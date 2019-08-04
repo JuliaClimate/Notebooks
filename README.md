@@ -2,11 +2,14 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gaelforget/JuliaCon2018Notebooks/master)
 
-This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) relied on two `Jupyter` notebooks provided here (`demo_type.ipynb` and `demo_exch.ipynb`) and predefined grids (downloaded from `github` within the notebooks).
+This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) introduced the package that later became [MeshArrays.jl](https://github.com/gaelforget/MeshArrays.jl) . It relied on two `Jupyter` notebooks (_provided here_) and predefined grids (_downloaded from `github` by the notebooks if needed_).
+
+- `demo_type.ipynb` illustrates the `gcmfaces` data type, the selection of a `gcmgrid`, and basic file-related (IO) functionalities.
+- `demo_exch.ipynb` applies the exchange of data between neighboring arrays in a `gcmfaces` instance, which is another essential feature of `MeshArrays.jl`.
 
 ## Added notebooks:
 
-`demo_smooth.ipynb` illustrates how `MeshArrays.smooth` is used for unit testing the [MeshArrays.jl package](https://github.com/gaelforget/MeshArrays.jl). This notebook does not require downloading any of the predefined grids.
+- `demo_smooth.ipynb` uses `MeshArrays.smooth` as done for unit testing the [MeshArrays.jl package](https://github.com/gaelforget/MeshArrays.jl). _This notebook does not require downloading any of the predefined grids._
 
 ## Activate notebooks:
 
