@@ -10,8 +10,8 @@ This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) introduced the p
 ## Added notebooks:
 
 - `demo_smooth.ipynb` uses `MeshArrays.smooth` as done for unit testing the [MeshArrays.jl package](https://github.com/gaelforget/MeshArrays.jl). _This notebook does not require downloading any of the predefined grids._
-- `demo_trsp.ipynb` uses `MeshArrays.TransportThrough` and `MeshArrays.LatCircles` to compute transports over the Global Ocean from 3D velocity fields.
-
+- `demo_trsp.ipynb` uses `MeshArrays.TransportThrough` and `MeshArrays.LatCircles` to compute transports over the Global Ocean.
+- `demo_trsp_prep.jl` provides `trsp_prep`, `trsp_read`, and `write_bin` to `demo_trsp.ipynb` (these deal with input fields).
 
 ## Activate notebooks:
 
