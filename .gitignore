@@ -1,5 +1,6 @@
-devel/
-.ipynb_checkpoints/
+devel
+.ipynb_checkpoints
 nctiles_climatology
-GRID_CS32/
-GRID_LLC90/
+GRID_CS32
+GRID_LLC90
+GRID_LL360
