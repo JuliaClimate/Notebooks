@@ -15,9 +15,14 @@
 
 # ## A key concept in `MeshArrays.jl` is the exchange of data between neighboring arrays
 #
-# Load the `MeshArrays.jl` and `'Plots.jl` package modules
+# Load the `MeshArrays.jl` and `Plots.jl` package modules
 
 using MeshArrays, Plots
+
+#for backward compatibility:
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
 
 # Download the pre-defined grid if needed
 
@@ -27,8 +32,8 @@ end
 
 # Select `cube sphere` grid and read `ocean depth` variable
 
-mygrid=GCMGridSpec("CS32")
-D=mygrid.read(mygrid.path*"Depth.data",gcmfaces(mygrid,Float32))
+mygrid=GridSpec("CS32")
+D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float32))
 show(D)
 
 # Use the `exchange` function to add neighboring points at face edges

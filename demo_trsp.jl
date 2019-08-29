@@ -13,7 +13,7 @@
 #     name: julia-1.1
 # ---
 
-# # Transport functions demo
+# # Ocean transport functions
 #
 # Computation of northward (or meridional) transport of seawater over the Global Ocean from three-dimensional, time-varying velocity fields.
 #
@@ -27,11 +27,16 @@
 using MeshArrays
 include("demo_trsp_prep.jl")
 
+#for backward compatibility:
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
+
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
 end
-mygrid=GCMGridSpec("LLC90");
-GridVariables=GCMGridLoad(mygrid);
+mygrid=GridSpec("LLC90");
+GridVariables=GridLoad(mygrid);
 
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/");
 
