@@ -30,8 +30,8 @@ include("demo_trsp_prep.jl")
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
 end
-mygrid=GCMGridSpec("LLC90");
-GridVariables=GCMGridLoad(mygrid);
+mygrid=GridSpec("LLC90");
+GridVariables=GridLoad(mygrid);
 
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/");
 

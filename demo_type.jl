@@ -21,7 +21,7 @@ using MeshArrays
 
 # Select a pre-defined grid; `LLC90` is used here
 
-mygrid=GCMGridSpec("LLC90")
+mygrid=GridSpec("LLC90")
 
 # Download the pre-defined grid if needed
 
@@ -31,7 +31,7 @@ end
 
 # Read a global field from binary file and convert it to `MeshArrays`'s `gcmfaces` type
 
-D=mygrid.read(mygrid.path*"Depth.data",gcmfaces(mygrid))
+D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float64))
 show(D)
 
 

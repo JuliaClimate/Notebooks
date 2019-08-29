@@ -27,8 +27,8 @@ end
 
 # Select `cube sphere` grid and read `ocean depth` variable
 
-mygrid=GCMGridSpec("CS32")
-D=mygrid.read(mygrid.path*"Depth.data",gcmfaces(mygrid,Float32))
+mygrid=GridSpec("CS32")
+D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float32))
 show(D)
 
 # Use the `exchange` function to add neighboring points at face edges

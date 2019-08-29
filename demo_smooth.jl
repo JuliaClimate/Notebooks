@@ -22,7 +22,7 @@ using MeshArrays, Plots
 
 # Define a grid with `6` faces of `16*16` points and distances, areas, etc. all set to `1.0`:
 
-GridVariables=GCMGridOnes("cs",6,16);
+GridVariables=GridOfOnes("cs",6,16);
 
 # Smooth a randomly initialized `Rini` at 3 grid point scales (`DXCsm,DYCsm`):
 
@@ -31,7 +31,7 @@ GridVariables=GCMGridOnes("cs",6,16);
 # Define `qwckplot` and use it to vizualize the resulting `Rend`:
 
 # +
-function qwckplot(fld::gcmfaces,ttl::String)
+function qwckplot(fld::MeshArray,ttl::String)
     arr=MeshArrays.convert2array(fld)
     arr=permutedims(arr,[2 1])
     #This uses Plots.jl:
