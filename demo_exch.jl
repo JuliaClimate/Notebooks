@@ -15,10 +15,11 @@
 
 # ## A key concept in `MeshArrays.jl` is the exchange of data between neighboring arrays
 #
-# Load the `MeshArrays.jl` and `'Plots.jl` package modules
+# Load the `MeshArrays.jl` and `Plots.jl` package modules
 
 using MeshArrays, Plots
 
+#for backward compatibility:
 !isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
 !isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
 !isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing

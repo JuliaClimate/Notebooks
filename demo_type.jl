@@ -19,6 +19,7 @@
 
 using MeshArrays
 
+#for backward compatibility:
 !isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
 !isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
 !isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing

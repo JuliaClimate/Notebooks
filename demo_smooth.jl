@@ -13,13 +13,13 @@
 #     name: julia-1.1
 # ---
 
-# ## `MeshArrays.jl` test suite uses the `MeshArrays.smooth` function
-#
+# ## `MeshArrays.jl` test suite uses a global smoother function
 
-# Load the `MeshArrays.jl` and `'Plots.jl` package modules
+# Load the `MeshArrays.jl` and `Plots.jl` package modules
 
 using MeshArrays, Plots
 
+#for backward compatibility:
 !isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
 !isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
 !isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
