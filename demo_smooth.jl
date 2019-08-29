@@ -20,6 +20,10 @@
 
 using MeshArrays, Plots
 
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
+
 # Define a grid with `6` faces of `16*16` points and distances, areas, etc. all set to `1.0`:
 
 GridVariables=GridOfOnes("cs",6,16);

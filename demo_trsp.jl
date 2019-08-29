@@ -27,6 +27,10 @@
 using MeshArrays
 include("demo_trsp_prep.jl")
 
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
+
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
 end

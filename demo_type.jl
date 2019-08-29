@@ -19,6 +19,10 @@
 
 using MeshArrays
 
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
+
 # Select a pre-defined grid; `LLC90` is used here
 
 mygrid=GridSpec("LLC90")

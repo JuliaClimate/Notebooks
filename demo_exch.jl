@@ -19,6 +19,10 @@
 
 using MeshArrays, Plots
 
+!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
+!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
+!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
+
 # Download the pre-defined grid if needed
 
 if !isdir("GRID_CS32") 
