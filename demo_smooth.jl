@@ -35,12 +35,8 @@ GridVariables=GridOfOnes("cs",6,16);
 # Define `qwckplot` and use it to vizualize the resulting `Rend`:
 
 # +
-function qwckplot(fld::MeshArray,ttl::String)
-    arr=MeshArrays.convert2array(fld)
-    arr=permutedims(arr,[2 1])
-    #This uses Plots.jl:
-    p=heatmap(arr,title=ttl)
-end
+include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_convert.jl"))
+include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_plot.jl"))
 
 qwckplot(Rend,"Smoothed noise")
 # -

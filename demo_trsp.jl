@@ -66,6 +66,7 @@ lat=-89.0:89.0
 plot(lat,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
+include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_convert.jl"))
 include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_plot.jl"))
 qwckplot(TrspX,"1st component (note varying face orientations)")
 #qwckplot(TrspY,"2nd component (note varying face orientations)")
