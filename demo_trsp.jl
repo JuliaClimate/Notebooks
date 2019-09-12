@@ -15,7 +15,7 @@
 
 # # Ocean transport functions
 #
-# Computation of northward (or meridional) transport of seawater over the Global Ocean from three-dimensional, time-varying velocity fields.
+# Computation of northward ("meridional") transport of seawater integrated over the Global Ocean from three-dimensional, time-varying velocity fields.
 #
 # **key functions:** 
 # - `LatitudeCircles` computes integration paths that follow latitude circles
@@ -26,11 +26,6 @@
 # +
 using MeshArrays
 include("demo_trsp_prep.jl")
-
-#for backward compatibility:
-!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
-!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
-!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
 
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
@@ -47,7 +42,7 @@ GridVariables=GridLoad(mygrid);
 #(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(mygrid,GridVariables,"GRID_LLC90/");
 # -
 
-# ### Northward seawater transport (Global Ocean)
+# ### Northward, total transport
 
 # +
 UVmean=Dict("U"=>TrspX,"V"=>TrspY,"dimensions"=>["x","y"]);
@@ -66,9 +61,12 @@ lat=-89.0:89.0
 plot(lat,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
-include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_convert.jl"))
-include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_plot.jl"))
-qwckplot(TrspX,"1st component (note varying face orientations)")
-#qwckplot(TrspY,"2nd component (note varying face orientations)")
+# ###  Transport Component Maps
+#
+# Notice that vector field orientations can differ between the plotted arrays.
+
+include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
+heatmap(1e-6*TrspX,clims=(-20.0,20.0))
+#heatmap(1e-6*TrspY,clims=(-20.0,20.0))
 
 

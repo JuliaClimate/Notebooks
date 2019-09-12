@@ -19,34 +19,28 @@
 
 using MeshArrays, Plots
 
-#for backward compatibility:
-!isdefined(MeshArrays,:GridSpec) ? GridSpec=GCMGridSpec : nothing
-!isdefined(MeshArrays,:GridLoad) ? GridLoad=GCMGridLoad : nothing
-!isdefined(MeshArrays,:GridOfOnes) ? GridOfOnes=GCMGridOnes : nothing
-
 # Define a grid with `6` faces of `16*16` points and distances, areas, etc. all set to `1.0`:
 
 GridVariables=GridOfOnes("cs",6,16);
 
-# Smooth a randomly initialized `Rini` at 3 grid point scales (`DXCsm,DYCsm`):
+# Smooth a field of random noise defined over the 6 faces of a cube:
 
-(Rini,Rend,DXCsm,DYCsm)=MeshArrays.demo2(GridVariables);
+DemoVariables=MeshArrays.demo2(GridVariables);
 
-# Define `qwckplot` and use it to vizualize the resulting `Rend`:
+# Include `heatmap` method and use it to vizualize the final result:
 
-# +
-include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_convert.jl"))
-include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_plot.jl"))
+include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
+heatmap(DemoVariables[2],title="smoothed noise",clims=(-1.0,1.0))
 
-qwckplot(Rend,"Smoothed noise")
-# -
+# Note the increased smoothness and reduced magnitude as compared with the initial condition:
 
-# Note the increased smoothness and reduced magnitude as compared with `Rini`:
-
-qwckplot(Rini,"Original noise")
+heatmap(DemoVariables[1],title="initial noise",clims=(-1.0,1.0))
 
 # To finish, let's benchmark `smooth` as a function of smoothing scale parameters:
 
+Rini=DemoVariables[1]
+DXCsm=DemoVariables[3]
+DYCsm=DemoVariables[4]
 @time Rend=smooth(Rini,DXCsm,DYCsm,GridVariables);
 @time Rend=smooth(Rini,2DXCsm,2DYCsm,GridVariables);
 
