@@ -13,21 +13,26 @@
 #     name: julia-1.1
 # ---
 
-# ## `MeshArrays.jl` test suite uses a global smoother function
+# # Diffusion over the surface of a cube
+#
+# The unit testing of `MeshArrays.jl` uses a global smoother function. This process can be applied to a field of random noise to "smooth it out". It attenuates the noise magnitude in  very predictable fashion. The main code is inside `MeshArrays.demo2` which can just as easily be applied to e.g. cubed-sphere or `llc` Earth grids.
 
-# Load the `MeshArrays.jl` and `Plots.jl` package modules
+# #### First, let's load the `MeshArrays` and `Plots`  modules
 
 using MeshArrays, Plots
 
-# Define a grid with `6` faces of `16*16` points and distances, areas, etc. all set to `1.0`:
+# Grid the `6` faces of a cube with `16*16` points on each face. Distances, areas, etc. are all set to `1.0` for simplicity.
 
 GridVariables=GridOfOnes("cs",6,16);
 
-# Smooth a field of random noise defined over the 6 faces of a cube:
+# #### Smooth out random noise over the 6 faces of a cube
+#
+# The orignal noise field is `DemoVariables[1]` while the smoothed one
+# is `DemoVariables[2]`
 
 DemoVariables=MeshArrays.demo2(GridVariables);
 
-# Include `heatmap` method and use it to vizualize the final result:
+# #### Include `heatmap` method to vizualize results
 
 include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 heatmap(DemoVariables[2],title="smoothed noise",clims=(-1.0,1.0))
