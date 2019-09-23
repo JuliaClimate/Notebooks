@@ -1,6 +1,7 @@
 # MeshArrayNotebooks
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gaelforget/MeshArrayNotebooks/master)
+[![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 [MeshArrays.jl](https://github.com/gaelforget/MeshArrays.jl) is a Julia package that handles gridded earth variables. **This repo** provides a set of Jupyter notebooks that document core features and functions provided by `MeshArrays.jl`
 
