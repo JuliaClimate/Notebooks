@@ -131,7 +131,7 @@ version = "0.3.0"
 
 [[MeshArrays]]
 deps = ["CatViews", "Printf", "SparseArrays", "Statistics"]
-path = "/Users/gforget/mywork/projects_major/2019-jlpkgs/MeshArrays.jl"
+git-tree-sha1 = "7f831199879a32ab32091b7246533db1b2acb7d5"
 uuid = "cb8c808f-1acf-59a3-9d2b-6e38d009f683"
 version = "0.2.3"
 
