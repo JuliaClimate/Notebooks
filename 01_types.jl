@@ -36,6 +36,11 @@ mygrid=GridSpec("LLC90")
 D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float64))
 show(D)
 
+p=dirname(pathof(MeshArrays));
+using Plots; include(joinpath(p,"Plots.jl"));
+heatmap(D,title="Ocean Depth",clims=(0.,6000.))
+
+
 # The read / write functions can also be used to convert a MeshArray from / to Array
 
 tmp1=write(D)
@@ -61,5 +66,4 @@ D[findall(D .< 1.)] .= NaN
 D[1]=0.0 .+ D[1]
 tmp=cos.(D)
 # -
-
 

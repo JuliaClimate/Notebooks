@@ -17,9 +17,9 @@
 #
 # This notebook proceeds in several steps:
 #
-# - read transport vector field from file and compute its convergence.
-# - split into rotational / divergent components (i.e., `Helmholtz Decomposition`).
-# - compute streamfunction from the rotational vector field.
+# - read `TrspX,TrspY` transport vector field from file and compute its convergence.
+# - split `TrspX,TrspY` into rotational and divergent components (i.e., `Helmholtz Decomposition`).
+# - compute streamfunction from the non-divergent component.
 #
 # _Note: this requires the `MeshArrays.jl v0.2.3` (upcoming release)_
 
@@ -29,7 +29,7 @@ using MeshArrays, Plots
 include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
 
-#1) get grid:
+#1) get grid
 !isdir("GRID_LLC90") ? run(`git clone https://github.com/gaelforget/GRID_LLC90`) : nothing
 mygrid=GridSpec("LLC90"); GridVariables=GridLoad(mygrid);
 
