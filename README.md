@@ -27,7 +27,5 @@ This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) about the precur
 - `01_types.ipynb` illustrates the `MeshArray` and `gcmgrid` data types.
 - `02_exchanges.ipynb` exchanges data between neighboring arrays in a `MeshArray `
 
-
-
 ## IO
-- `05_nctiles.ipynb` uses the `NCTiles.jl` package to write data to `NetCDF` files. Examples include interpolated data on a rectangular grid read from binary files and written to single `NetCDF` files, and larger data on the `LLC90` grid read in using `MeshArrays` and written to multiple tiled `NetCDF` files.
+- `06_nctiles.ipynb` uses the `NCTiles.jl` package to write data to `NetCDF` files. Examples include interpolated data on a rectangular grid read from binary files and written to single `NetCDF` files, and larger data on the `LLC90` grid read in using `MeshArrays` and written to multiple tiled `NetCDF` files.
