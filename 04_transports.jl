@@ -13,32 +13,34 @@
 #     name: julia-1.1
 # ---
 
-# # Ocean transports and flow maps
+# # Ocean transports and maps
 #
-# Global, northward transport of seawater is here integrated over the Global Ocean from three-dimensional, time-varying velocity fields.
+# Ocean transport is represented as a vector field defined over the Global Ocean. These case be integrated along a grid path to compute transports between any two points. 
 #
-# **key functions:** 
+# For more about how these methods, please refer to **Forget et al, 2015.** ECCO version 4: An integrated framework for non-linear inverse modeling and global ocean state estimation. https://doi.org/10.5194/gmd-8-3071-2015
+#
+# Key functions:
 # - `LatitudeCircles` computes integration paths that follow latitude circles
 # - `ThroughFlow` computes transports through these integration paths
 
-# ### Time mean, vertically integrated transports
-#
-# This step has been done earlier for you and results saved to a few smaller files. 
-#
-# Let's re-read those using `trsp_read` from `prepare_transports.jl`.
-
 # +
-using MeshArrays
+using MeshArrays, Plots
+include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
 
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
 end
+
 mygrid=GridSpec("LLC90");
 GridVariables=GridLoad(mygrid);
+# -
 
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/");
+# ### Time average and vertically integrate transports
+#
+# _Note: these intermediate results have pre-computed for you._
 
+# +
 #using Statistics
 #using FortranFiles
 #!isdir("nctiles_climatology") ? error("missing files") : nothing
@@ -46,7 +48,13 @@ GridVariables=GridLoad(mygrid);
 #(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(mygrid,GridVariables,"GRID_LLC90/");
 # -
 
-# ### Transport integrals across parallels
+# Let's read the intermediate results from file using `trsp_read`.
+
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/");
+
+# Alternatively these can be recomputed from three-dimensional time-varying velocity fields via `trsp_prep`.
+
+# ### Transports between latitude bands
 
 # +
 UVmean=Dict("U"=>TrspX,"V"=>TrspY,"dimensions"=>["x","y"]);
@@ -58,18 +66,16 @@ for i=1:length(LC)
 end
 # -
 
-# Plot result:
+# ### Plot result
 
-using Plots
 lat=-89.0:89.0
 plot(lat,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
-# Plot transport vector component Maps. 
+# ### Plot transport maps
 #
 # _Note that vector field orientations differ amongst the arrays._
 
-include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 heatmap(1e-6*TrspX,clims=(-20.0,20.0))
 #heatmap(1e-6*TrspY,clims=(-20.0,20.0))
 
@@ -98,7 +104,7 @@ end
 
 # `Eastward/Northward` transport
 #
-# _Compare vector field orientations with the previous case._
+# _Note: compare vector field orientations with previous plot._
 
 cs=GridVariables["AngleCS"];
 sn=GridVariables["AngleSN"];
@@ -109,8 +115,8 @@ heatmap(u,clims=(-20.0,20.0))
 # Transport as a function of longitude and latitude
 
 # +
-cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
-using Pkg; Pkg.add(PackageSpec(url=cbp))
+#cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
+#using Pkg; Pkg.add(PackageSpec(url=cbp))
 using CbiomesProcessing
 
 SPM,lon,lat=CbiomesProcessing.read_SPM("GRID_LLC90/")

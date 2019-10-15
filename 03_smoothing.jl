@@ -13,35 +13,37 @@
 #     name: julia-1.1
 # ---
 
-# # Diffusion over the surface of a cube
+# # Spatial diffusion / smoothing example
 #
-# The unit testing of `MeshArrays.jl` uses a global smoother function. This process can be applied to a field of random noise to "smooth it out". It attenuates the noise magnitude in  very predictable fashion. The main code is inside `MeshArrays.demo2` which can just as easily be applied to e.g. cubed-sphere or `llc` Earth grids.
+# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Its effect on a random noise field is to "smooth it out". The average smoother efficiency is predictable and can be set via a `scale parameter`. The method as defined inside `MeshArrays.demo2` is applicable for any regular, `cube-sphere`, or `lat-lon-cap` Earth grid.
+#
+# For more about how this diffusion based method works and behaves, please refer to **Weaver and Courtier, 2001.** Correlation modelling on the sphere using a generalized diffusion equation. https://doi.org/10.1002/qj.49712757518
 
-# #### First, let's load the `MeshArrays` and `Plots`  modules
+# #### Load  `MeshArrays` and `Plots`  modules
 
 using MeshArrays, Plots
+include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 
 # Grid the `6` faces of a cube with `16*16` points on each face. Distances, areas, etc. are all set to `1.0` for simplicity.
 
 GridVariables=GridOfOnes("cs",6,16);
 
-# #### Smooth out random noise over the 6 faces of a cube
-#
-# The orignal noise field is `DemoVariables[1]` while the smoothed one
-# is `DemoVariables[2]`
+# #### Diffuse a noisy field over the surface of a cube
 
 DemoVariables=MeshArrays.demo2(GridVariables);
 
-# #### Include `heatmap` method to vizualize results
+# #### Display the 6 cube faces using  `heatmap`
+#
+# The orignal noise field is `DemoVariables[1]` while the smoothed one
+# is `DemoVariables[2]`.
 
-include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
-heatmap(DemoVariables[2],title="smoothed noise",clims=(-1.0,1.0))
+heatmap(DemoVariables[1],title="initial noise",clims=(-0.5,0.5))
 
-# Note the increased smoothness and reduced magnitude as compared with the initial condition:
+# After `smooth()` has been applied via `demo2()`, the noise is smoother and muted.
 
-heatmap(DemoVariables[1],title="initial noise",clims=(-1.0,1.0))
+heatmap(DemoVariables[2],title="smoothed noise",clims=(-0.5,0.5))
 
-# To finish, let's benchmark `smooth` as a function of smoothing scale parameters:
+# The cost of applying `smooth()` predictably  increases with the decorrelation scale. For more about how this works, please refer to **Weaver and Courtier, 2001.** Correlation modelling on the sphere using a generalized diffusion equation. https://doi.org/10.1002/qj.49712757518
 
 Rini=DemoVariables[1]
 DXCsm=DemoVariables[3]
