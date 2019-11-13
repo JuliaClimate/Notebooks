@@ -8,7 +8,7 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.1.1
+#     display_name: Julia 1.1.0
 #     language: julia
 #     name: julia-1.1
 # ---
@@ -36,11 +36,15 @@
 using NCTiles,NCDatasets,NetCDF,MeshArrays
 
 # Set Paths
-datadir = joinpath("../../DarwinModelOutputSamples","test")
-outputdir = joinpath(datadir,"diags")
-availdiagsfile = joinpath(datadir,"run","available_diagnostics.log")
-griddir = joinpath(datadir,"run/")
-resultsdir = joinpath(datadir,"results")
+datadir = "2019-nctiles-sample/"
+availdiagsfile = joinpath(datadir,"sample_native/available_diagnostics.log")
+readmefile = joinpath(datadir,"sample_native/README")
+griddir = joinpath(datadir,"sample_native/GRID_float32/")
+outputdir = joinpath(datadir,"sample_native/diags/")
+interpdir = joinpath(datadir,"sample_native/diags_interp/")
+
+resultsdir = "2019-nctiles-processed/"
+if ~ispath(resultsdir); mkpath(resultsdir); end
 
 # Dimensions
 prec = Float32
@@ -54,7 +58,7 @@ time_steps = timeinterval/2:timeinterval:timeinterval*nsteps
 time_units = "days since 1992-01-01 0:0:0"
 timevar = NCvar("tim",time_units,Inf,time_steps,Dict(("long_name" => "time","standard_name" => "time")),NCDatasets)
 
-README = readlines(joinpath(datadir,"run","README"))
+README = readlines(readmefile)
 # -
 
 # # Interpolated Data Test Case
@@ -63,18 +67,11 @@ README = readlines(joinpath(datadir,"run","README"))
 
 # Setup paths and dimensions used for interpolated data.
 
-# +
-interpdir = joinpath(datadir,"interp")
-writedir = joinpath(resultsdir,"ncfiles_interp")
-
-if ~ispath(writedir); mkpath(writedir); end
-
 # Interpolated dimensions
 lon_c=-179.75:0.5:179.75; lat_c=-89.75:0.5:89.75;
 lon_cvar = NCvar("lon_c","degrees_east",size(lon_c),lon_c,Dict("long_name" => "longitude"),NCDatasets)
 lat_cvar = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "longitude"),NCDatasets)
 n1,n2,n3 = (length(lon_c),length(lat_c),length(dep_c))
-# -
 
 # ## Interpolate
 
@@ -82,13 +79,16 @@ n1,n2,n3 = (length(lon_c),length(lat_c),length(dep_c))
 
 # ## Write interpolated data to NetCDF Files
 
+writedir = joinpath(resultsdir,"interp")
+if ~ispath(writedir); mkpath(writedir); end
+
 # ### 2D Field ETAN
 
 # Get the filenames for our first dataset and other information about the field.
 
 dataset = "state_2d_set1"
 fldname = "ETAN"
-flddatadir = joinpath(interpdir,dataset,fldname)
+flddatadir = joinpath(interpdir,fldname)
 fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
 diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname)
 
@@ -116,9 +116,9 @@ close(ds)
 
 # +
 # Get the filenames for our first dataset and other information about the field.
-dataset = "trsp_3d_set1"
+dataset = "WVELMASS"
 fldname = "WVELMASS"
-flddatadir = joinpath(interpdir,dataset,fldname)
+flddatadir = joinpath(interpdir,fldname)
 fnames = flddatadir*'/'.*filter(x -> occursin(".data",x), readdir(flddatadir))
 diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname)
 
@@ -240,11 +240,13 @@ end
 # Setup paths and dimensions used for interpolated data.
 
 # +
-mygrid = GridSpec("LLC90",griddir)
-mygrid = gcmgrid(mygrid.path,mygrid.class,mygrid.nFaces,mygrid.fSize, mygrid.ioSize, prec, mygrid.read, mygrid.write)
+writedir = joinpath(resultsdir,"nctiles")
+if ~ispath(writedir); mkpath(writedir); end
+
+mygrid = GridSpec("LLC90",joinpath(datadir,"sample_native/"))
+mygrid = gcmgrid("2019-nctiles-sample/sample_native/GRID_float32/",mygrid.class,mygrid.nFaces,mygrid.fSize, mygrid.ioSize, prec, mygrid.read, mygrid.write)
 tilesize = (30,30)
 (n1,n2,n3) = (90,1170,50)
-writedir = joinpath(resultsdir,"ncfiles_tiles")
 
 # First two dimensions
 icvar = NCvar("i_c","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),NCDatasets)
@@ -370,6 +372,10 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
+savenames = savenamebase*".".*lpad.(string.(1:numtiles),4,"0").*".nc"
+tidx=1
+createfile(savenames[tidx],flds,README, itile = tidx, ntile = length(savenames))
+
 # ## Vector Field UVELMASS
 
 # +
@@ -421,7 +427,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
             "area" => areasvar,
             "land" => landsvar,
             "thic" => thiccvar
-]
+])
 
 writeNetCDFtiles(flds,savenamebase,README)
 # -
@@ -445,8 +451,8 @@ tilfld = TileData(flddata,tilesize,mygrid)
 coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
 flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
             "lon" => loncvar,
-            "lat" => latcvara,
-            "area" => areavar
+            "lat" => latcvar,
+            "area" => areacvar,
             "land" => land3Dvar,
             "thic" => thiclvar
 ])
