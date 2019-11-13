@@ -13,20 +13,24 @@
 #     name: julia-1.1
 # ---
 
-# # Test Cases
+# # NCTiles.jl examples
 
-# This notebook demonstrates several test cases.
-# 1. Interpolate (TODO) and write to NetCDF files (Done)
-#   - 2D data
-#   - Vertical vector field data
-# 2. Write data to multiple files separated into "tiles" in native grid.
-#   - 2D data
-#   - 3D data
-#   - Vector field data
-# 3. Calculate climatology for interpolated data and write to NetCDF files (TODO)
-#   - 2D data
-#   - Vertical vector field data
+# This notebook demonstrates the use of `NCTiles.jl` in combination with `MeshArrays.jl` or in standalone mode. Several test cases are included:
+#
+# 1. Write regular array data to single NetCDF file
+#   - 2D example
+#   - 3D example
+# 2. Write tiled data to multiple NetCDF files ("nctiles")
+#   - 2D example
+#   - 3D, temperature example
+#   - 3D, C-grid vector example
 #   
+# To run these test cases, please first download and decompress them as follows.
+#
+# ```
+# git clone https://github.com/gaelforget/nctiles-testcases
+# gunzip nctiles-testcases/diags/*.gz
+# ```
 
 # # Setup
 
@@ -36,14 +40,14 @@
 using NCTiles,NCDatasets,NetCDF,MeshArrays
 
 # Set Paths
-datadir = "2019-nctiles-sample/"
-availdiagsfile = joinpath(datadir,"sample_native/available_diagnostics.log")
-readmefile = joinpath(datadir,"sample_native/README")
-griddir = joinpath(datadir,"sample_native/GRID_float32/")
-outputdir = joinpath(datadir,"sample_native/diags/")
-interpdir = joinpath(datadir,"sample_native/diags_interp/")
+datadir = "nctiles-testcases/"
+availdiagsfile = joinpath(datadir,"available_diagnostics.log")
+readmefile = joinpath(datadir,"README")
+griddir = joinpath(datadir,"grid_float32/")
+nativedir = joinpath(datadir,"diags/")
+interpdir = joinpath(datadir,"diags_interp/")
 
-resultsdir = "2019-nctiles-processed/"
+resultsdir = "nctiles-newfiles/"
 if ~ispath(resultsdir); mkpath(resultsdir); end
 
 # Dimensions
@@ -240,11 +244,12 @@ end
 # Setup paths and dimensions used for interpolated data.
 
 # +
-writedir = joinpath(resultsdir,"nctiles")
+writedir = joinpath(resultsdir,"tiled")
 if ~ispath(writedir); mkpath(writedir); end
 
-mygrid = GridSpec("LLC90",joinpath(datadir,"sample_native/"))
-mygrid = gcmgrid("2019-nctiles-sample/sample_native/GRID_float32/",mygrid.class,mygrid.nFaces,mygrid.fSize, mygrid.ioSize, prec, mygrid.read, mygrid.write)
+mygrid = GridSpec("LLC90",joinpath(datadir,"grid_float32/"))
+mygrid = gcmgrid(joinpath(datadir,"grid_float32/"),mygrid.class,mygrid.nFaces,
+    mygrid.fSize, mygrid.ioSize, Float32, mygrid.read, mygrid.write)
 tilesize = (30,30)
 (n1,n2,n3) = (90,1170,50)
 
@@ -320,7 +325,7 @@ thiclvar = NCvar("thic","m",dep_lvar,thicl,Dict("standard_name" => "cell_thickne
 
 dataset = "state_2d_set1"
 fldname = "ETAN"
-fnames = outputdir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(outputdir))
+fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(nativedir))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
@@ -349,7 +354,7 @@ writeNetCDFtiles(flds,savenamebase,README)
 # Get the filenames for our first dataset and other information about the field.
 dataset = "state_3d_set1"
 fldname = "THETA"
-fnames = outputdir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(outputdir))
+fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(nativedir))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
@@ -372,17 +377,13 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
-savenames = savenamebase*".".*lpad.(string.(1:numtiles),4,"0").*".nc"
-tidx=1
-createfile(savenames[tidx],flds,README, itile = tidx, ntile = length(savenames))
-
 # ## Vector Field UVELMASS
 
 # +
 # Get the filenames for our first dataset and create BinData struct
 dataset = "trsp_3d_set1"
 fldname = "UVELMASS"
-fnames = outputdir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(outputdir))
+fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(nativedir))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
@@ -410,7 +411,7 @@ writeNetCDFtiles(flds,savenamebase,README)
 # Get the filenames for our first dataset and create BinData struct
 dataset = "trsp_3d_set1"
 fldname = "VVELMASS"
-fnames = outputdir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(outputdir))
+fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(nativedir))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
@@ -438,7 +439,7 @@ writeNetCDFtiles(flds,savenamebase,README)
 # Get the filenames for our first dataset and create BinData struct
 dataset = "trsp_3d_set1"
 fldname = "WVELMASS"
-fnames = outputdir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(outputdir))
+fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(nativedir))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
