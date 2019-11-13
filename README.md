@@ -27,6 +27,6 @@ This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) about the precur
 - `01_types.ipynb` illustrates the `MeshArray` and `gcmgrid` data types.
 - `02_exchanges.ipynb` exchanges data between neighboring arrays in a `MeshArray `
 
-## Input / Output
+## Netcdf Files
 
-- `06_nctiles.ipynb` uses the `NCTiles.jl` package to convert binary data to `NetCDF` files. Examples include interpolated data on a rectangular grid written to single `NetCDF` files, and tiled model output on the `LLC90` grid read written to multiple `NetCDF` files.
+- `06_nctiles.ipynb` uses `NCTiles.jl` to convert binary data to `NetCDF` files. Examples include interpolated data on a rectangular grid written to single file, and tiled model output on the `LLC90` grid written to multiple files.
