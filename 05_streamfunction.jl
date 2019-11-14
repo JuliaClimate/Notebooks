@@ -24,8 +24,7 @@
 # _Note: this requires the `MeshArrays.jl v0.2.3` (upcoming release)_
 
 # +
-using MeshArrays, Plots
-
+using MeshArrays, Plots, FortranFiles
 include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
 
