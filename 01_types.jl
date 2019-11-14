@@ -6,7 +6,7 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.4'
-#       jupytext_version: 1.2.1
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Julia 1.1.0
 #     language: julia
@@ -19,7 +19,7 @@
 #
 # #### First, let's load the `MeshArrays.jl` package
 
-using MeshArrays
+using MeshArrays, Plots
 
 # #### Select a pre-defined grid such as `LLC90`
 
@@ -36,8 +36,7 @@ mygrid=GridSpec("LLC90")
 D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float64))
 show(D)
 
-p=dirname(pathof(MeshArrays));
-using Plots; include(joinpath(p,"Plots.jl"));
+p=dirname(pathof(MeshArrays)); include(joinpath(p,"Plots.jl"));
 heatmap(D,title="Ocean Depth",clims=(0.,6000.))
 
 

@@ -25,18 +25,22 @@
 #   - 3D, temperature example
 #   - 3D, C-grid vector example
 #   
-# To run these test cases, please first download and decompress them as follows.
+# To run these test cases, please first download and decompress files as follows.
 #
 # ```
 # git clone https://github.com/gaelforget/nctiles-testcases
 # gunzip nctiles-testcases/diags/*.gz
 # ```
 
+!isdir("nctiles-testcases") ? run(`git clone https://github.com/gaelforget/nctiles-testcases`) : nothing
+#run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
+
 # # Setup
 
 # Setting the paths and dimensions that will be used throughout this notebook.
 
 # +
+using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
 using NCTiles,NCDatasets,NetCDF,MeshArrays
 
 # Set Paths

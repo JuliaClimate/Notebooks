@@ -6,7 +6,7 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.4'
-#       jupytext_version: 1.2.1
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Julia 1.1.0
 #     language: julia
@@ -24,9 +24,13 @@
 # - `ThroughFlow` computes transports through these integration paths
 
 # +
-using MeshArrays, Plots
+using MeshArrays, Plots, Statistics
 include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
+
+cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
+using Pkg; Pkg.add(PackageSpec(url=cbp))
+using CbiomesProcessing
 
 if !isdir("GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90`)
@@ -41,8 +45,7 @@ GridVariables=GridLoad(mygrid);
 # _Note: these intermediate results have pre-computed for you._
 
 # +
-#using Statistics
-#using FortranFiles
+#using Pkg; Pkg.add("FortranFiles"); using FortranFiles
 #!isdir("nctiles_climatology") ? error("missing files") : nothing
 #include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))
 #(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(mygrid,GridVariables,"GRID_LLC90/");
@@ -114,13 +117,7 @@ heatmap(u,clims=(-20.0,20.0))
 
 # Transport as a function of longitude and latitude
 
-# +
-#cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
-#using Pkg; Pkg.add(PackageSpec(url=cbp))
-using CbiomesProcessing
-
 SPM,lon,lat=CbiomesProcessing.read_SPM("GRID_LLC90/")
 uI=CbiomesProcessing.MatrixInterp(write(u),SPM,size(lon))
 heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI))
-# -
 
