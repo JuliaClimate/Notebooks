@@ -16,7 +16,6 @@ _Notes:_
 
 The following notebooks demonstrate various standard computations related to ocean transports.
 
-- `03_smoothing.ipynb` uses `smooth()` as done in the unit tests of [MeshArrays.jl](https://github.com/gaelforget/MeshArrays.jl) 
 - `04_transports.ipynb` uses `TransportThrough()` and `LatCircles()` to compute seawater transports between latitude bands. It plots interpolated results over the Global Ocean.
 - `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute a streamfunction along with the divergent transport component.
 
@@ -26,6 +25,7 @@ This [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) about the precur
 
 - `01_types.ipynb` illustrates the `MeshArray` and `gcmgrid` data types.
 - `02_exchanges.ipynb` exchanges data between neighboring arrays in a `MeshArray `
+- `03_smoothing.ipynb` uses `smooth()` as done in the unit tests of [MeshArrays.jl](https://github.com/gaelforget/MeshArrays.jl) 
 
 ## Netcdf Files
 
