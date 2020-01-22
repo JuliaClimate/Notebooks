@@ -1,16 +1,20 @@
-# GlobalRegionalOceanography.ipynb
+# GlobalOcean_jl
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gaelforget/MeshArrayNotebooks/master)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-Notebooks related to global to regional ocean research, education, and outreach. 
+[Jupyter](https://jupyter.org) notebooks related to regional-to-global ocean & climate science in [Julia](https://julialang.org). Initial focus has been on the analysis of ocean transports performed on native model grids (as needed to avoid large errors).
 
+**Table of content**
+
+- 0. Data Structures
+- 1. Ocean Transports
 
 _Notes:_ 
 
-- each `.ipynb` notebook is paired with a `.jl` file via `jupytext`
-- an interactive version can readily be spun up via the `launch binder` badge
-- please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc.
+- _Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`_
+- _An interactive version can readily be spun up via the `launch binder` badge_
+- _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
 
 ## Ocean Transports
 
@@ -21,7 +25,7 @@ The following notebooks demonstrate various standard computations related to oce
 
 _Notes_
 
-- `prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`
+- _`prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`_
 
 ## Data Structures
 
