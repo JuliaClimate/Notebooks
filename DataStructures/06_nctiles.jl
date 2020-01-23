@@ -32,7 +32,9 @@
 # gunzip nctiles-testcases/diags/*.gz
 # ```
 
-!isdir("nctiles-testcases") ? run(`git clone https://github.com/gaelforget/nctiles-testcases`) : nothing
+if !isdir("../inputs/nctiles-testcases")
+    run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)
+end
 #run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
 
 # # Setup
@@ -40,18 +42,18 @@
 # Setting the paths and dimensions that will be used throughout this notebook.
 
 # +
-using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
+#using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
 using NCTiles,NCDatasets,NetCDF,MeshArrays
 
 # Set Paths
-datadir = "nctiles-testcases/"
+datadir = "../inputs/nctiles-testcases/"
 availdiagsfile = joinpath(datadir,"available_diagnostics.log")
 readmefile = joinpath(datadir,"README")
 griddir = joinpath(datadir,"grid_float32/")
 nativedir = joinpath(datadir,"diags/")
 interpdir = joinpath(datadir,"diags_interp/")
 
-resultsdir = "nctiles-newfiles/"
+resultsdir = "../outputs/nctiles-newfiles/"
 if ~ispath(resultsdir); mkpath(resultsdir); end
 
 # Dimensions
