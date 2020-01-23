@@ -42,7 +42,7 @@ end
 # Setting the paths and dimensions that will be used throughout this notebook.
 
 # +
-using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
+#using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
 using NCTiles,NCDatasets,NetCDF,MeshArrays
 
 # Set Paths

@@ -23,7 +23,7 @@ using MeshArrays, Plots
 
 # #### Select a pre-defined grid such as `LLC90`
 
-mygrid=GridSpec("LLC90")
+mygrid=GridSpec("LLC90","../inputs/")
 
 # And download the pre-defined grid if needed
 
