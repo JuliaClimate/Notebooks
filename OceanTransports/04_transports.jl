@@ -27,18 +27,19 @@
 using MeshArrays, Plots, Statistics
 include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 
-using Pkg; Pkg.add("FortranFiles"); using FortranFiles
+using Pkg; Pkg.add("FortranFiles")
+using FortranFiles
 include("prepare_transports.jl")
 
 cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
 using Pkg; Pkg.add(PackageSpec(url=cbp))
 using CbiomesProcessing
 
-if !isdir("GRID_LLC90") 
-    run(`git clone https://github.com/gaelforget/GRID_LLC90`)
+if !isdir("../inputs/GRID_LLC90") 
+    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
 
-mygrid=GridSpec("LLC90");
+mygrid=GridSpec("LLC90","../inputs/");
 GridVariables=GridLoad(mygrid);
 # -
 
@@ -55,7 +56,7 @@ GridVariables=GridLoad(mygrid);
 
 # Let's read the intermediate results from file using `trsp_read`.
 
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/");
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"../inputs/GRID_LLC90/");
 
 # Alternatively these can be recomputed from three-dimensional time-varying velocity fields via `trsp_prep`.
 
@@ -119,7 +120,9 @@ heatmap(u,clims=(-20.0,20.0))
 
 # Transport as a function of longitude and latitude
 
-SPM,lon,lat=CbiomesProcessing.read_SPM("GRID_LLC90/")
+SPM,lon,lat=CbiomesProcessing.read_SPM("../inputs/GRID_LLC90/")
 uI=CbiomesProcessing.MatrixInterp(write(u),SPM,size(lon))
 heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI))
+
+
 

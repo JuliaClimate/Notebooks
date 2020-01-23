@@ -29,11 +29,13 @@ include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
 
 #1) get grid
-!isdir("GRID_LLC90") ? run(`git clone https://github.com/gaelforget/GRID_LLC90`) : nothing
-mygrid=GridSpec("LLC90"); GridVariables=GridLoad(mygrid);
+if !isdir("../inputs/GRID_LLC90") 
+    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
+end
+mygrid=GridSpec("LLC90","../inputs/"); GridVariables=GridLoad(mygrid);
 
 #2) get transport
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"GRID_LLC90/")
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"../inputs/GRID_LLC90/")
 
 #3) compute convergence
 TrspCon=convergence(TrspX,TrspY);

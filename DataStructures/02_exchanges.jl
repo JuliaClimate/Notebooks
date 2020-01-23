@@ -23,13 +23,13 @@ using MeshArrays, Plots
 
 # Download the pre-defined grid if needed
 
-if !isdir("GRID_CS32") 
-    run(`git clone https://github.com/gaelforget/GRID_CS32`)
+if !isdir("../inputs/GRID_CS32") 
+    run(`git clone https://github.com/gaelforget/GRID_CS32 ../inputs/GRID_CS32`)
 end
 
 # Select `cube sphere` grid and read `ocean depth` variable
 
-mygrid=GridSpec("CS32")
+mygrid=GridSpec("CS32","../inputs/")
 D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float32))
 show(D)
 

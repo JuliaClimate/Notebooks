@@ -27,7 +27,9 @@ mygrid=GridSpec("LLC90")
 
 # And download the pre-defined grid if needed
 
-!isdir("GRID_LLC90") ? run(`git clone https://github.com/gaelforget/GRID_LLC90`) : nothing
+if !isdir("../inputs/GRID_LLC90")
+    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
+end
 
 # #### Read a MeshArray from file
 #
