@@ -15,7 +15,9 @@
 
 # # Streamfunction For Zonally Integrated Transport
 #
-# _Note: this could be done more efficiently, to scale better_
+# _Notes:_
+# - _this likely could be done more efficiently & to scale better_
+# - _this requires downloading `ECCOv4r2/nctiles_climatology/`_
 
 using MeshArrays
 include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))

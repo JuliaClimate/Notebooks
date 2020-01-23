@@ -21,7 +21,8 @@ _Notes:_
 The following notebooks demonstrate various standard computations related to ocean transports.
 
 - `04_transports.ipynb` uses `TransportThrough()` and `LatCircles()` to compute seawater transports between latitude bands. It plots interpolated results over the Global Ocean.
-- `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute a streamfunction along with the divergent transport component.
+- `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute horizontal streamfunction along with the divergent transport component.
+- `06_MOC.ipynb` computes the meridional overturning circulation (MOC) streamfunction.
 
 _Notes_
 
