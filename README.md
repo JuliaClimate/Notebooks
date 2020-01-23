@@ -16,6 +16,8 @@ _Notes:_
 - _An interactive version can readily be spun up via the `launch binder` badge_
 - _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
 
+<img width="500" src="OceanTransports/MOC.png">
+
 ## 1. Ocean Transports
 
 The following notebooks demonstrate various standard computations related to ocean transports.

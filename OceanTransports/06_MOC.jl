@@ -66,12 +66,18 @@ ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 
 # Plot annual mean
 
+# +
 using Plots, Statistics
 tmp=dropdims(mean(ov,dims=3),dims=3)
+
 x=vec(-89.0:89.0)
 y=reverse(vec(GridVariables["RF"][1:end-1]))
 z=reverse(tmp,dims=2)
 z[z.==0.0].=NaN
-contourf(x,y,transpose(z),clims=(-40e6,40e6))
+
+contourf(x,y,1e-6*transpose(z),clims=(-40,40),
+    title="Global MOC (Eulerian; in Sv)",titlefontsize=10)
+#savefig("MOC.png")
+# -
 
 
