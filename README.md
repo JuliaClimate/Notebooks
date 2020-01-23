@@ -1,4 +1,4 @@
-# GlobalOcean_jl
+# GlobalOceanNotebooks
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gaelforget/MeshArrayNotebooks/master)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
@@ -16,7 +16,7 @@ _Notes:_
 - _An interactive version can readily be spun up via the `launch binder` badge_
 - _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
 
-## Ocean Transports
+## 1. Ocean Transports
 
 The following notebooks demonstrate various standard computations related to ocean transports.
 
@@ -27,8 +27,9 @@ The following notebooks demonstrate various standard computations related to oce
 _Notes_
 
 - _`prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`_
+- `06_MOC.ipynb` requires further downloading `ECCOv4r2/nctiles_climatology/`
 
-## Data Structures
+## 0. Data Structures
 
 [MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) is a Julia package that handles gridded earth variables. It was introduced in this [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) which corresponds to `01_types` and `02_exchanges` in this folder.
 
