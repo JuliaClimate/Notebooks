@@ -15,9 +15,9 @@
 
 # # Ocean transports and maps
 #
-# Ocean transport is represented as a vector field defined over the Global Ocean. These case be integrated along a grid path to compute transports between any two points. 
+# Transports within the climate system are commonly represented as vector fields on a `C-grid` in a.g. atmospheric and ocean models. Transports often need to be integrated across a grid path that connects two points or a closed grid contour that e.g. tracks a meridian. 
 #
-# For more about how these methods, please refer to **Forget et al, 2015.** ECCO version 4: An integrated framework for non-linear inverse modeling and global ocean state estimation. https://doi.org/10.5194/gmd-8-3071-2015
+# For more about how these methods, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) _ECCO version 4: An integrated framework for non-linear inverse modeling and global ocean state estimation._
 #
 # Key functions:
 # - `LatitudeCircles` computes integration paths that follow latitude circles
@@ -25,7 +25,9 @@
 
 # +
 using MeshArrays, Plots, Statistics
-include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
+
+p=dirname(pathof(MeshArrays))
+include(joinpath(p,"../examples/Plots.jl"))
 
 #using Pkg; Pkg.add("FortranFiles")
 using FortranFiles
@@ -39,7 +41,7 @@ if !isdir("../inputs/GRID_LLC90")
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
 
-mygrid=GridSpec("LLC90","../inputs/");
+mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/");
 GridVariables=GridLoad(mygrid);
 # -
 

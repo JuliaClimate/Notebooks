@@ -15,22 +15,27 @@
 
 # # Spatial diffusion / smoothing example
 #
-# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Its effect on a random noise field is to "smooth it out". The average smoother efficiency is predictable and can be set via a `scale parameter`. The method as defined inside `MeshArrays.demo2` is applicable for any regular, `cube-sphere`, or `lat-lon-cap` Earth grid.
+# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Its effect on a random noise field is to smooth it down. The average smoother efficiency is predictable and can be set via a `scale parameter`. The method as defined inside `demo2` is applicable for any `PeriodicDomain`, `PeriodicChanel`, `CubeSphere`, or `LatLon-Gap` Earth grid.
 #
-# For more about how this diffusion based method works and behaves, please refer to **Weaver and Courtier, 2001.** Correlation modelling on the sphere using a generalized diffusion equation. https://doi.org/10.1002/qj.49712757518
+# For more about the diffusion-based smoother, please refer to [Weaver and Courtier, 2001](https://doi.org/10.1002/qj.49712757518) Correlation modelling on the sphere using a generalized diffusion equation.
 
 # #### Load  `MeshArrays` and `Plots`  modules
 
+# +
 using MeshArrays, Plots
-include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
+
+p=dirname(pathof(MeshArrays))
+include(joinpath(p,"../examples/Plots.jl"))
+include(joinpath(p,"../examples/Demos.jl"))
+# -
 
 # Grid the `6` faces of a cube with `16*16` points on each face. Distances, areas, etc. are all set to `1.0` for simplicity.
 
-GridVariables=GridOfOnes("cs",6,16);
+GridVariables=GridOfOnes("CubeSphere",6,16);
 
 # #### Diffuse a noisy field over the surface of a cube
 
-DemoVariables=MeshArrays.demo2(GridVariables);
+DemoVariables=demo2(GridVariables);
 
 # #### Display the 6 cube faces using  `heatmap`
 #
