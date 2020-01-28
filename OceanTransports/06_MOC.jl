@@ -19,13 +19,19 @@
 # - _this likely could be done more efficiently & to scale better_
 # - _this requires downloading `ECCOv4r2/nctiles_climatology/`_
 
-using MeshArrays
-include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))
+using Pkg; #Pkg.add(PackageSpec(url="https://github.com/gaelforget/MITgcmTools.jl", rev="master"))
+using MeshArrays, Plots, Statistics, MITgcmTools
+
+# +
+#pathof(MITgcmTools)
+#Pkg.rm("MITgcmTools")
+#Pkg.gc()
+# -
 
 # Read variables to memory
 
 # +
-mygrid=GridSpec("LLC90","../inputs/")
+mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/")
 GridVariables=GridLoad(mygrid)
 LC=LatitudeCircles(-89.0:89.0,GridVariables)
 
@@ -67,7 +73,6 @@ ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 # Plot annual mean
 
 # +
-using Plots, Statistics
 tmp=dropdims(mean(ov,dims=3),dims=3)
 
 x=vec(-89.0:89.0)

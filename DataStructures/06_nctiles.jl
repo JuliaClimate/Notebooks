@@ -253,8 +253,8 @@ end
 writedir = joinpath(resultsdir,"tiled")
 if ~ispath(writedir); mkpath(writedir); end
 
-mygrid = GridSpec("LLC90",joinpath(datadir,"grid_float32/"))
-mygrid = gcmgrid(joinpath(datadir,"grid_float32/"),mygrid.class,mygrid.nFaces,
+mygrid = GridSpec("LatLonCap",griddir)
+mygrid = gcmgrid(griddir,mygrid.class,mygrid.nFaces,
     mygrid.fSize, mygrid.ioSize, Float32, mygrid.read, mygrid.write)
 tilesize = (30,30)
 (n1,n2,n3) = (90,1170,50)

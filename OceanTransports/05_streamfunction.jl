@@ -25,14 +25,17 @@
 
 # +
 using MeshArrays, Plots, FortranFiles
-include(joinpath(dirname(pathof(MeshArrays)),"Plots.jl"))
 include("prepare_transports.jl")
+
+p=dirname(pathof(MeshArrays))
+include(joinpath(p,"../examples/Plots.jl"))
 
 #1) get grid
 if !isdir("../inputs/GRID_LLC90") 
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
-mygrid=GridSpec("LLC90","../inputs/"); GridVariables=GridLoad(mygrid);
+mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/")
+GridVariables=GridLoad(mygrid)
 
 #2) get transport
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"../inputs/GRID_LLC90/")

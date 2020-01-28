@@ -29,7 +29,7 @@ end
 
 # Select `cube sphere` grid and read `ocean depth` variable
 
-mygrid=GridSpec("CS32","../inputs/")
+mygrid=GridSpec("CubeSphere","../inputs/GRID_CS32/")
 D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float32))
 show(D)
 

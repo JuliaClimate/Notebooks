@@ -8,22 +8,27 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.1.0
+#     display_name: Julia 1.3.0-rc4
 #     language: julia
-#     name: julia-1.1
+#     name: julia-1.3
 # ---
 
-# ## `MeshArrays` represent global gridded variables
+# ## `MeshArray`'s represent global gridded variables
 #
 # Each `MeshArray` contains an array of elementary arrays that (1) are connected at their edges and (2) collectively form a global grid. Global grid specifications are contained within `gcmgrid` instances.
 #
-# #### First, let's load the `MeshArrays.jl` package
+# #### First, let's load the `MeshArrays` & `Plots` packages
 
+# +
 using MeshArrays, Plots
 
-# #### Select a pre-defined grid such as `LLC90`
+p=dirname(pathof(MeshArrays))
+include(joinpath(p,"../examples/Plots.jl"))
+# -
 
-mygrid=GridSpec("LLC90","../inputs/")
+# #### Select a pre-defined grid such as `LLC90` grid commonly used with `MITgcm`
+
+mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/")
 
 # And download the pre-defined grid if needed
 
@@ -38,7 +43,8 @@ end
 D=mygrid.read(mygrid.path*"Depth.data",MeshArray(mygrid,Float64))
 show(D)
 
-p=dirname(pathof(MeshArrays)); include(joinpath(p,"Plots.jl"));
+# Plot the subdomain arrays
+
 heatmap(D,title="Ocean Depth",clims=(0.,6000.))
 
 
