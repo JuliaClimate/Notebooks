@@ -9,3 +9,9 @@ Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [compat]
 julia = "1.1"
+FortranFiles = "0.5.0"
+MeshArrays = "0.2.5"
+NCDatasets = "0.9.5"
+NCTiles = "0.1.5"
+NetCDF = "0.8.2"
+Plots = "0.28.4"
