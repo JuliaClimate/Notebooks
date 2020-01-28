@@ -17,16 +17,9 @@
 #
 # _Notes:_
 # - _this likely could be done more efficiently & to scale better_
-# - _this requires downloading `ECCOv4r2/nctiles_climatology/`_
+# - _this requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]()_ 
 
-using Pkg; #Pkg.add(PackageSpec(url="https://github.com/gaelforget/MITgcmTools.jl", rev="master"))
 using MeshArrays, Plots, Statistics, MITgcmTools
-
-# +
-#pathof(MITgcmTools)
-#Pkg.rm("MITgcmTools")
-#Pkg.gc()
-# -
 
 # Read variables to memory
 

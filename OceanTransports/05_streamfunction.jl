@@ -20,8 +20,6 @@
 # - read `TrspX,TrspY` transport vector field from file and compute its convergence.
 # - split `TrspX,TrspY` into rotational and divergent components (i.e., `Helmholtz Decomposition`).
 # - compute streamfunction from the non-divergent component.
-#
-# _Note: this requires the `MeshArrays.jl v0.2.3` (upcoming release)_
 
 # +
 using MeshArrays, Plots, FortranFiles
