@@ -42,8 +42,8 @@ end
 
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath)
-SPM,lon,lat=read_SPM(mypath)
 
+SPM,lon,lat=read_SPM(mypath)
 GridVariables=GridLoad(mygrid)
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath);
 # -
