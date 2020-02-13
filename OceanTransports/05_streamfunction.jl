@@ -13,7 +13,7 @@
 #     name: julia-1.1
 # ---
 
-# # Transport Streamfunction And Divergence
+# # Transport Streamfunction And Divergence Map
 #
 # This notebook proceeds in several steps:
 #

@@ -13,27 +13,37 @@
 #     name: julia-1.3
 # ---
 
-# # Streamfunction For Zonally Integrated Transport
+# # Meridional Overturning Circulation
 #
 # _Notes:_
-# - _this likely could be done more efficiently & to scale better_
-# - _this requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]()_ 
+# - _likely could be done more efficiently and scale better_
+# - _requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]()_ 
 
 using MeshArrays, Plots, Statistics, MITgcmTools
 
 # Read variables to memory
 
 # +
-mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/")
+mypath="../inputs/GRID_LLC90/"
+mygrid=GridSpec("LatLonCap",mypath)
 GridVariables=GridLoad(mygrid)
 LC=LatitudeCircles(-89.0:89.0,GridVariables)
 
-fileName="../inputs/nctiles_climatology/UVELMASS/UVELMASS"
+pth="../inputs/nctiles_climatology/"
+msg="Please download $pth from e.g. `ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/`"
+!isdir("$pth"*"UVELMASS") ? error(msg) : nothing
+!isdir("$pth"*"VVELMASS") ? error(msg) : nothing
+
+fileName="$pth"*"UVELMASS/UVELMASS"
 U=Main.read_nctiles(fileName,"UVELMASS",mygrid)
-fileName="../inputs/nctiles_climatology/VVELMASS/VVELMASS"
+fileName="$pth"*"VVELMASS/VVELMASS"
 V=Main.read_nctiles(fileName,"VVELMASS",mygrid)
 
-#U=U[:,:,1]; V=V[:,:,1];
+show(U)
+# -
+
+# ### Convert velocity (m/s) to transport (m^3/s)
+
 for i in eachindex(U)
     tmp1=U[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
     tmp1=V[i]; tmp1[(!isfinite).(tmp1)] .= 0.0    
@@ -41,10 +51,7 @@ for i in eachindex(U)
     V[i]=GridVariables["DRF"][i[2]]*V[i].*GridVariables["DXG"][i[1]]
 end
 
-show(U)
-# -
-
-# Compute overturning streamfunction
+# ### Compute overturning streamfunction
 
 # +
 s=size(U); nz=s[2]; nl=length(LC)
@@ -63,19 +70,29 @@ end; end;
 ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 # -
 
-# Plot annual mean
+# ### Plot annual mean
 
 # +
-tmp=dropdims(mean(ov,dims=3),dims=3)
-
 x=vec(-89.0:89.0)
 y=reverse(vec(GridVariables["RF"][1:end-1]))
+
+tmp=dropdims(mean(ov,dims=3),dims=3)
 z=reverse(tmp,dims=2)
 z[z.==0.0].=NaN
 
 contourf(x,y,1e-6*transpose(z),clims=(-40,40),
-    title="Global MOC (Eulerian; in Sv)",titlefontsize=10)
-#savefig("MOC.png")
+    title="Overturning mean (Eulerian; in Sv)",titlefontsize=10)
+#savefig("MOC_mean.png")
 # -
+# ### Plot seasonal standard deviation
 
+# +
+tmp=dropdims(std(ov,dims=3),dims=3)
+z=reverse(tmp,dims=2)
+z[z.==0.0].=NaN
+
+contourf(x,y,1e-6*transpose(z),clims=(-40,40),
+    title="Overturning standard deviation (Eulerian; in Sv)",titlefontsize=10)
+#savefig("MOC_std.png")
+# -
 
