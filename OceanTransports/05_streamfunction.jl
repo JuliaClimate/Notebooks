@@ -13,64 +13,93 @@
 #     name: julia-1.1
 # ---
 
-# # Streamfunction For Vertically Integrated Transport
+# # Transport Streamfunction And Divergence Map
 #
 # This notebook proceeds in several steps:
 #
-# - read `TrspX,TrspY` transport vector field from file and compute its convergence.
-# - split `TrspX,TrspY` into rotational and divergent components (i.e., `Helmholtz Decomposition`).
-# - compute streamfunction from the non-divergent component.
+# - read vertically integrated transport vector field from file
+# - compute its convergence and apply land mask
+# - **Helmholtz Decomposition** : split into rotational and divergent components
+# - compute streamfunction from the non-divergent component
+#
+# ### Time average and vertically integrate transports
+#
+# _note: `trsp_read` reloads intermediate results from file._
 
 # +
-using MeshArrays, Plots, FortranFiles
+using MeshArrays, Plots, Statistics, MITgcmTools
+
 include("prepare_transports.jl")
 
-p=dirname(pathof(MeshArrays))
-include(joinpath(p,"../examples/Plots.jl"))
-
-#1) get grid
-if !isdir("../inputs/GRID_LLC90") 
+if !isdir("../inputs/GRID_LLC90")
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
-mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/")
+
+mypath="../inputs/GRID_LLC90/"
+mygrid=GridSpec("LatLonCap",mypath)
+
 GridVariables=GridLoad(mygrid)
+SPM,lon,lat=read_SPM(mypath)
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath);
+# -
 
-#2) get transport
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"../inputs/GRID_LLC90/")
+# ### Compute convergence and apply land mask
+#
+# _note: masking avoids isolated Canyons / singular matrices_
 
-#3) compute convergence
+# +
 TrspCon=convergence(TrspX,TrspY);
 
-#4) apply mask & avoid isolated Canyons / singular matrices
 msk=1.0 .+ 0.0 * mask(view(GridVariables["hFacC"],:,1),NaN,0.0)
+
 TrspCon=msk*TrspCon;
 # -
 
 # ### Helmholtz Decomposition
+#
+# The basic steps are:
+# - compute scalar potential
+# - subtract divergent component
+# - compute vector potential / streamfunction
 
 # +
 #scalar potential
 TrspPot=ScalarPotential(TrspCon)
 
-#plot result
-heatmap(TrspPot,clims=(-5e5,5e5))
-
-#Divergent vector field
+#Divergent transport component
 (TrspXdiv,TrspYdiv)=gradient(TrspPot,GridVariables)
 TrspXdiv=TrspXdiv.*GridVariables["DXC"]
-TrspYdiv=TrspYdiv.*GridVariables["DYC"];
+TrspYdiv=TrspYdiv.*GridVariables["DYC"]
 
-# Check that divergences match:
-tmpCon=convergence(TrspXdiv,TrspYdiv)
-heatmap(tmpCon-TrspCon) #TrspCon-tmpCon should be << TrspCon 
-
-#Rotational vector field
+#Rotational transport component
 TrspXrot = TrspX-TrspXdiv
 TrspYrot = TrspY-TrspYdiv
 
 #vector Potential
-TrspPsi=VectorPotential(TrspX,TrspY,GridVariables)
-heatmap(1e-6*msk*TrspPsi)
+TrspPsi=VectorPotential(TrspX,TrspY,GridVariables);
 # -
+
+# ### Check that convergent terms match
+#
+# _TrspCon-tmpCon should be negligible compared with TrspCon_
+
+# +
+tmpCon=convergence(TrspXdiv,TrspYdiv)
+tmp1=TrspCon[3]
+tmp2=tmp1[findall(isfinite.(tmp1))]
+errCon=1/sqrt(mean(tmp2.^2)).*(tmpCon[3]-TrspCon[3])
+
+heatmap(errCon)
+# -
+
+# ### Streamfunction And Scalar Potential Maps
+
+TrspPsiI=MatrixInterp(write(1e-6*msk*TrspPsi),SPM,size(lon))
+contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPsiI),
+    title="Streamfunction",clims=(-50,50))
+
+TrspPotI=MatrixInterp(write(1e-6*msk*TrspPot),SPM,size(lon))
+contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPotI),
+    title="Scalar Potential",clims=(-0.4,0.4))
 
 

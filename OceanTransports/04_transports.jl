@@ -15,7 +15,9 @@
 
 # # Ocean transports and maps
 #
-# Transports within the climate system are commonly represented as vector fields on a `C-grid` in a.g. atmospheric and ocean models. Transports often need to be integrated across a grid path that connects two points or a closed grid contour that e.g. tracks a meridian. 
+# Transports within the climate system are commonly represented as vector fields on a `C-grid`. 
+#
+# Transports often need to be integrated across a grid path that either (1) connects two points or (2) tracks a closed contour suh as a meridian.
 #
 # For more about how these methods, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) _ECCO version 4: An integrated framework for non-linear inverse modeling and global ocean state estimation._
 #
@@ -23,44 +25,28 @@
 # - `LatitudeCircles` computes integration paths that follow latitude circles
 # - `ThroughFlow` computes transports through these integration paths
 
-# +
-using MeshArrays, Plots, Statistics
+# ### Time average and vertically integrate transports
+#
+# _note: `trsp_read` reloads intermediate results from file._
 
+# +
+using MeshArrays, Plots, Statistics, MITgcmTools
+
+include("prepare_transports.jl")
 p=dirname(pathof(MeshArrays))
 include(joinpath(p,"../examples/Plots.jl"))
 
-#using Pkg; Pkg.add("FortranFiles")
-using FortranFiles
-include("prepare_transports.jl")
-
-cbp="https://github.com/gaelforget/CbiomesProcessing.jl"
-using Pkg; Pkg.add(PackageSpec(url=cbp))
-using CbiomesProcessing
-
-if !isdir("../inputs/GRID_LLC90") 
+if !isdir("../inputs/GRID_LLC90")
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
 
-mygrid=GridSpec("LatLonCap","../inputs/GRID_LLC90/");
-GridVariables=GridLoad(mygrid);
+mypath="../inputs/GRID_LLC90/"
+mygrid=GridSpec("LatLonCap",mypath)
+
+SPM,lon,lat=read_SPM(mypath)
+GridVariables=GridLoad(mygrid)
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath);
 # -
-
-# ### Time average and vertically integrate transports
-#
-# _Note: these intermediate results have pre-computed for you._
-
-# +
-#using Pkg; Pkg.add("FortranFiles"); using FortranFiles
-#!isdir("nctiles_climatology") ? error("missing files") : nothing
-#include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))
-#(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(mygrid,GridVariables,"GRID_LLC90/");
-# -
-
-# Let's read the intermediate results from file using `trsp_read`.
-
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,"../inputs/GRID_LLC90/");
-
-# Alternatively these can be recomputed from three-dimensional time-varying velocity fields via `trsp_prep`.
 
 # ### Transports between latitude bands
 
@@ -76,16 +62,16 @@ end
 
 # ### Plot result
 
-lat=-89.0:89.0
-plot(lat,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
+l=-89.0:89.0
+plot(l,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
-# ### Plot transport maps
+# ### Plot transport arrays
 #
 # _Note that vector field orientations differ amongst the arrays._
 
-heatmap(1e-6*TrspX,clims=(-20.0,20.0))
-#heatmap(1e-6*TrspY,clims=(-20.0,20.0))
+heatmap(1e-6*TrspX,clims=(-20.0,20.0),title="x-ward")
+#heatmap(1e-6*TrspY,clims=(-20.0,20.0),title="y-ward")
 
 # Convert to `Sv` and mask out land
 
@@ -118,13 +104,20 @@ cs=GridVariables["AngleCS"];
 sn=GridVariables["AngleSN"];
 u=uC.*cs-vC.*sn;
 v=uC.*sn+vC.*cs;
-heatmap(u,clims=(-20.0,20.0))
+heatmap(u,clims=(-20.0,20.0),title="eastward")
 
-# Transport as a function of longitude and latitude
+# ### Map out transport 
+#
+# Here we map out (1) zonal and (2) meridional transport as a function of longitude and latitude.
 
-SPM,lon,lat=CbiomesProcessing.read_SPM("../inputs/GRID_LLC90/")
-uI=CbiomesProcessing.MatrixInterp(write(u),SPM,size(lon))
-heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI))
+# +
+uI=MatrixInterp(write(u),SPM,size(lon))
+heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI),
+    title="eastward transport (in Sv)")
 
+#vI=MatrixInterp(write(v),SPM,size(lon))
+#heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(vI),
+#    title="northward transport per grid cell (in Sv)")
+# -
 
 
