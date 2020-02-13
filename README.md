@@ -7,8 +7,8 @@
 
 **Table of content**
 
-- 0. Data Structures
 - 1. Ocean Transports
+- 0. Data Structures
 
 _Notes:_ 
 
@@ -25,11 +25,12 @@ The following notebooks demonstrate various standard computations related to oce
 - `04_transports.ipynb` uses `TransportThrough()` and `LatCircles()` to compute seawater transports between latitude bands. It plots interpolated results over the Global Ocean.
 - `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute horizontal streamfunction along with the divergent transport component.
 - `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
+- `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
 
 _Notes_
 
 - _`prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`_
-- `06_overturning.ipynb ` requires downloading additional data (see notebook header)
+- `06_overturning.ipynb` and `07_particles.ipynb` require downloading additional data (see notebook header)
 
 ## 0. Data Structures
 
