@@ -15,37 +15,45 @@
 
 # # NCTiles.jl examples
 
-# This notebook demonstrates the use of `NCTiles.jl` in combination with `MeshArrays.jl` or in standalone mode. Several test cases are included:
+# This notebook demonstrates the use of `NCTiles.jl` in combination with `MeshArrays.jl` (or in standalone mode) to create `NetCDF` files (or read them to memory). Several examples are included:
 #
-# 1. Write regular array data to single NetCDF file
+# 1. Write interpolated model output, on a regular `lat-lon` grid, to a single `NetCDF` file
 #   - 2D example
 #   - 3D example
-# 2. Write tiled data to multiple NetCDF files ("nctiles")
-#   - 2D example
+# 2. Write tiled model output, on a tiled C-grid, to a `NCTiles` collection (multiple `NetCDF` files)
+#   - 2D, free surface example
 #   - 3D, temperature example
 #   - 3D, C-grid vector example
-#   
-# To run these test cases, please first download and decompress files as follows.
+#
+# Running the examples requires that you first download and decompress test files:
 #
 # ```
 # git clone https://github.com/gaelforget/nctiles-testcases
 # gunzip nctiles-testcases/diags/*.gz
 # ```
 
+# ### Packages & input files
+#
+# _These will be used throughout the notebook_
+
+# +
+using NCTiles, MeshArrays
+
 if !isdir("../inputs/nctiles-testcases")
     run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)
 end
 #run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
+# -
 
-# # Setup
-
-# Setting the paths and dimensions that will be used throughout this notebook.
+# ### Back-end and file paths
+#
+# _These will be used throughout the notebook_
 
 # +
-#using Pkg; Pkg.add(["NCTiles","NCDatasets","NetCDF"])
-using NCTiles,NCDatasets,NetCDF,MeshArrays
+# Back-end
+nc=NCTiles.NCDatasets
 
-# Set Paths
+# Paths
 datadir = "../inputs/nctiles-testcases/"
 availdiagsfile = joinpath(datadir,"available_diagnostics.log")
 readmefile = joinpath(datadir,"README")
@@ -55,60 +63,71 @@ interpdir = joinpath(datadir,"diags_interp/")
 
 resultsdir = "../outputs/nctiles-newfiles/"
 if ~ispath(resultsdir); mkpath(resultsdir); end
+# -
 
-# Dimensions
+# ### Set up dimensions, sizes, and meta data
+
+# +
+# Dimensions & sizes
 prec = Float32
 dep_l=-readbin(joinpath(griddir,"RF.data"),prec,(51,1))[2:end]
 dep_c=-readbin(joinpath(griddir,"RC.data"),prec,(50,1))[:]
-dep_lvar = NCvar("dep_l","m",size(dep_l),dep_l,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),NCDatasets)
-dep_cvar = NCvar("dep_c","m",size(dep_c),dep_c,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),NCDatasets)
+dep_lvar = NCvar("dep_l","m",size(dep_l),dep_l,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
+dep_cvar = NCvar("dep_c","m",size(dep_c),dep_c,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
 nsteps = 240
 timeinterval = 3
 time_steps = timeinterval/2:timeinterval:timeinterval*nsteps
 time_units = "days since 1992-01-01 0:0:0"
-timevar = NCvar("tim",time_units,Inf,time_steps,Dict(("long_name" => "time","standard_name" => "time")),NCDatasets)
+timevar = NCvar("tim",time_units,Inf,time_steps,Dict(("long_name" => "time","standard_name" => "time")),nc)
 
+# Meta data
 README = readlines(readmefile)
 # -
 
-# # Interpolated Data Test Case
+# ## Interpolated Data Examples
 
-# This example first interpolates 2D and 3D data to a rectangular half-degree grid. This interpolated data is then written to a single NetCDF file per field.
+# This example first interpolates 2D and 3D fields to a rectangular half-degree grid. See below for dimension and size definitions. The interpolated data is then written to a single `NetCDF` file for each variable.
 
-# Setup paths and dimensions used for interpolated data.
-
-# Interpolated dimensions
 lon_c=-179.75:0.5:179.75; lat_c=-89.75:0.5:89.75;
-lon_cvar = NCvar("lon_c","degrees_east",size(lon_c),lon_c,Dict("long_name" => "longitude"),NCDatasets)
-lat_cvar = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "longitude"),NCDatasets)
+lon_cvar = NCvar("lon_c","degrees_east",size(lon_c),lon_c,Dict("long_name" => "longitude"),nc)
+lat_cvar = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "longitude"),nc)
 n1,n2,n3 = (length(lon_c),length(lat_c),length(dep_c))
 
-# ## Interpolate
+# ### Interpolate
 
 # This section will take the original model output on the LLC90 grid and interpolate it to a rectangular half-degree grid. This will be done using `loop_task1` from [`CbiomesProcessing.jl`](https://github.com/gaelforget/CbiomesProcessing.jl). The following section is currently run using pre-interpolated data produced with [`gcmfaces`](https://github.com/gaelforget/gcmfaces) in Matlab.
 
-# ## Write interpolated data to NetCDF Files
+# ### Output path
+#
+# The following path will be used for this part's output.
 
 writedir = joinpath(resultsdir,"interp")
 if ~ispath(writedir); mkpath(writedir); end
 
-# ### 2D Field ETAN
+# ### 2D example
 
-# Get the filenames for our first dataset and other information about the field.
+# Choose variable to process and get the corresponding list of input files
 
 dataset = "state_2d_set1"
 fldname = "ETAN"
 flddatadir = joinpath(interpdir,fldname)
 fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
+
+# Get meta data for the chosen variable
+
 diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname)
 
-# Define the field for writing using an NCvar struct. BinData contains the filenames where the data sits so it's only loaded when needed.
+# Define:
+#
+# - a `BinData` struct to contain the file names, precision, and array size.
+# - a `NCvar` struct that sets up the subsequent `write` operation (incl. `BinData` struct.
 
 flddata = BinData(fnames,prec,(n1,n2))
 dims = [lon_cvar, lat_cvar, timevar]
-field = NCvar(fldname,diaginfo["units"],dims,flddata,Dict("long_name" => diaginfo["title"]),NCDatasets)
+field = NCvar(fldname,diaginfo["units"],dims,flddata,
+    Dict("long_name" => diaginfo["title"]),nc)
 
-# Create the NetCDF file and write the data to the file.
+# Create the NetCDF file and write data to it.
 
 # +
 # Create the NetCDF file and populate with dimension and field info
@@ -122,7 +141,7 @@ addDimData.(Ref(ds),field.dims)
 close(ds)
 # -
 
-# ### 3D Vertical Vector Field WVELMASS
+# ### 3D example
 
 # +
 # Get the filenames for our first dataset and other information about the field.
@@ -132,11 +151,11 @@ flddatadir = joinpath(interpdir,fldname)
 fnames = flddatadir*'/'.*filter(x -> occursin(".data",x), readdir(flddatadir))
 diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname)
 
-# Define the field for writing using an NCvar struct. BinData contains the filenames 
+# Define the field for writing using an NCvar struct. BinData contains the filenames
 # where the data sits so it's only loaded when needed.
 flddata = BinData(fnames,prec,(n1,n2,n3))
 dims = [lon_cvar, lat_cvar, dep_lvar, timevar]
-field = NCvar(fldname,diaginfo["units"],dims,flddata,Dict("long_name" => diaginfo["title"]),NCDatasets)
+field = NCvar(fldname,diaginfo["units"],dims,flddata,Dict("long_name" => diaginfo["title"]),nc)
 
 # Create the NetCDF file and populate with dimension and field info
 ds,fldvar,dimlist = createfile(joinpath(writedir,fldname*".nc"),field,README)
@@ -149,125 +168,40 @@ addDimData.(Ref(ds),field.dims)
 close(ds)
 # -
 
-# # Tiled Test Case
+# ## Tiled Data Examples
 
-# This example breaks up the data into tiles and writes those tiles to separate NetCDF files. This is done using the `MeshArrays` Julia package for reading in the data and breaking it up into tiles, and `NCTiles.jl` for writing the tiles.
+# This example reads in global variables defined over a collection of subdomain arrays (_tiles_) using `MeshArrays.jl`, and writes them to a collection of `NetCDF` files (_nctiles_) using `NCTiles.jl`
+#
+# Helper functions will be used avoid code duplication below:
 
-# ## Helper Functions
+include("nctiles_helper_functions.jl")
 
-# Function for writing out tiled data.
+# ### Output path
+#
+# The following path will be used for this part's output.
 
-# +
-"""
-    writeNetCDFtiles(flds::Dict,savenamebase::String,README::Array)
-
-Function to write out tiled NetCDF files. Flds should be a Dict of NCVars, 
-    savenamebase should be the prefix of the filenames to which the tile 
-    number and file exension is added, including full path to the save 
-    location, and README should be an Array of strings containing the
-    description to write into the files.
-"""
-function writeNetCDFtiles(flds::Dict,savenamebase::String,README::Array)
-    
-    savenames = savenamebase*".".*lpad.(string.(1:numtiles),4,"0").*".nc"
-    
-    datasets = [createfile(savenames[tidx],flds,README, itile = tidx, ntile = length(savenames)) for tidx in 1:length(savenames)]
-
-    ds = [x[1] for x in datasets]
-    fldvars = [x[2] for x in datasets]
-
-    for k in keys(flds)
-        if isa(flds[k].values,TileData)
-            addData(fldvars,flds[k])
-        else
-            tmpfldvars = [fv[findfirst(isequal(k),name.(fv))] for fv in fldvars]
-            addData.(tmpfldvars,Ref(flds[k]))
-        end
-    end
-
-    for dim in dims
-        addDimData.(ds,Ref(dim))
-    end
-
-    close.(ds);
-    
-    return nothing
-    
-end
-# -
-
-# Function for getting the latitude/longitude values for the vector field data (`XW`, `YW` and `XS`,`YS`).
-
-"""
-    addvfgridvars(gridvars::Dict)
-
-Function to add XW, YW, XS, and YS to gridvars. These provide 
-    the latitude and longitude for vector fields.
-"""
-function addvfgridvars(gridvars::Dict)
-    
-    tmpXC=exchange(gridvars["XC"]); tmpYC=exchange(gridvars["YC"])
-
-    gridvars["XW"]=NaN .* gridvars["XC"]; gridvars["YW"]=NaN .* gridvars["YC"];
-    gridvars["XS"]=NaN .* gridvars["XC"]; gridvars["YS"]=NaN .* gridvars["YC"];
-
-    for ff=1:mygrid.nFaces
-        tmp1=tmpXC[ff][1:end-2,2:end-1]
-        tmp2=tmpXC[ff][2:end-1,2:end-1]
-        tmp2[tmp2.-tmp1.>180]=tmp2[tmp2.-tmp1.>180].-360;
-        tmp2[tmp1.-tmp2.>180]=tmp2[tmp1.-tmp2.>180].+360;
-        gridvars["XW"][ff]=(tmp1.+tmp2)./2;
-
-       #
-        tmp1=tmpXC[ff][2:end-1,1:end-2]
-        tmp2=tmpXC[ff][2:end-1,2:end-1]
-        tmp2[tmp2.-tmp1.>180]=tmp2[tmp2.-tmp1.>180].-360;
-        tmp2[tmp1.-tmp2.>180]=tmp2[tmp1.-tmp2.>180].+360;
-        gridvars["XS"][ff]=(tmp1.+tmp2)./2;
-
-       #
-        tmp1=tmpYC[ff][1:end-2,2:end-1]
-        tmp2=tmpYC[ff][2:end-1,2:end-1]
-        gridvars["YW"][ff]=(tmp1.+tmp2)./2;
-
-       #
-        tmp1=tmpYC[ff][2:end-1,1:end-2]
-        tmp2=tmpYC[ff][2:end-1,2:end-1]
-        gridvars["YS"][ff]=(tmp1.+tmp2)./2;
-    end;
-
-    Xmax=180; Xmin=-180;
-
-    gridvars["XS"][findall(gridvars["XS"].<Xmin)]=gridvars["XS"][findall(gridvars["XS"].<Xmin)].+360;
-    gridvars["XS"][findall(gridvars["XS"].>Xmax)]=gridvars["XS"][findall(gridvars["XS"].>Xmax)].-360;
-    gridvars["XW"][findall(gridvars["XW"].<Xmin)]=gridvars["XW"][findall(gridvars["XW"].<Xmin)].+360;
-    gridvars["XW"][findall(gridvars["XW"].>Xmax)]=gridvars["XW"][findall(gridvars["XW"].>Xmax)].-360;
-    return gridvars
-end
-
-# ## Setup
-
-# Setup paths and dimensions used for interpolated data.
-
-# +
 writedir = joinpath(resultsdir,"tiled")
-if ~ispath(writedir); mkpath(writedir); end
+~ispath(writedir) ? mkpath(writedir) : nothing
 
+# ### Set up dimensions, sizes, and meta data
+
+# +
+# Read grid into MeshArrays
 mygrid = GridSpec("LatLonCap",griddir)
 mygrid = gcmgrid(griddir,mygrid.class,mygrid.nFaces,
     mygrid.fSize, mygrid.ioSize, Float32, mygrid.read, mygrid.write)
+gridvars = addvfgridvars(GridLoad(mygrid))
+
 tilesize = (30,30)
 (n1,n2,n3) = (90,1170,50)
 
 # First two dimensions
-icvar = NCvar("i_c","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),NCDatasets)
-jcvar = NCvar("j_c","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),NCDatasets)
-iwvar = NCvar("i_w","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),NCDatasets)
-jwvar = NCvar("j_w","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),NCDatasets)
-isvar = NCvar("i_s","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),NCDatasets)
-jsvar = NCvar("j_s","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),NCDatasets)
-
-gridvars = addvfgridvars(GridLoad(mygrid))
+icvar = NCvar("i_c","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),nc)
+jcvar = NCvar("j_c","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),nc)
+iwvar = NCvar("i_w","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),nc)
+jwvar = NCvar("j_w","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),nc)
+isvar = NCvar("i_s","1",tilesize[1],1:tilesize[1],Dict("long_name" => "Cartesian coordinate 1"),nc)
+jsvar = NCvar("j_s","1",tilesize[2],1:tilesize[2],Dict("long_name" => "Cartesian coordinate 2"),nc)
 
 # Land masks indicate which points are land, which are ocean
 landC = gridvars["hFacC"]
@@ -277,10 +211,10 @@ for f in landC.fIndex
     for d in 1:size(landC,2)
         landC[f,d][landC[f,d].==0] .= NaN
         landC[f,d][landC[f,d].>0] .= 1
-        
+
         landW[f,d][landW[f,d].==0] .= NaN
         landW[f,d][landW[f,d].>0] .= 1
-        
+
         landS[f,d][landS[f,d].==0] .= NaN
         landS[f,d][landS[f,d].>0] .= 1
     end
@@ -308,26 +242,26 @@ tillats = TileData(gridvars["YS"],tileinfo,tilesize,prec,numtiles)
 tillons = TileData(gridvars["XS"],tileinfo,tilesize,prec,numtiles)
 
 # NCvar structs outline fields and their metadata to be written to the file
-loncvar = NCvar("lon","degrees_east",[icvar,jcvar],tillonc,Dict("long_name" => "longitude"),NCDatasets)
-latcvar = NCvar("lat","degrees_north",[icvar,jcvar],tillatc,Dict("long_name" => "latitude"),NCDatasets)
-lonwvar = NCvar("lon","degrees_east",[iwvar,jwvar],tillonw,Dict("long_name" => "longitude"),NCDatasets)
-latwvar = NCvar("lat","degrees_north",[iwvar,jwvar],tillatw,Dict("long_name" => "latitude"),NCDatasets)
-lonsvar = NCvar("lon","degrees_east",[isvar,jsvar],tillons,Dict("long_name" => "longitude"),NCDatasets)
-latsvar = NCvar("lat","degrees_north",[isvar,jsvar],tillats,Dict("long_name" => "latitude"),NCDatasets)
-areacvar = NCvar("area","m^2",[icvar,jcvar],tilareaC,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),NCDatasets)
-areawvar = NCvar("area","m^2",[iwvar,jwvar],tilareaW,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),NCDatasets)
-areasvar = NCvar("area","m^2",[isvar,jsvar],tilareaS,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),NCDatasets)
-land3Dvar = NCvar("land","1",[icvar,jcvar,dep_cvar],tilland3D,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),NCDatasets)
-land2Dvar = NCvar("land","1",[icvar,jcvar],tilland2D,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),NCDatasets)
-landwvar = NCvar("land","1",[iwvar,jwvar,dep_cvar],tillandW,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),NCDatasets)
-landsvar = NCvar("land","1",[isvar,jsvar,dep_cvar],tillandS,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),NCDatasets)
-thiccvar = NCvar("thic","m",dep_cvar,thicc,Dict("standard_name" => "cell_thickness"),NCDatasets)
-thiclvar = NCvar("thic","m",dep_lvar,thicl,Dict("standard_name" => "cell_thickness"),NCDatasets)
+loncvar = NCvar("lon","degrees_east",[icvar,jcvar],tillonc,Dict("long_name" => "longitude"),nc)
+latcvar = NCvar("lat","degrees_north",[icvar,jcvar],tillatc,Dict("long_name" => "latitude"),nc)
+lonwvar = NCvar("lon","degrees_east",[iwvar,jwvar],tillonw,Dict("long_name" => "longitude"),nc)
+latwvar = NCvar("lat","degrees_north",[iwvar,jwvar],tillatw,Dict("long_name" => "latitude"),nc)
+lonsvar = NCvar("lon","degrees_east",[isvar,jsvar],tillons,Dict("long_name" => "longitude"),nc)
+latsvar = NCvar("lat","degrees_north",[isvar,jsvar],tillats,Dict("long_name" => "latitude"),nc)
+areacvar = NCvar("area","m^2",[icvar,jcvar],tilareaC,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),nc)
+areawvar = NCvar("area","m^2",[iwvar,jwvar],tilareaW,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),nc)
+areasvar = NCvar("area","m^2",[isvar,jsvar],tilareaS,Dict(["long_name" => "grid cell area", "standard_name" => "cell_area"]),nc)
+land3Dvar = NCvar("land","1",[icvar,jcvar,dep_cvar],tilland3D,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),nc)
+land2Dvar = NCvar("land","1",[icvar,jcvar],tilland2D,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),nc)
+landwvar = NCvar("land","1",[iwvar,jwvar,dep_cvar],tillandW,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),nc)
+landsvar = NCvar("land","1",[isvar,jsvar,dep_cvar],tillandS,Dict(["long_name" => "land mask", "standard_name" => "land_binary_mask"]),nc)
+thiccvar = NCvar("thic","m",dep_cvar,thicc,Dict("standard_name" => "cell_thickness"),nc)
+thiclvar = NCvar("thic","m",dep_lvar,thicl,Dict("standard_name" => "cell_thickness"),nc)
 # -
 
-# ## 2D Field ETAN
+# ### 2D example
 
-# Get the filenames for our first dataset and other information about the field.
+# Choose variable to process and get the corresponding list of input files
 
 dataset = "state_2d_set1"
 fldname = "ETAN"
@@ -335,26 +269,27 @@ fnames = nativedir*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x))
 savepath = joinpath(writedir,fldname)
 if ~ispath(savepath); mkpath(savepath); end
 savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname)
+diaginfo = readAvailDiagnosticsLog(availdiagsfile,fldname);
 
-# Fields to be written to the file are indicated with a dictionary of NCvar structs. Then write to NetCDF files.
+# Prepare dictionary of `NCvar` structs and write to `NetCDF` files.
 
 # +
 flddata = BinData(fnames,prec,(n1,n2))
-dims = [icvar, jcvar, timevar]
 tilfld = TileData(flddata,tilesize,mygrid)
+
+dims = [icvar, jcvar, timevar]
 coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
+flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
             "lon" => loncvar,
             "lat" => latcvar,
             "area" => areacvar,
             "land" => land2Dvar
-]) 
+])
 
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
-# ## 3D Field Theta
+# ### 3D example
 
 # +
 # Get the filenames for our first dataset and other information about the field.
@@ -371,7 +306,7 @@ flddata = BinData(fnames,prec,(n1,n2,n3))
 dims = [icvar, jcvar, dep_cvar, timevar]
 tilfld = TileData(flddata,tilesize,mygrid)
 coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
+flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
             "lon" => loncvar,
             "lat" => latcvar,
             "area" => areacvar,
@@ -383,7 +318,11 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
-# ## Vector Field UVELMASS
+# ### 3D vector example
+#
+# Here we process the three staggered components of a vector field (`UVELMASS`, `VVELMASS` and `WVELMASS`). On a `C-grid` these components are staggered in space.
+#
+# First component : `UVELMASS`
 
 # +
 # Get the filenames for our first dataset and create BinData struct
@@ -400,8 +339,8 @@ flddata = BinData(fnames,prec,(n1,n2,n3))
 dims = [iwvar, jwvar, dep_cvar, timevar]
 tilfld = TileData(flddata,tilesize,mygrid)
 coords = join(replace([dim.name for dim in dims],"i_w" => "lon", "j_w" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
-            "lon" => lonwvar, 
+flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
+            "lon" => lonwvar,
             "lat" => latwvar,
             "area" => areawvar,
             "land" => landwvar,
@@ -411,7 +350,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
-# ## Vector Field VVELMASS
+# Second component : `VVELMASS`
 
 # +
 # Get the filenames for our first dataset and create BinData struct
@@ -428,7 +367,7 @@ flddata = BinData(fnames,prec,(n1,n2,n3))
 dims = [isvar, jsvar, dep_cvar, timevar]
 tilfld = TileData(flddata,tilesize,mygrid)
 coords = join(replace([dim.name for dim in dims],"i_s" => "lon", "j_s" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
+flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
             "lon" => lonsvar,
             "lat" => latsvar,
             "area" => areasvar,
@@ -439,7 +378,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 writeNetCDFtiles(flds,savenamebase,README)
 # -
 
-# ## Vector Field WVELMASS
+# Third component : `WVELMASS`
 
 # +
 # Get the filenames for our first dataset and create BinData struct
@@ -456,7 +395,7 @@ flddata = BinData(fnames,prec,(n1,n2,n3))
 dims = [icvar, jcvar, dep_lvar, timevar]
 tilfld = TileData(flddata,tilesize,mygrid)
 coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),NCDatasets),
+flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
             "lon" => loncvar,
             "lat" => latcvar,
             "area" => areacvar,
@@ -465,6 +404,3 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 ])
 
 writeNetCDFtiles(flds,savenamebase,README)
-# -
-
-
