@@ -1,6 +1,6 @@
 # GlobalOceanNotebooks
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gaelforget/MeshArrayNotebooks/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/MeshArrayNotebooks/master)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 [Jupyter](https://jupyter.org) notebooks related to regional-to-global ocean & climate science in [Julia](https://julialang.org). Initial focus has been on the analysis of ocean transports performed on native model grids (as needed to avoid large errors).
