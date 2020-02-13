@@ -45,6 +45,10 @@ end
 #run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
 # -
 
+# Helper functions will be used avoid code duplication below:
+
+include("nctiles_helper_functions.jl")
+
 # ### Back-end and file paths
 #
 # _These will be used throughout the notebook_
@@ -171,10 +175,6 @@ close(ds)
 # ## Tiled Data Examples
 
 # This example reads in global variables defined over a collection of subdomain arrays (_tiles_) using `MeshArrays.jl`, and writes them to a collection of `NetCDF` files (_nctiles_) using `NCTiles.jl`
-#
-# Helper functions will be used avoid code duplication below:
-
-include("nctiles_helper_functions.jl")
 
 # ### Output path
 #

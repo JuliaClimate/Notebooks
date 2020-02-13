@@ -24,12 +24,12 @@ The following notebooks demonstrate various standard computations related to oce
 
 - `04_transports.ipynb` uses `TransportThrough()` and `LatCircles()` to compute seawater transports between latitude bands. It plots interpolated results over the Global Ocean.
 - `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute horizontal streamfunction along with the divergent transport component.
-- `06_MOC.ipynb` computes the meridional overturning circulation (MOC) streamfunction.
+- `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
 
 _Notes_
 
 - _`prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`_
-- `06_MOC.ipynb` requires further downloading `ECCOv4r2/nctiles_climatology/`
+- `06_overturning.ipynb ` requires downloading additional data (see notebook header)
 
 ## 0. Data Structures
 
@@ -38,9 +38,12 @@ _Notes_
 - `01_types.ipynb` illustrates the main data structures defined in `MeshArrays.jl` -- `MeshArray`, `gcmarray`, and `gcmgrid` that are [documented here](https://juliaclimate.github.io/MeshArrays.jl/stable/).
 - `02_exchanges.ipynb` exchanges data between neighboring arrays in a `MeshArray `
 - `03_smoothing.ipynb` uses `smooth()` as done in the unit tests of [MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) 
-- `06_nctiles.ipynb` converts binary data to `NetCDF` files using `NCTiles.jl` for (1) simple rectangular grid written to single file; (2) tiled model domain written to multiple files.
+- `04_netcdf.ipynb` converts binary data to `NetCDF` files using `NCTiles.jl` for (1) simple rectangular grid written to single file; (2) tiled model domain written to multiple files.
 
 _Notes_
 
 - _Predefined grids are downloaded by the notebooks except in `03_smoothing`._
+- _Helper functions from `nctiles_helper_functions.jl` are used in `04_netcdf.ipynb`._
+- _`04_netcdf.ipynb ` requires downloading additional data (see notebook header)._
+
 
