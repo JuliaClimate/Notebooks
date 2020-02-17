@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.1.0
+#     display_name: Julia 1.2.0
 #     language: julia
-#     name: julia-1.1
+#     name: julia-1.2
 # ---
 
 # # Spatial diffusion / smoothing example

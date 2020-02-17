@@ -8,22 +8,29 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.0-rc4
+#     display_name: Julia 1.2.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.2
 # ---
 
 # # Meridional Overturning Circulation
 #
-# _Notes:_
-# - _likely could be done more efficiently and scale better_
-# - _requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]()_ 
+# This notebook requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]() as follows
+#
+# ```
+# run(`wget --recursive ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology`)
+# run(`mv mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology ../inputs/`)
+# ```
 
 using MeshArrays, Plots, Statistics, MITgcmTools
 
 # Read variables to memory
 
 # +
+if !isdir("../inputs/GRID_LLC90")
+    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
+end
+
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath)
 GridVariables=GridLoad(mygrid)

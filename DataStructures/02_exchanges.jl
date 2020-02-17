@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.1.0
+#     display_name: Julia 1.2.0
 #     language: julia
-#     name: julia-1.1
+#     name: julia-1.2
 # ---
 
 # ## Data exchange between neighbor arrays
@@ -42,7 +42,7 @@ show(Dexch)
 
 # We can also illustrate what happened using `Plots.jl`
 
-P=heatmap(D.f[6],title="Ocean Depth (D, Face 6)",lims=(0,40))
+P=heatmap(D.f[6],title="Ocean Depth (D, Face 6)",lims=(-4,36))
 Pexch=heatmap(Dexch.f[6],title="...(Dexch, Face 6)",lims=(0,40))
 plot(P,Pexch)
 
