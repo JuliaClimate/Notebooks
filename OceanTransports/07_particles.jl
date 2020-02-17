@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.0-rc4
+#     display_name: Julia 1.2.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.2
 # ---
 
 # # This notebook
@@ -26,19 +26,32 @@ using Plots, Statistics, MITgcmTools, DataFrames
 
 # Put grid variables in a dictionary.
 
+# +
+if !isdir("../inputs/GRID_LLC90")
+    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
+end
+
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath) 
 GridVariables=GridLoad(mygrid)
 GridVariables=merge(GridVariables,
     IndividualDisplacements.NeighborTileIndices_cs(GridVariables));
+# -
 
 # Read velocity fields as `MeshArray`s.
+
+# +
+pth="../inputs/nctiles_climatology/"
+msg="Please download $pth from e.g. `ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/`"
+!isdir("$pth"*"UVELMASS") ? error(msg) : nothing
+!isdir("$pth"*"VVELMASS") ? error(msg) : nothing
 
 fileName="../inputs/nctiles_climatology/UVELMASS/UVELMASS"
 u=Main.read_nctiles(fileName,"UVELMASS",mygrid)
 fileName="../inputs/nctiles_climatology/VVELMASS/VVELMASS"
 v=Main.read_nctiles(fileName,"VVELMASS",mygrid)
 show(u)
+# -
 
 # Select depth & time, normalize to grid units, and apply exchange.
 

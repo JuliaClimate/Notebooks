@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.1.0
+#     display_name: Julia 1.2.0
 #     language: julia
-#     name: julia-1.1
+#     name: julia-1.2
 # ---
 
 # # NCTiles.jl examples
@@ -37,7 +37,7 @@
 # _These will be used throughout the notebook_
 
 # +
-using NCTiles, MeshArrays
+using NCTiles, MeshArrays, MITgcmTools
 
 if !isdir("../inputs/nctiles-testcases")
     run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)

@@ -35,9 +35,9 @@ version = "0.0.3"
 
 [[CMake]]
 deps = ["BinDeps"]
-git-tree-sha1 = "c67a8689dc5444adc5eb2be7d837100340ecba11"
+git-tree-sha1 = "50a8b41d2c562fccd9ab841085fc7d1e2706da82"
 uuid = "631607c0-34d2-5d66-819e-eb0f9aa2061a"
-version = "1.1.2"
+version = "1.2.0"
 
 [[CMakeWrapper]]
 deps = ["BinDeps", "CMake", "Libdl", "Parameters", "Test"]
@@ -139,6 +139,12 @@ git-tree-sha1 = "a0c901c29c0e7c763342751c0a94211d56c0de5c"
 uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
 version = "0.4.1"
 
+[[FortranFiles]]
+deps = ["Compat"]
+git-tree-sha1 = "261d0569724da4c9bd906586880a2ad0cc29c2a4"
+uuid = "c58ffaec-ab22-586d-bfc5-781a99fd0b10"
+version = "0.5.0"
+
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "LinearAlgebra", "Printf", "Random", "Serialization", "Sockets", "Test"]
 git-tree-sha1 = "c690c2ab22ac9ee323d9966deae61a089362b25c"
@@ -215,9 +221,9 @@ version = "0.3.1"
 
 [[MeshArrays]]
 deps = ["CatViews", "Printf", "SparseArrays", "Statistics"]
-git-tree-sha1 = "37f08e9b7ea8b1dfd1d982ba8c11572ed8d1c677"
+git-tree-sha1 = "fdaa2e5d885b858f9456fd83f2010072d4eab8eb"
 uuid = "cb8c808f-1acf-59a3-9d2b-6e38d009f683"
-version = "0.2.5"
+version = "0.2.6"
 
 [[Missings]]
 deps = ["DataAPI"]
@@ -236,9 +242,9 @@ version = "0.9.5"
 
 [[NCTiles]]
 deps = ["Dates", "MeshArrays", "NCDatasets", "NetCDF", "Printf"]
-git-tree-sha1 = "61acfd5c356703132faa7ace9f4191829edfc4ca"
+git-tree-sha1 = "35a2287e387d8906b04d93a49088edabe297e517"
 uuid = "4c1fdd90-559f-11e9-1abf-07ceafc4ffc0"
-version = "0.1.5"
+version = "0.1.6"
 
 [[NaNMath]]
 git-tree-sha1 = "928b8ca9b2791081dc71a51c55347c27c618760f"
@@ -361,9 +367,9 @@ uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [[StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics"]
-git-tree-sha1 = "c53e809e63fe5cf5de13632090bc3520649c9950"
+git-tree-sha1 = "be5c7d45daa449d12868f4466dbf5882242cf2d9"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.32.0"
+version = "0.32.1"
 
 [[Test]]
 deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
