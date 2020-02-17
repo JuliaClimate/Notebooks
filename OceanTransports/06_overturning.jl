@@ -15,9 +15,12 @@
 
 # # Meridional Overturning Circulation
 #
-# _Notes:_
-# - _likely could be done more efficiently and scale better_
-# - _requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]()_ 
+# This notebook requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]() as follows
+#
+# ```
+# run(`wget --recursive ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology`)
+# run(`mv mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology ../inputs/`)
+# ```
 
 using MeshArrays, Plots, Statistics, MITgcmTools
 

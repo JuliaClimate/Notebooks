@@ -13,9 +13,21 @@
 #     name: julia-1.2
 # ---
 
-# # This notebook
+# # Trajectories That Follow Ocean Currents
 #
-# _Notes:_ For documentation see <https://gaelforget.github.io/MeshArrays.jl/stable/>, <https://docs.juliadiffeq.org/latest/solvers/ode_solve.html> and <https://en.wikipedia.org/wiki/Displacement_(vector)>
+# For documentation see:
+#
+# - <https://JuliaClimate.github.io/IndividualDisplacements.jl/dev/>
+# - <https://en.wikipedia.org/wiki/Displacement_(vector)>
+# - <https://JuliaClimate.github.io/MeshArrays.jl/dev/>
+# - <https://docs.juliadiffeq.org/latest>
+#
+# This notebook requires downloading `nctiles_climatology/` from e.g. [ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/]() as follows:
+#
+# ```
+# run(`wget --recursive ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology`)
+# run(`mv mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology ../inputs/`)
+# ```
 
 # ## 1. import software
 
