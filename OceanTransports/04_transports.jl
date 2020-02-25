@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.2.0
+#     display_name: Julia 1.3.1
 #     language: julia
-#     name: julia-1.2
+#     name: julia-1.3
 # ---
 
 # # Ocean transports and maps
@@ -32,7 +32,6 @@
 # +
 using MeshArrays, Plots, Statistics, MITgcmTools
 
-import Pkg; Pkg.add("FortranFiles");
 include("prepare_transports.jl")
 p=dirname(pathof(MeshArrays))
 include(joinpath(p,"../examples/Plots.jl"))
