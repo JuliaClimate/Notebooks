@@ -15,7 +15,7 @@
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Ocean transports and maps
-#
+#  
 # Transports in the climate system are often represented as gridded vector fields (e.g. on a `C-grid`) and integrated across `grid edge paths` that e.g. (1) connect location pairs or (2) tracks latitude circles. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) (incl. appendices)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -94,11 +94,11 @@ v=uC.*sn+vC.*cs;
 # 1. `uC,vC` are oriented along the `x,y` directions of each subdomain
 # 2. `u,v` are oriented in the `Eastward,Northward` directions
 
-# + {"slideshow": {"slide_type": "subslide"}}
+# + {"slideshow": {"slide_type": "subslide"}, "cell_style": "split"}
 heatmap(uC,clims=(-20.0,20.0),title="x-ward")
 #heatmap(vC,clims=(-20.0,20.0),title="y-ward")
 
-# + {"slideshow": {"slide_type": "subslide"}}
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
 heatmap(u,clims=(-20.0,20.0),title="East-ward")
 #heatmap(v,clims=(-20.0,20.0),title="North-ward")
 
@@ -113,10 +113,7 @@ mypath="../inputs/GRID_LLC90/"
 SPM,lon,lat=read_SPM(mypath) #interpolation matrix (sparse)
 uI=MatrixInterp(write(u),SPM,size(lon)) #interpolation itself
 vI=MatrixInterp(write(v),SPM,size(lon)); #interpolation itself
-# + {"slideshow": {"slide_type": "fragment"}}
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
 heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI),clims=(-20.0,20.0),title="Eastward transport (in Sv / cell)")
-#heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(vI),clims=(-20.0,20.0),title="Northward transport (in Sv / cell)")
-# -
-
-
-
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(vI),clims=(-20.0,20.0),title="Northward transport (in Sv / cell)")
