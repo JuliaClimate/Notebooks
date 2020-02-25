@@ -25,6 +25,7 @@
 # 2. read variables
 
 # + {"slideshow": {"slide_type": "subslide"}}
+#import Pkg; Pkg.activate("../binder/"); Pkg.instantiate()
 using MeshArrays, Plots, Statistics, MITgcmTools
 
 include("prepare_transports.jl")
@@ -46,24 +47,30 @@ GridVariables=GridLoad(mygrid)
 #
 # 1. `LatitudeCircles` computes `grid edge path`s that track latitude circles
 # 2. `ThroughFlow` integrates transports accross the specified `grid edge path`s
+# 3. Plot integrated meridional transport in `Sverdrup` units
 
 # + {"slideshow": {"slide_type": "subslide"}}
+l=-89.0:89.0
 UVmean=Dict("U"=>TrspX,"V"=>TrspY,"dimensions"=>["x","y"])
-l=-89.0:89.0; LC=LatitudeCircles(l,GridVariables)
+LC=LatitudeCircles(l,GridVariables);
+
+# + {"slideshow": {"slide_type": "fragment"}}
 T=Array{Float64,1}(undef,length(LC))
 for i=1:length(LC)
    T[i]=ThroughFlow(UVmean,LC[i],GridVariables)
 end
 
+# + {"slideshow": {"slide_type": "subslide"}}
 plot(l,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Post-Process Result For Plotting
+# ## Prepare For Mapping Out Transport
 #
 # 1. Convert to `Sv` units and mask out land
 # 2. Interpolate `x/y` transport to grid cell center
 # 3. Convert to `Eastward/Northward` transport
+# 4. Display Subdomain Arrays (optional)
 
 # + {"slideshow": {"slide_type": "subslide"}}
 u=1e-6 .*UVmean["U"]; v=1e-6 .*UVmean["V"];
@@ -88,8 +95,8 @@ sn=GridVariables["AngleSN"]
 u=uC.*cs-vC.*sn
 v=uC.*sn+vC.*cs;
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ### Plot transport arrays
+# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# ### Display Subdomain Arrays
 #
 # 1. `uC,vC` are oriented along the `x,y` directions of each subdomain
 # 2. `u,v` are oriented in the `Eastward,Northward` directions
@@ -103,7 +110,7 @@ heatmap(u,clims=(-20.0,20.0),title="East-ward")
 #heatmap(v,clims=(-20.0,20.0),title="North-ward")
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ### Map out transport 
+# ### Map Out Global Transport 
 #
 # 1. interpolate `u,v` to a `1/2 x 1/2` degree grid for plotting
 # 2. plot e.g. the Eastward transport component as a global map
