@@ -29,26 +29,26 @@
 # 1. pre-requisites
 # 2. read variables
 
-# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 using MeshArrays, Plots, Statistics, MITgcmTools
 include("prepare_transports.jl")
 if !isdir("../inputs/GRID_LLC90")
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
 
-# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath)
 GridVariables=GridLoad(mygrid)
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath)
-SPM,lon,lat=read_SPM(mypath)
+SPM,lon,lat=read_SPM(mypath);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Transport Convergence And Land Mask
 #
 # _note: masking avoids isolated Canyons / singular matrices_
 
-# + {"slideshow": {"slide_type": "fragment"}}
+# + {"slideshow": {"slide_type": "-"}}
 TrspCon=convergence(TrspX,TrspY)
 
 msk=1.0 .+ 0.0 * mask(view(GridVariables["hFacC"],:,1),NaN,0.0)
@@ -61,7 +61,7 @@ TrspCon=msk*TrspCon;
 # 2. subtract divergent component
 # 3. compute vector potential / streamfunction
 
-# + {"slideshow": {"slide_type": "fragment"}}
+# + {"slideshow": {"slide_type": "-"}}
 #scalar potential
 TrspPot=ScalarPotential(TrspCon)
 
@@ -82,12 +82,11 @@ TrspPsi=VectorPotential(TrspX,TrspY,GridVariables);
 #
 # _TrspCon-tmpCon should be negligible compared with TrspCon_
 
-# + {"slideshow": {"slide_type": "fragment"}}
+# + {"slideshow": {"slide_type": "-"}}
 tmpCon=convergence(TrspXdiv,TrspYdiv)
 tmp1=TrspCon[3]
 tmp2=tmp1[findall(isfinite.(tmp1))]
 errCon=1/sqrt(mean(tmp2.^2)).*(tmpCon[3]-TrspCon[3])
-
 heatmap(errCon)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -95,12 +94,12 @@ heatmap(errCon)
 #
 # _Interpolation is used to readily create global maps_
 
-# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 TrspPsiI=MatrixInterp(write(1e-6*msk*TrspPsi),SPM,size(lon))
 contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPsiI),
     title="Streamfunction",clims=(-50,50))
 
-# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 TrspPotI=MatrixInterp(write(1e-6*msk*TrspPot),SPM,size(lon))
 contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPotI),
     title="Scalar Potential",clims=(-0.4,0.4))
