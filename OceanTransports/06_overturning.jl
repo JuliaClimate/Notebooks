@@ -24,13 +24,6 @@
 # 1. pre-requisites
 # 2. read variables
 # 3. conversion to transports
-#
-# _Note: rerunning this notebook requires [nctiles_climatology/](ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/) e.g. via wget_
-#
-# ```
-# run(`wget --recursive ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology`)
-# run(`mv mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology ../inputs/`)
-# ```
 
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
@@ -39,10 +32,28 @@ if !isdir("../inputs/GRID_LLC90")
     run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
 end
 
+# +
+using CSV, DataFrames
+
+function get_from_dataverse(nam::String,pth::String)
+    tmp = CSV.File("nctiles_climatology.csv") |> DataFrame!
+    ii = findall([occursin("$nam", tmp[i,:name]) for i=1:size(tmp,1)])
+    !isdir("$pth"*"$nam") ? mkdir("$pth"*"$nam") : nothing
+    for i in ii
+        ID=tmp[i,:ID]
+        nam1=tmp[i,:name]
+        nam2=joinpath("$pth"*"$nam/",nam1)
+        run(`wget --content-disposition https://dataverse.harvard.edu/api/access/datafile/$ID`);
+        run(`mv $nam1 $nam2`);
+    end
+end
+
+# +
 pth="../inputs/nctiles_climatology/"
-msg="Please download $pth from e.g. `ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/`"
-!isdir("$pth"*"UVELMASS") ? error(msg) : nothing
-!isdir("$pth"*"VVELMASS") ? error(msg) : nothing
+
+!isdir("$pth") ? mkdir("$pth") : nothing 
+!isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
+!isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
 
 # + {"slideshow": {"slide_type": "fragment"}}
 mypath="../inputs/GRID_LLC90/"
