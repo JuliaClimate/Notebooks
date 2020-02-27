@@ -28,29 +28,10 @@
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
 
-if !isdir("../inputs/GRID_LLC90")
-    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-end
+include("helper_functions.jl")
+get_grid_if_needed()
 
-# +
-using CSV, DataFrames
-
-function get_from_dataverse(nam::String,pth::String)
-    tmp = CSV.File("nctiles_climatology.csv") |> DataFrame!
-    ii = findall([occursin("$nam", tmp[i,:name]) for i=1:size(tmp,1)])
-    !isdir("$pth"*"$nam") ? mkdir("$pth"*"$nam") : nothing
-    for i in ii
-        ID=tmp[i,:ID]
-        nam1=tmp[i,:name]
-        nam2=joinpath("$pth"*"$nam/",nam1)
-        run(`wget --content-disposition https://dataverse.harvard.edu/api/access/datafile/$ID`);
-        run(`mv $nam1 $nam2`);
-    end
-end
-
-# +
 pth="../inputs/nctiles_climatology/"
-
 !isdir("$pth") ? mkdir("$pth") : nothing 
 !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
 !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
@@ -59,12 +40,7 @@ pth="../inputs/nctiles_climatology/"
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath)
 GridVariables=GridLoad(mygrid)
-LC=LatitudeCircles(-89.0:89.0,GridVariables)
-
-fileName="$pth"*"UVELMASS/UVELMASS"
-U=Main.read_nctiles(fileName,"UVELMASS",mygrid)
-fileName="$pth"*"VVELMASS/VVELMASS"
-V=Main.read_nctiles(fileName,"VVELMASS",mygrid);
+(U,V)=read_uv_all(pth,mygrid);
 
 # + {"slideshow": {"slide_type": "fragment"}}
 #Convert Velocity (m/s) to transport (m^3/s)
@@ -82,6 +58,9 @@ end
 # 2. integrate along these `grid edge paths` and from the bottom
 
 # + {"slideshow": {"slide_type": "-"}}
+#define latitude circle path
+LC=LatitudeCircles(-89.0:89.0,GridVariables)
+
 #integrate across latitude circles
 s=size(U); nz=s[2]; nl=length(LC)
 nt=1; ov=Array{eltype(U),2}(undef,nl,nz)

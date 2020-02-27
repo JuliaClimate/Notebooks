@@ -23,51 +23,46 @@
 #
 # 1. pre-requisites
 # 2. read variables
-#
-# _Note: rerunning this notebook requires [nctiles_climatology/](ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology/) e.g. via wget_
-#
-# ```
-# run(`wget --recursive ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology`)
-# run(`mv mit.ecco-group.org/ecco_for_las/version_4/release2/nctiles_climatology ../inputs/`)
-# ```
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
 using Plots, Statistics, MITgcmTools, DataFrames
 
-if !isdir("../inputs/GRID_LLC90")
-    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-end
+include("helper_functions.jl")
+get_grid_if_needed()
 
+pth="../inputs/nctiles_climatology/"
+!isdir("$pth") ? mkdir("$pth") : nothing 
+!isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
+!isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
+
+# + {"cell_style": "center"}
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath); GridVariables=GridLoad(mygrid)
 GridVariables=merge(GridVariables,IndividualDisplacements.NeighborTileIndices_cs(GridVariables));
-
-# + {"cell_style": "center"}
-pth="../inputs/nctiles_climatology/"
-msg="Please download $pth from e.g. `ftp://mit.ecco-group.org/ecco_for_las/version_4/release2/`"
-!isdir("$pth"*"UVELMASS") ? error(msg) : nothing
-!isdir("$pth"*"VVELMASS") ? error(msg) : nothing
-
-fileName="../inputs/nctiles_climatology/UVELMASS/UVELMASS"
-u=Main.read_nctiles(fileName,"UVELMASS",mygrid)
-fileName="../inputs/nctiles_climatology/VVELMASS/VVELMASS"
-v=Main.read_nctiles(fileName,"VVELMASS",mygrid);
+(uAll,vAll)=read_uv_all(pth,mygrid);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Pre-Process Gridded Variables
 #
-# 1. Select depth & time
+# 1. Select depth & time average
 # 2. normalize to grid units
 # 3. apply exchange function to `u,v,lon,lat`
 # 4. store everything in a dictionary
 
 # + {"slideshow": {"slide_type": "subslide"}}
-#u=dropdims(mean(u,dims=3),dims=3); v=dropdims(mean(v,dims=3),dims=3)
-u=u[:,20,1]; v=v[:,20,1]; msk=(GridVariables["hFacC"][:,20] .> 0.) #select depth and time
+k=20; msk=(GridVariables["hFacC"][:,20] .> 0.) #select depth
+
+u=similar(uAll[:,1,1]); v=similar(vAll[:,1,1]);
+for i=1:size(uAll,1); for t=1:size(uAll,3);
+        u[i]=u[i] + uAll[i,k,t] #select depth
+        v[i]=v[i] + vAll[i,k,t]
+end; end
+u=u ./ size(uAll,3)
+v=v ./ size(uAll,3) #time average
 
 u[findall(isnan.(u))]=0.0; v[findall(isnan.(v))]=0.0 #mask with 0s rather than NaNs
-u=u./GridVariables["DXC"]; v=v./GridVariables["DYC"]; #normalization to grid units
+u=u./GridVariables["DXC"]; v=v./GridVariables["DYC"]; #normalize to grid units
 
 # + {"slideshow": {"slide_type": "-"}}
 (u,v)=exchange(u,v,1) #add 1 point at each edge for u and v
