@@ -25,7 +25,7 @@
 # 2. read variables
 
 # +
-#]add MITgcmTools#gfdev01; add OrdinaryDiffEq; add IndividualDisplacements;
+#]add MITgcmTools#gfdev01; add OrdinaryDiffEq; add IndividualDisplacements#gfdev01;
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
