@@ -29,6 +29,9 @@
 # 1. pre-requisites
 # 2. read variables
 
+# +
+#]add MITgcmTools#gfdev01
+
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 using MeshArrays, Plots, Statistics, MITgcmTools
 include("prepare_transports.jl")

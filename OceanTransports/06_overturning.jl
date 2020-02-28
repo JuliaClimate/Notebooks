@@ -25,6 +25,9 @@
 # 2. read variables
 # 3. conversion to transports
 
+# +
+#]add MITgcmTools#gfdev01
+
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
 

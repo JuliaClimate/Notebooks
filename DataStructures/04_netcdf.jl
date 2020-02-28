@@ -29,6 +29,10 @@
 #
 # _These will be used throughout the notebook_
 
+# +
+#]add MITgcmTools#gfdev01; add NCTiles; add NCDatasets
+# -
+
 using MeshArrays, NCTiles, MITgcmTools
 
 # Helper functions will be used avoid code duplication below:

@@ -89,11 +89,11 @@ end
 function get_testcases_if_needed()
     if !isdir("../inputs/nctiles-testcases")
         run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)
-        run(`gunzip nctiles-testcases/diags/state_3d_set1.0000000732.data.gz`)
-        run(`gunzip nctiles-testcases/diags/state_3d_set1.0000001428.data.gz`)
-        run(`gunzip nctiles-testcases/diags/state_3d_set1.0000002172.data.gz`)
-        run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
-        run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000001428.data.gz`)
-        run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000002172.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000000732.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000001428.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000002172.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000001428.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000002172.data.gz`)
     end
 end

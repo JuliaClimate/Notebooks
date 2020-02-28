@@ -24,8 +24,10 @@
 # 1. pre-requisites
 # 2. read variables
 
+# +
+#]add MITgcmTools#gfdev01
+
 # + {"slideshow": {"slide_type": "subslide"}}
-#import Pkg; Pkg.activate("../binder/"); Pkg.instantiate()
 using MeshArrays, Plots, Statistics, MITgcmTools
 
 include("prepare_transports.jl")

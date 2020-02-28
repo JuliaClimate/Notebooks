@@ -24,6 +24,9 @@
 # 1. pre-requisites
 # 2. read variables
 
+# +
+#]add MITgcmTools#gfdev01; add OrdinaryDiffEq; add IndividualDisplacements;
+
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
 using Plots, Statistics, MITgcmTools, DataFrames
