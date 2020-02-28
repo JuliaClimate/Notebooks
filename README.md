@@ -3,20 +3,22 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-[Jupyter](https://jupyter.org) notebooks related to regional-to-global ocean & climate science in [Julia](https://julialang.org). Initial focus has been on the analysis of ocean transports performed on native model grids (as needed to avoid large errors).
+[Jupyter](https://jupyter.org) / [Julia](https://julialang.org) notebooks that illustrate some of the [JuliaClimate](https://github.com/JuliaClimate/GlobalOceanNotebooks) packages working in concert. 
+
+For example, **MeshArrays.jl** is used to analyze global ocean transports derived accurately from gridded model output. An important requirement in climate science is to derive transports using native model grid output to allow for maximum precision e.g. in closing energy budgets. 
+
+**IndividualDisplacements.jl** extends this approach by providing a [Lagrangian tracking](Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on any model `C-grid` supported by **MeshArrays.jl**. In our examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded into `MeshArray` using functions provided by **MITgcmTools.jl**.
 
 **Table of content**
 
 - 1. Ocean Transports
 - 0. Data Structures
 
-_Notes:_ 
 
-- _Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`_
-- _An interactive version can readily be spun up via the `launch binder` badge_
-- _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
-
-<img width="500" src="OceanTransports/MOC.png">
+<img width="250" src="OceanTransports/Streamfunction.png">
+<img width="250" src="OceanTransports/ScalarPotential.png">
+<img width="250" src="OceanTransports/MOC.png">
+<img width="250" src="OceanTransports/LatLonCap300mDepth.png">
 
 ## 1. Ocean Transports
 
@@ -27,10 +29,6 @@ The following notebooks demonstrate various standard computations related to oce
 - `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
 - `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
 
-_Notes_
-
-- _`prepare_transports.jl` provides the `trsp_prep`, `trsp_read`, and `write_bin` functions to `04_transports ` and `05_streamfunction`_
-- `06_overturning.ipynb` and `07_particles.ipynb` require downloading additional data (see notebook header)
 
 ## 0. Data Structures
 
@@ -41,10 +39,11 @@ _Notes_
 - `03_smoothing.ipynb` uses `smooth()` as done in the unit tests of [MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) 
 - `04_netcdf.ipynb` converts binary data to `NetCDF` files using `NCTiles.jl` for (1) simple rectangular grid written to single file; (2) tiled model domain written to multiple files.
 
-_Notes_
+## Notes
 
-- _Predefined grids are downloaded by the notebooks except in `03_smoothing`._
-- _Helper functions from `nctiles_helper_functions.jl` are used in `04_netcdf.ipynb`._
-- _`04_netcdf.ipynb ` requires downloading additional data (see notebook header)._
-
+- _Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`_
+- _An interactive version can readily be spun up via the `launch binder` badge_
+- _Rerunning the examples can involve data downloads into the `inputs/` folder that can safely be removed afterwards_
+- _For now, this is serial. Efficiency can be improved in various places or simply through parallelization._
+- _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
 

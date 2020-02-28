@@ -38,6 +38,7 @@ using MeshArrays, NCTiles, MITgcmTools
 # Helper functions will be used avoid code duplication below:
 
 include("nctiles_helper_functions.jl")
+get_testcases_if_needed()
 
 # ### Back-end and file paths
 #
