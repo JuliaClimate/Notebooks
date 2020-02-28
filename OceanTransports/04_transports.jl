@@ -30,13 +30,11 @@
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
 
-include("prepare_transports.jl")
+include("helper_functions.jl")
+get_grid_if_needed()
+
 p=dirname(pathof(MeshArrays))
 include(joinpath(p,"../examples/Plots.jl"))
-
-if !isdir("../inputs/GRID_LLC90")
-    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-end
 
 # + {"slideshow": {"slide_type": "fragment"}}
 mypath="../inputs/GRID_LLC90/"

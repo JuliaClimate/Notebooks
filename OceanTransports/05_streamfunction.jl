@@ -34,10 +34,8 @@
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 using MeshArrays, Plots, Statistics, MITgcmTools
-include("prepare_transports.jl")
-if !isdir("../inputs/GRID_LLC90")
-    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-end
+include("helper_functions.jl")
+get_grid_if_needed()
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 mypath="../inputs/GRID_LLC90/"
