@@ -1,6 +1,6 @@
 
 using NCDatasets
-# this is needed cause writeNetCDFtiles uses `name` etc 
+# this is needed cause writeNetCDFtiles uses `name` etc
 
 """
     writeNetCDFtiles(flds::Dict,savenamebase::String,README::Array)
@@ -84,4 +84,16 @@ function addvfgridvars(gridvars::Dict)
     gridvars["XW"][findall(gridvars["XW"].<Xmin)]=gridvars["XW"][findall(gridvars["XW"].<Xmin)].+360;
     gridvars["XW"][findall(gridvars["XW"].>Xmax)]=gridvars["XW"][findall(gridvars["XW"].>Xmax)].-360;
     return gridvars
+end
+
+function get_testcases_if_needed()
+    if !isdir("../inputs/nctiles-testcases")
+        run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000000732.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000001428.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/state_3d_set1.0000002172.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000001428.data.gz`)
+        run(`gunzip ../inputs/nctiles-testcases/diags/trsp_3d_set1.0000002172.data.gz`)
+    end
 end

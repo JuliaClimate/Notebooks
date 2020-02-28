@@ -8,117 +8,119 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.2.0
+#     display_name: Julia 1.3.1
 #     language: julia
-#     name: julia-1.2
+#     name: julia-1.3
 # ---
 
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Ocean transports and maps
-#
-# Transports within the climate system are commonly represented as vector fields on a `C-grid`. 
-#
-# Transports often need to be integrated across a grid path that either (1) connects two points or (2) tracks a closed contour suh as a meridian.
-#
-# For more about how these methods, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) _ECCO version 4: An integrated framework for non-linear inverse modeling and global ocean state estimation._
-#
-# Key functions:
-# - `LatitudeCircles` computes integration paths that follow latitude circles
-# - `ThroughFlow` computes transports through these integration paths
+#  
+# Transports in the climate system are often represented as gridded vector fields (e.g. on a `C-grid`) and integrated across `grid edge paths` that e.g. (1) connect location pairs or (2) tracks latitude circles. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) (incl. appendices)
 
-# ### Time average and vertically integrate transports
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ### Read grid & transports from file
 #
-# _note: `trsp_read` reloads intermediate results from file._
+# 1. pre-requisites
+# 2. read variables
 
 # +
+#]add MITgcmTools#gfdev01
+
+# + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
 
-import Pkg; Pkg.add("FortranFiles");
-include("prepare_transports.jl")
+include("helper_functions.jl")
+get_grid_if_needed()
+
 p=dirname(pathof(MeshArrays))
 include(joinpath(p,"../examples/Plots.jl"))
 
-if !isdir("../inputs/GRID_LLC90")
-    run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-end
-
+# + {"slideshow": {"slide_type": "fragment"}}
 mypath="../inputs/GRID_LLC90/"
 mygrid=GridSpec("LatLonCap",mypath)
-
-SPM,lon,lat=read_SPM(mypath)
 GridVariables=GridLoad(mygrid)
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath);
-# -
 
-# ### Transports between latitude bands
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ### Integrate transport across latitude lines
+#
+# 1. `LatitudeCircles` computes `grid edge path`s that track latitude circles
+# 2. `ThroughFlow` integrates transports accross the specified `grid edge path`s
+# 3. Plot integrated meridional transport in `Sverdrup` units
 
-# +
-UVmean=Dict("U"=>TrspX,"V"=>TrspY,"dimensions"=>["x","y"]);
-LC=LatitudeCircles(-89.0:89.0,GridVariables);
+# + {"slideshow": {"slide_type": "subslide"}}
+l=-89.0:89.0
+UVmean=Dict("U"=>TrspX,"V"=>TrspY,"dimensions"=>["x","y"])
+LC=LatitudeCircles(l,GridVariables);
 
-T=Array{Float64,1}(undef,length(LC));
+# + {"slideshow": {"slide_type": "fragment"}}
+T=Array{Float64,1}(undef,length(LC))
 for i=1:length(LC)
    T[i]=ThroughFlow(UVmean,LC[i],GridVariables)
 end
-# -
 
-# ### Plot result
-
-l=-89.0:89.0
+# + {"slideshow": {"slide_type": "subslide"}}
 plot(l,T/1e6,xlabel="latitude",ylabel="Sverdrup (10^6 m^3 s^-1)",
     label="ECCOv4r2",title="Northward transport of seawater (Global Ocean)")
 
-# ### Plot transport arrays
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ## Prepare For Mapping Out Transport
 #
-# _Note that vector field orientations differ amongst the arrays._
+# 1. Convert to `Sv` units and mask out land
+# 2. Interpolate `x/y` transport to grid cell center
+# 3. Convert to `Eastward/Northward` transport
+# 4. Display Subdomain Arrays (optional)
 
-heatmap(1e-6*TrspX,clims=(-20.0,20.0),title="x-ward")
-#heatmap(1e-6*TrspY,clims=(-20.0,20.0),title="y-ward")
-
-# Convert to `Sv` and mask out land
-
+# + {"slideshow": {"slide_type": "subslide"}}
 u=1e-6 .*UVmean["U"]; v=1e-6 .*UVmean["V"];
-u[findall(GridVariables["hFacW"][:,1].==0)].=NaN;
+u[findall(GridVariables["hFacW"][:,1].==0)].=NaN
 v[findall(GridVariables["hFacS"][:,1].==0)].=NaN;
 
-# `x/y` transport at cell center
-
-# +
+# + {"slideshow": {"slide_type": "fragment"}}
 using Statistics
 nanmean(x) = mean(filter(!isnan,x))
 nanmean(x,y) = mapslices(nanmean,x,dims=y)
-
-(u,v)=exch_UV(u,v);
-uC=similar(u); vC=similar(v);
-for iF=1:mygrid.nFaces;
-    tmp1=u[iF][1:end-1,:]; tmp2=u[iF][2:end,:];
-    uC[iF]=reshape(nanmean([tmp1[:] tmp2[:]],2),size(tmp1));
-    tmp1=v[iF][:,1:end-1]; tmp2=v[iF][:,2:end];
-    vC[iF]=reshape(nanmean([tmp1[:] tmp2[:]],2),size(tmp1));
+(u,v)=exch_UV(u,v); uC=similar(u); vC=similar(v)
+for iF=1:mygrid.nFaces
+    tmp1=u[iF][1:end-1,:]; tmp2=u[iF][2:end,:]
+    uC[iF]=reshape(nanmean([tmp1[:] tmp2[:]],2),size(tmp1))
+    tmp1=v[iF][:,1:end-1]; tmp2=v[iF][:,2:end]
+    vC[iF]=reshape(nanmean([tmp1[:] tmp2[:]],2),size(tmp1))
 end
-# -
 
-# `Eastward/Northward` transport
-#
-# _Note: compare vector field orientations with previous plot._
-
-cs=GridVariables["AngleCS"];
-sn=GridVariables["AngleSN"];
-u=uC.*cs-vC.*sn;
+# + {"slideshow": {"slide_type": "fragment"}}
+cs=GridVariables["AngleCS"]
+sn=GridVariables["AngleSN"]
+u=uC.*cs-vC.*sn
 v=uC.*sn+vC.*cs;
-heatmap(u,clims=(-20.0,20.0),title="eastward")
 
-# ### Map out transport 
+# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# ### Display Subdomain Arrays
 #
-# Here we map out (1) zonal and (2) meridional transport as a function of longitude and latitude.
+# 1. `uC,vC` are oriented along the `x,y` directions of each subdomain
+# 2. `u,v` are oriented in the `Eastward,Northward` directions
 
-# +
-uI=MatrixInterp(write(u),SPM,size(lon))
-heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI),
-    title="eastward transport (in Sv)")
+# + {"slideshow": {"slide_type": "subslide"}, "cell_style": "split"}
+heatmap(uC,clims=(-20.0,20.0),title="x-ward")
+#heatmap(vC,clims=(-20.0,20.0),title="y-ward")
 
-#vI=MatrixInterp(write(v),SPM,size(lon))
-#heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(vI),
-#    title="northward transport per grid cell (in Sv)")
-# -
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+heatmap(u,clims=(-20.0,20.0),title="East-ward")
+#heatmap(v,clims=(-20.0,20.0),title="North-ward")
 
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ### Map Out Global Transport 
+#
+# 1. interpolate `u,v` to a `1/2 x 1/2` degree grid for plotting
+# 2. plot e.g. the Eastward transport component as a global map
 
+# + {"slideshow": {"slide_type": "subslide"}}
+mypath="../inputs/GRID_LLC90/"
+SPM,lon,lat=read_SPM(mypath) #interpolation matrix (sparse)
+uI=MatrixInterp(write(u),SPM,size(lon)) #interpolation itself
+vI=MatrixInterp(write(v),SPM,size(lon)); #interpolation itself
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(uI),clims=(-20.0,20.0),title="Eastward transport (in Sv / cell)")
+# + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
+heatmap(vec(lon[:,1]),vec(lat[1,:]),transpose(vI),clims=(-20.0,20.0),title="Northward transport (in Sv / cell)")
