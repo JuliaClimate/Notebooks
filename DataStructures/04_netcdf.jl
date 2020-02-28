@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.2.0
+#     display_name: Julia 1.3.1
 #     language: julia
-#     name: julia-1.2
+#     name: julia-1.3
 # ---
 
 # # NCTiles.jl examples
@@ -24,26 +24,12 @@
 #   - 2D, free surface example
 #   - 3D, temperature example
 #   - 3D, C-grid vector example
-#
-# Running the examples requires that you first download and decompress test files:
-#
-# ```
-# git clone https://github.com/gaelforget/nctiles-testcases
-# gunzip nctiles-testcases/diags/*.gz
-# ```
 
 # ### Packages & input files
 #
 # _These will be used throughout the notebook_
 
-# +
-using NCTiles, MeshArrays, MITgcmTools
-
-if !isdir("../inputs/nctiles-testcases")
-    run(`git clone https://github.com/gaelforget/nctiles-testcases ../inputs/nctiles-testcases`)
-end
-#run(`gunzip nctiles-testcases/diags/trsp_3d_set1.0000000732.data.gz`)
-# -
+using MeshArrays, NCTiles, MITgcmTools
 
 # Helper functions will be used avoid code duplication below:
 
