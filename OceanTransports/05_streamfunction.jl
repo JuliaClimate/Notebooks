@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -14,7 +15,7 @@
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# # Decompose Transports into Streamfunction And Purely Divergent Component
+# # Transport Streamfunction And Divergent Component
 #
 # Here we apply such [Helmholtz Decomposition](https://en.wikipedia.org/wiki/Helmholtz_decomposition) to vertically integrated transports defined over a Global Ocean model (`C-grid`).
 #
@@ -32,51 +33,44 @@
 # +
 #]add MITgcmTools#gfdev01
 
-# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
+# + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
 using MeshArrays, Plots, Statistics, MITgcmTools
 include("helper_functions.jl")
 get_grid_if_needed()
 
-# + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
-mypath="../inputs/GRID_LLC90/"
-mygrid=GridSpec("LatLonCap",mypath)
-GridVariables=GridLoad(mygrid)
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_read(mygrid,mypath)
-SPM,lon,lat=read_SPM(mypath);
-
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ### Transport Convergence And Land Mask
-#
-# _note: masking avoids isolated Canyons / singular matrices_
-
-# + {"slideshow": {"slide_type": "-"}}
-TrspCon=convergence(TrspX,TrspY)
-
-msk=1.0 .+ 0.0 * mask(view(GridVariables["hFacC"],:,1),NaN,0.0)
-TrspCon=msk*TrspCon;
+γ=GridLoad(GridSpec("LatLonCap","../inputs/GRID_LLC90/"))
+(Tx,Ty,τx,τy,η)=trsp_read("LatLonCap","../inputs/GRID_LLC90/")
+SPM,lon,lat=read_SPM("../inputs/GRID_LLC90/")
+msk=1.0 .+ 0.0 * mask(view(γ["hFacC"],:,1),NaN,0.0);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Helmholtz Decomposition
 #
-# 1. compute scalar potential
-# 2. subtract divergent component
-# 3. compute vector potential / streamfunction
+# 1. convergence & land mask
+# 2. compute scalar potential
+# 3. subtract divergent component
+# 4. compute vector potential / streamfunction
+#
+# _note: masking avoids singularities related to isolated canyons_
 
-# + {"slideshow": {"slide_type": "-"}}
+# + {"slideshow": {"slide_type": "subslide"}}
+#convergence & land mask
+TrspCon=msk.*convergence(Tx,Ty);
+
 #scalar potential
 TrspPot=ScalarPotential(TrspCon)
 
 #Divergent transport component
-(TrspXdiv,TrspYdiv)=gradient(TrspPot,GridVariables)
-TrspXdiv=TrspXdiv.*GridVariables["DXC"]
-TrspYdiv=TrspYdiv.*GridVariables["DYC"]
+(TxD,TyD)=gradient(TrspPot,γ)
+TxD=TxD.*γ["DXC"]
+TyD=TyD.*γ["DYC"]
 
 #Rotational transport component
-TrspXrot = TrspX-TrspXdiv
-TrspYrot = TrspY-TrspYdiv
+TxR = Tx-TyD
+TyR = Ty-TyD
 
 #vector Potential
-TrspPsi=VectorPotential(TrspX,TrspY,GridVariables);
+TrspPsi=VectorPotential(TxR,TyR,γ);
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### Verify The Results Consistency
@@ -84,7 +78,7 @@ TrspPsi=VectorPotential(TrspX,TrspY,GridVariables);
 # _TrspCon-tmpCon should be negligible compared with TrspCon_
 
 # + {"slideshow": {"slide_type": "-"}}
-tmpCon=convergence(TrspXdiv,TrspYdiv)
+tmpCon=convergence(TxD,TyD)
 tmp1=TrspCon[3]
 tmp2=tmp1[findall(isfinite.(tmp1))]
 errCon=1/sqrt(mean(tmp2.^2)).*(tmpCon[3]-TrspCon[3])
@@ -93,7 +87,7 @@ heatmap(errCon)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Map Out Streamfunction And Scalar Potential
 #
-# _Interpolation is used to readily create global maps_
+# _Interpolation is used to create global maps_
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 TrspPsiI=MatrixInterp(write(1e-6*msk*TrspPsi),SPM,size(lon))

@@ -175,3 +175,93 @@ function interp_uv(u,v)
     vI=MatrixInterp(write(v),SPM,size(lon)); #interpolation itself
     return transpose(uI),transpose(vI),vec(lon[:,1]),vec(lat[1,:])
 end
+
+"""
+    read_velocity_and_grid()
+"""
+function read_velocity_and_grid()
+    pth="../inputs/nctiles_climatology/"
+    !isdir("$pth") ? mkdir("$pth") : nothing
+    !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
+    !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
+
+    mypath="../inputs/GRID_LLC90/"
+    mygrid=GridSpec("LatLonCap",mypath)
+    γ=GridLoad(mygrid)
+    (U,V)=read_uv_all(pth,mygrid);
+
+    return U,V,γ
+end
+
+
+"""
+    initialize_locations()
+
+Define `uInitS` as an array of initial conditions
+"""
+function initialize_locations(XC)
+    uInitS = Array{Float64,2}(undef, 3, prod(XC.grid.ioSize))
+
+    kk = 0
+    for fIndex = 1:5
+        nx, ny = XC.fSize[fIndex]
+        ii1 = 0.5:1.0:nx
+        ii2 = 0.5:1.0:ny
+        n1 = length(ii1)
+        n2 = length(ii2)
+        for i1 in eachindex(ii1)
+            for i2 in eachindex(ii2)
+                if msk[fIndex][Int(round(i1+0.5)),Int(round(i2+0.5))]
+                    kk += 1
+                    let kk = kk
+                        uInitS[1, kk] = ii1[i1]
+                        uInitS[2, kk] = ii2[i2]
+                        uInitS[3, kk] = fIndex
+                    end
+                end
+            end
+        end
+    end
+
+    uInitS=uInitS[:,1:kk]
+    du=fill(0.0,size(uInitS));
+
+    return uInitS,du
+end
+
+"""
+    postprocess_locations()
+
+Copy `sol` to a `DataFrame` & map position to lon,lat coordinates
+"""
+function postprocess_locations(sol)
+    ID=collect(1:size(sol,2))*ones(1,size(sol,3))
+    x=sol[1,:,:]
+    y=sol[2,:,:]
+    fIndex=sol[3,:,:]
+    df = DataFrame(ID=Int.(ID[:]), x=x[:], y=y[:], fIndex=fIndex[:])
+
+    lon=Array{Float64,1}(undef,size(df,1)); lat=similar(lon)
+
+    for ii=1:length(lon)
+        #get location in grid index space
+        x=df[ii,:x]; y=df[ii,:y]; fIndex=Int(df[ii,:fIndex])
+        dx,dy=[x - floor(x),y - floor(y)]
+        i_c,j_c = Int32.(floor.([x y])) .+ 2
+        #interpolate lon and lat to position
+        tmp=view(YC[fIndex],i_c:i_c+1,j_c:j_c+1)
+        lat[ii]=(1.0-dx)*(1.0-dy)*tmp[1,1]+dx*(1.0-dy)*tmp[2,1]+(1.0-dx)*dy*tmp[1,2]+dx*dy*tmp[2,2]
+
+        tmp=view(XC[fIndex],i_c:i_c+1,j_c:j_c+1)
+        if (maximum(tmp)>minimum(tmp)+180)&&(lat[ii]<88)
+            tmp1=deepcopy(tmp)
+            tmp1[findall(tmp.<maximum(tmp)-180)] .+= 360.
+            tmp=tmp1
+        end
+        #kk=findall(tmp.<maximum(tmp)-180); tmp[kk].=tmp[kk].+360.0
+        lon[ii]=(1.0-dx)*(1.0-dy)*tmp[1,1]+dx*(1.0-dy)*tmp[2,1]+(1.0-dx)*dy*tmp[1,2]+dx*dy*tmp[2,2]
+    end
+
+    df.lon=lon; df.lat=lat; #show(df[end-3:end,:])
+    return df
+end
