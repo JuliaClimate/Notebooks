@@ -34,9 +34,40 @@ using Plots, Statistics, MITgcmTools, DataFrames
 
 include("helper_functions.jl")
 get_grid_if_needed()
-γ =read_llc90_grid()
-(uAll,vAll)=read_uv_all(γ["XC"].grid)
+
+function read_uv_all(pth::String,mygrid::gcmgrid)
+     u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",mygrid)
+     v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",mygrid)
+     return u,v
+end
+    
+function read_velocity_and_grid()
+    pth="../inputs/nctiles_climatology/"
+    !isdir("$pth") ? mkdir("$pth") : nothing
+    !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
+    !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
+
+    mypath="../inputs/GRID_LLC90/"
+     mygrid=GridSpec("LatLonCap",mypath)
+     γ=GridLoad(mygrid)
+    (U,V)=read_uv_all(pth,mygrid);
+
+    return U,V,γ
+end
+
+(uAll,vAll,γ) =read_velocity_and_grid()
 γ=merge(γ,IndividualDisplacements.NeighborTileIndices_cs(γ));
+
+# +
+include("helper_functions.jl")
+get_grid_if_needed()
+get_velocity_if_needed()
+
+γ =read_llc90_grid()
+γ=merge(γ,IndividualDisplacements.NeighborTileIndices_cs(γ))
+
+(uAll,vAll)=read_uv_all(γ["XC"].grid)
+(uAll,vAll)=convert_velocity(uAll,vAll,γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Pre-Process Gridded Variables

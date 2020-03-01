@@ -34,16 +34,13 @@ using MeshArrays, Plots, Statistics, MITgcmTools
 
 include("helper_functions.jl")
 get_grid_if_needed()
-U,V,γ =read_velocity_and_grid()
-LC=LatitudeCircles(-89.0:89.0,γ);
+get_velocity_if_needed()
 
-#Convert Velocity (m/s) to transport (m^3/s)
-for i in eachindex(U)
-    tmp1=U[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
-    tmp1=V[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
-    U[i]=γ["DRF"][i[2]]*U[i].*γ["DYG"][i[1]]
-    V[i]=γ["DRF"][i[2]]*V[i].*γ["DXG"][i[1]]    
-end
+γ =read_llc90_grid()
+LC=LatitudeCircles(-89.0:89.0,γ)
+
+(U,V)=read_uv_all(γ["XC"].grid)
+(U,V)=convert_velocity(U,V,γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
@@ -57,6 +54,7 @@ ov=Array{eltype(U),3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
 for t=1:nt; for z=1:nz; 
+        
         UV=Dict("U"=>U[:,z,t],"V"=>V[:,z,t],"dimensions"=>["x","y"])
         [ov[l,z,t]=ThroughFlow(UV,LC[l],γ) for l=1:nl]
 end; end;

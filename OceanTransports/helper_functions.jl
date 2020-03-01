@@ -22,10 +22,29 @@ function get_grid_if_needed()
     end
 end
 
-function read_uv_all(pth::String,mygrid::gcmgrid)
+function get_velocity_if_needed()
+    pth="../inputs/nctiles_climatology/"
+    !isdir("$pth") ? mkdir("$pth") : nothing
+    !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
+    !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
+end
+
+function read_uv_all(mygrid::gcmgrid)
+    pth="../inputs/nctiles_climatology/"
     u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",mygrid)
     v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",mygrid)
     return u,v
+end
+
+#Convert Velocity (m/s) to transport (m^3/s)
+function convert_velocity(U,V,γ)
+    for i in eachindex(U)
+        tmp1=U[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
+        tmp1=V[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
+        U[i]=γ["DRF"][i[2]]*U[i].*γ["DYG"][i[1]]
+        V[i]=γ["DRF"][i[2]]*V[i].*γ["DXG"][i[1]]
+    end
+    return U,V
 end
 
 ##
@@ -177,20 +196,12 @@ function interp_uv(u,v)
 end
 
 """
-    read_velocity_and_grid()
+    read_llc90_grid()
 """
-function read_velocity_and_grid()
-    pth="../inputs/nctiles_climatology/"
-    !isdir("$pth") ? mkdir("$pth") : nothing
-    !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
-    !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
-
+function read_llc90_grid()
     mypath="../inputs/GRID_LLC90/"
     mygrid=GridSpec("LatLonCap",mypath)
     γ=GridLoad(mygrid)
-    (U,V)=read_uv_all(pth,mygrid);
-
-    return U,V,γ
 end
 
 
