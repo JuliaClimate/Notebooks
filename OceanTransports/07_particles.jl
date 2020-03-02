@@ -34,44 +34,20 @@ using Plots, Statistics, MITgcmTools, DataFrames
 
 include("helper_functions.jl")
 get_grid_if_needed()
-γ=read_llc90_grid()
-γ=merge(γ,IndividualDisplacements.NeighborTileIndices_cs(γ));
+get_velocity_if_needed()
+
+γ=read_llc90_grid();
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Pre-Process Gridded Variables
+# ## Set Gridded Variables
 #
-# 1. Select depth & time average
-# 2. normalize to grid units
+# 1. Select depth
+# 2. time average & normalize to grid units
 # 3. apply exchange function to `u,v,lon,lat`
-# 4. store everything in a dictionary
-
-# + {"slideshow": {"slide_type": "subslide"}}
-k=20 #select depth
-nt=12; u=0. *γ["XC"]; v=0. *γ["XC"];
-
-for t=1:nt
-    (U,V)=read_velocities(γ["XC"].grid,t)
-    for i=1:size(u,1)
-        u[i]=u[i] + U[i,k]
-        v[i]=v[i] + V[i,k]
-    end
-end
-u=u ./ nt
-v=v ./ nt #time average
-msk=(γ["hFacC"][:,k] .> 0.) #select depth
-
-u[findall(isnan.(u))]=0.0; v[findall(isnan.(v))]=0.0 #mask with 0s rather than NaNs
-u=u./γ["DXC"]; v=v./γ["DYC"]; #normalize to grid units
+# 4. store everything in `uv_etc` dictionary
 
 # + {"slideshow": {"slide_type": "-"}}
-(u,v)=exchange(u,v,1) #add 1 point at each edge for u and v
-XC=exchange(γ["XC"]) #add 1 lon point at each edge
-YC=exchange(γ["YC"]) #add 1 lat point at each edge
-
-t0=0.0; t1=86400*366*10.0; dt=10*86400.0;
-uvt = Dict("u0" => u, "u1" => u, "v0" => v, "v1" => v,
-    "t0" => t0, "t1" => t1, "dt" => dt, "msk" => msk)
-uvetc=merge(uvt,γ); #store everything in a dictionary
+uv_etc=read_uv_etc(20,γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Initialize Trajectory Computation
@@ -80,8 +56,8 @@ uvetc=merge(uvt,γ); #store everything in a dictionary
 # 2. set `u0` initial location array
 
 # + {"slideshow": {"slide_type": "-"}}
-duComp=IndividualDisplacements.VelComp!
-(u0,du)=initialize_locations(XC);
+du_dt=IndividualDisplacements.VelComp!
+(u0,du)=initialize_locations(uv_etc);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Compute Trajectories
@@ -89,9 +65,9 @@ duComp=IndividualDisplacements.VelComp!
 # _Note: `ODEProblem` and `solve` settings can still be refined_
 # -
 
-tspan = (0.0,uvt["t1"]-uvt["t0"])
-prob = ODEProblem(duComp,u0,tspan,uvetc)
-sol = solve(prob,Euler(),dt=uvt["dt"])
+tspan = (0.0,uv_etc["t1"]-uv_etc["t0"])
+prob = ODEProblem(du_dt,u0,tspan,uv_etc)
+sol = solve(prob,Euler(),dt=uv_etc["dt"])
 size(sol)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -101,7 +77,7 @@ size(sol)
 # 2. Map position to lon,lat coordinates
 
 # + {"slideshow": {"slide_type": "subslide"}}
-df=postprocess_locations(sol);
+df=postprocess_locations(sol,uv_etc);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Plot Trajectories
@@ -115,12 +91,15 @@ df=postprocess_locations(sol);
 
 # + {"slideshow": {"slide_type": "-"}}
 p=dirname(pathof(IndividualDisplacements));
-#include(joinpath(p,"plot_pyplot.jl")); 
-include(joinpath(p,"plot_makie.jl")); AbstractPlotting.inline!(true); #for Juno, set to false
 
 # + {"slideshow": {"slide_type": "slide"}}
+#include(joinpath(p,"plot_pyplot.jl")); 
 #PyPlot.figure(); PlotMapProj(df,5000)
-scene=PlotMakie(df,5000,180.0) #Makie.save("LatLonCap300mDepth.png", scene)
-# -
 
+#include(joinpath(p,"plot_makie.jl")); AbstractPlotting.inline!(true); #for Juno, set to false
+#scene=PlotMakie(df,5000,180.0) #Makie.save("LatLonCap300mDepth.png", scene)
+
+include(joinpath(p,"plot_plots.jl")); 
+plt=PlotBasic(df,1000,180.0)
+# -
 
