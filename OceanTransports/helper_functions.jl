@@ -244,11 +244,11 @@ function initialize_locations(uv_etc::Dict,n_subset::Int=1)
 end
 
 """
-    postprocess_locations()
+    postprocess_ODESolution()
 
 Copy `sol` to a `DataFrame` & map position to lon,lat coordinates
 """
-function postprocess_locations(sol::ODESolution,uv_etc::Dict)
+function postprocess_ODESolution(sol,uv_etc::Dict)
     XC=uv_etc["XC"]; YC=uv_etc["YC"]
     ID=collect(1:size(sol,2))*ones(1,size(sol,3))
     x=sol[1,:,:]
