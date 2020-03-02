@@ -77,7 +77,7 @@ size(sol)
 # 2. Map position to lon,lat coordinates
 
 # + {"slideshow": {"slide_type": "subslide"}}
-df=postprocess_locations(sol,uv_etc);
+df=postprocess_ODESolution(sol,uv_etc);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Plot Trajectories
