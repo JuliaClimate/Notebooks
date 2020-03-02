@@ -210,7 +210,7 @@ end
 
 Define `uInitS` as an array of initial conditions
 """
-function initialize_locations(uv_etc::Dict)
+function initialize_locations(uv_etc::Dict,n_subset::Int=1)
     msk=uv_etc["msk"]
     uInitS = Array{Float64,2}(undef, 3, prod(msk.grid.ioSize))
 
@@ -238,6 +238,8 @@ function initialize_locations(uv_etc::Dict)
     uInitS=uInitS[:,1:kk]
     du=fill(0.0,size(uInitS));
 
+    uInitS=uInitS[:,1:n_subset:end]
+    du=du[:,1:n_subset:end]
     return uInitS,du
 end
 

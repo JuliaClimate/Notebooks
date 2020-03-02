@@ -26,7 +26,7 @@
 # 2. read variables
 
 # + {"slideshow": {"slide_type": "subslide"}}
-#]add MITgcmTools#master; add OrdinaryDiffEq; add IndividualDisplacements#gfdev01;
+#]add MITgcmTools#master; add OrdinaryDiffEq; add IndividualDisplacements#master;
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
 using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
@@ -57,7 +57,7 @@ uv_etc=read_uv_etc(20,γ);
 
 # + {"slideshow": {"slide_type": "-"}}
 du_dt=IndividualDisplacements.VelComp!
-(u0,du)=initialize_locations(uv_etc);
+(u0,du)=initialize_locations(uv_etc,10);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Compute Trajectories
