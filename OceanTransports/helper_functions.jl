@@ -29,15 +29,15 @@ function get_velocity_if_needed()
     !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
 end
 
-function read_uv_all(mygrid::gcmgrid)
+function read_velocities(mygrid::gcmgrid,t::Int)
     pth="../inputs/nctiles_climatology/"
-    u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",mygrid)
-    v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",mygrid)
+    u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",mygrid,I=(:,:,:,t))
+    v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",mygrid,I=(:,:,:,t))
     return u,v
 end
 
 #Convert Velocity (m/s) to transport (m^3/s)
-function convert_velocity(U,V,γ)
+function convert_velocities(U,V,γ)
     for i in eachindex(U)
         tmp1=U[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
         tmp1=V[i]; tmp1[(!isfinite).(tmp1)] .= 0.0

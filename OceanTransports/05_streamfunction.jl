@@ -31,7 +31,7 @@
 # 2. read variables
 
 # +
-#]add MITgcmTools#gfdev01
+#]add MITgcmTools#master
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
 using MeshArrays, Plots, Statistics, MITgcmTools

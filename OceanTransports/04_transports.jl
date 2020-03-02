@@ -26,7 +26,7 @@
 # 2. read variables
 
 # +
-#]add MITgcmTools#gfdev01
+#]add MITgcmTools#master
 
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools

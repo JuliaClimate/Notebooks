@@ -26,7 +26,7 @@
 # 2. read variables
 
 # + {"slideshow": {"slide_type": "subslide"}}
-#]add MITgcmTools#gfdev01; add OrdinaryDiffEq; add IndividualDisplacements#gfdev01;
+#]add MITgcmTools#master; add OrdinaryDiffEq; add IndividualDisplacements#gfdev01;
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
 using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
@@ -34,9 +34,8 @@ using Plots, Statistics, MITgcmTools, DataFrames
 
 include("helper_functions.jl")
 get_grid_if_needed()
-γ =read_llc90_grid()
-γ=merge(γ,IndividualDisplacements.NeighborTileIndices_cs(γ))
-(U,V)=read_uv_all(γ["XC"].grid);
+γ=read_llc90_grid()
+γ=merge(γ,IndividualDisplacements.NeighborTileIndices_cs(γ));
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Pre-Process Gridded Variables
@@ -47,14 +46,18 @@ get_grid_if_needed()
 # 4. store everything in a dictionary
 
 # + {"slideshow": {"slide_type": "subslide"}}
-k=20; 
-u=similar(U[:,1,1]); v=similar(V[:,1,1]);
-for i=1:size(U,1); for t=1:size(V,3);
-        u[i]=u[i] + U[i,k,t] #select depth
-        v[i]=v[i] + V[i,k,t]
-end; end
-u=u ./ size(U,3)
-v=v ./ size(V,3) #time average
+k=20 #select depth
+nt=12; u=0. *γ["XC"]; v=0. *γ["XC"];
+
+for t=1:nt
+    (U,V)=read_velocities(γ["XC"].grid,t)
+    for i=1:size(u,1)
+        u[i]=u[i] + U[i,k]
+        v[i]=v[i] + V[i,k]
+    end
+end
+u=u ./ nt
+v=v ./ nt #time average
 msk=(γ["hFacC"][:,k] .> 0.) #select depth
 
 u[findall(isnan.(u))]=0.0; v[findall(isnan.(v))]=0.0 #mask with 0s rather than NaNs

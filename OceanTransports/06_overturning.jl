@@ -27,7 +27,7 @@
 # 3. conversion to transports
 
 # +
-#]add MITgcmTools#gfdev01
+#]add MITgcmTools#master
 
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics, MITgcmTools
@@ -37,10 +37,7 @@ get_grid_if_needed()
 get_velocity_if_needed()
 
 γ =read_llc90_grid()
-LC=LatitudeCircles(-89.0:89.0,γ)
-
-(U,V)=read_uv_all(γ["XC"].grid)
-(U,V)=convert_velocity(U,V,γ);
+LC=LatitudeCircles(-89.0:89.0,γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
@@ -49,15 +46,18 @@ LC=LatitudeCircles(-89.0:89.0,γ)
 # 2. integrate from the bottom
 
 # + {"slideshow": {"slide_type": "-"}}
-s=size(U); nz=s[2]; nt=s[3]; nl=length(LC)
-ov=Array{eltype(U),3}(undef,nl,nz,nt)
+nz=size(γ["hFacC"],2); nt=12; nl=length(LC)
+ov=Array{Float64,3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
-for t=1:nt; for z=1:nz; 
-        
-        UV=Dict("U"=>U[:,z,t],"V"=>V[:,z,t],"dimensions"=>["x","y"])
+for t=1:nt
+    (U,V)=read_velocities(γ["XC"].grid,t)
+    (U,V)=convert_velocities(U,V,γ)
+    for z=1:nz
+        UV=Dict("U"=>U[:,z],"V"=>V[:,z],"dimensions"=>["x","y"])
         [ov[l,z,t]=ThroughFlow(UV,LC[l],γ) for l=1:nl]
-end; end;
+    end
+end
 
 #integrate from bottom
 ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
