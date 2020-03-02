@@ -14,12 +14,6 @@ For example, **MeshArrays.jl** is used to analyze global ocean transports derive
 - 1. Ocean Transports
 - 0. Data Structures
 
-
-<img width="250" src="OceanTransports/Streamfunction.png">
-<img width="250" src="OceanTransports/ScalarPotential.png">
-<img width="250" src="OceanTransports/MOC.png">
-<img width="250" src="OceanTransports/LatLonCap300mDepth.png">
-
 ## 1. Ocean Transports
 
 The following notebooks demonstrate various standard computations related to ocean transports.
@@ -29,6 +23,9 @@ The following notebooks demonstrate various standard computations related to oce
 - `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
 - `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
 
+![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png)         |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/LatLonCap300mDepth.png)
+:------------------------------:|:---------------------------------:
+![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png)  |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png)
 
 ## 0. Data Structures
 
