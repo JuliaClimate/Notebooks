@@ -23,9 +23,9 @@ The following notebooks demonstrate various standard computations related to oce
 - `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
 - `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
 
-![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png)         |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/LatLonCap300mDepth.png)
+![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png?resize=1024,512)         |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/LatLonCap300mDepth.png?resize=1024,512)
 :------------------------------:|:---------------------------------:
-![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png)  |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png)
+![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png?resize=1024,512)  |  ![](https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png?resize=1024,512)
 
 ## 0. Data Structures
 
