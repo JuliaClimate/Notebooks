@@ -29,12 +29,10 @@ The following notebooks demonstrate various standard computations related to oce
 
 ## 0. Data Structures
 
-[MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) is a Julia package that handles gridded earth variables. It was introduced in this [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) which corresponds to `01_types` and `02_exchanges` in this folder.
+[MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) is a Julia package that handles gridded earth variables. It was introduced in this [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) which corresponds to `01_MeshArrays` in this folder.
 
-- `01_types.ipynb` illustrates the main data structures defined in `MeshArrays.jl` -- `MeshArray`, `gcmarray`, and `gcmgrid` that are [documented here](https://juliaclimate.github.io/MeshArrays.jl/stable/).
-- `02_exchanges.ipynb` exchanges data between neighboring arrays in a `MeshArray `
-- `03_smoothing.ipynb` uses `smooth()` as done in the unit tests of [MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) 
-- `04_netcdf.ipynb` converts binary data to `NetCDF` files using `NCTiles.jl` for (1) simple rectangular grid written to single file; (2) tiled model domain written to multiple files.
+- `01_MeshArrays.ipynb` illustrates the main data structures defined in `MeshArrays.jl` [(documented here)](https://juliaclimate.github.io/MeshArrays.jl/stable/), the exchange of data between neighboring arrays in a `MeshArray`, and demo's these concepts in a simulation of diffusive transport. 
+- `04_netcdf.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using `NCTiles.jl` for (1) a simple rectangular grid written to single file; (2) a tiled model domain on a less simple grid written to multiple files.
 
 ## Notes
 
