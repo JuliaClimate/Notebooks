@@ -36,26 +36,26 @@ include("helper_functions.jl")
 get_grid_if_needed()
 get_velocity_if_needed()
 
-γ =read_llc90_grid()
-LC=LatitudeCircles(-89.0:89.0,γ);
+Γ =read_llc90_grid()
+LC=LatitudeCircles(-89.0:89.0,Γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
 #
-# 1. integrate across `latitude circle paths` 
+# 1. integrate across `latitude circle paths`
 # 2. integrate from the bottom
 
 # + {"slideshow": {"slide_type": "-"}}
-nz=size(γ["hFacC"],2); nt=12; nl=length(LC)
+nz=size(Γ["hFacC"],2); nt=12; nl=length(LC)
 ov=Array{Float64,3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
 for t=1:nt
-    (U,V)=read_velocities(γ["XC"].grid,t)
-    (U,V)=convert_velocities(U,V,γ)
+    (U,V)=read_velocities(Γ["XC"].grid,t)
+    (U,V)=convert_velocities(U,V,Γ)
     for z=1:nz
         UV=Dict("U"=>U[:,z],"V"=>V[:,z],"dimensions"=>["x","y"])
-        [ov[l,z,t]=ThroughFlow(UV,LC[l],γ) for l=1:nl]
+        [ov[l,z,t]=ThroughFlow(UV,LC[l],Γ) for l=1:nl]
     end
 end
 
@@ -66,7 +66,7 @@ ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 # ### Plot Annual Mean And Variability
 # -
 
-x=vec(-89.0:89.0); y=reverse(vec(γ["RF"][1:end-1])); #coordinate variables
+x=vec(-89.0:89.0); y=reverse(vec(Γ["RF"][1:end-1])); #coordinate variables
 
 # + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
 tmp=dropdims(mean(ov,dims=3),dims=3)
@@ -82,5 +82,3 @@ z=reverse(tmp,dims=2); z[z.==0.0].=NaN
 contourf(x,y,1e-6*transpose(z),clims=(-40,40),
     title="Overturning standard deviation (Eulerian; in Sv)",titlefontsize=10)
 #savefig("MOC_std.png")
-# -
-

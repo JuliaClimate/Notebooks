@@ -38,10 +38,10 @@ using MeshArrays, Plots, Statistics, MITgcmTools
 include("helper_functions.jl")
 get_grid_if_needed()
 
-γ=GridLoad(GridSpec("LatLonCap","../inputs/GRID_LLC90/"))
+Γ=GridLoad(GridSpec("LatLonCap","../inputs/GRID_LLC90/"))
 (Tx,Ty,τx,τy,η)=trsp_read("LatLonCap","../inputs/GRID_LLC90/")
 SPM,lon,lat=read_SPM("../inputs/GRID_LLC90/")
-msk=1.0 .+ 0.0 * mask(view(γ["hFacC"],:,1),NaN,0.0);
+msk=1.0 .+ 0.0 * mask(view(Γ["hFacC"],:,1),NaN,0.0);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Helmholtz Decomposition
@@ -61,16 +61,16 @@ TrspCon=msk.*convergence(Tx,Ty);
 TrspPot=ScalarPotential(TrspCon)
 
 #Divergent transport component
-(TxD,TyD)=gradient(TrspPot,γ)
-TxD=TxD.*γ["DXC"]
-TyD=TyD.*γ["DYC"]
+(TxD,TyD)=gradient(TrspPot,Γ)
+TxD=TxD.*Γ["DXC"]
+TyD=TyD.*Γ["DYC"]
 
 #Rotational transport component
 TxR = Tx-TyD
 TyR = Ty-TyD
 
 #vector Potential
-TrspPsi=VectorPotential(TxR,TyR,γ);
+TrspPsi=VectorPotential(TxR,TyR,Γ);
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### Verify The Results Consistency
@@ -98,6 +98,3 @@ contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPsiI),
 TrspPotI=MatrixInterp(write(1e-6*msk*TrspPot),SPM,size(lon))
 contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPotI),
     title="Scalar Potential",clims=(-0.4,0.4))
-# -
-
-
