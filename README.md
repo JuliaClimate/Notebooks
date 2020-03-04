@@ -29,16 +29,17 @@ The following notebooks demonstrate various standard computations related to oce
 
 ## 0. Data Structures
 
-[MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) is a Julia package that handles gridded earth variables. It was introduced in this [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) which corresponds to `01_MeshArrays` in this folder.
-
-- `01_MeshArrays.ipynb` illustrates the main data structures defined in `MeshArrays.jl` [(documented here)](https://juliaclimate.github.io/MeshArrays.jl/stable/), the exchange of data between neighboring arrays in a `MeshArray`, and demo's these concepts in a simulation of diffusive transport. 
+- `01_MeshArrays.ipynb` illustrates the main data structures defined in `MeshArrays.jl` [(documented here)](https://juliaclimate.github.io/MeshArrays.jl/stable/), the exchange of data between neighboring arrays in a `MeshArray`, and demo's these concepts in a simulation of diffusive transport.
+- `02_climatetools.ipynb` illustrates the use of [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/) and [ClimatePlots.jl](https://juliaclimate.github.io/ClimatePlots.jl/dev/)
 - `04_netcdf.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using `NCTiles.jl` for (1) a simple rectangular grid written to single file; (2) a tiled model domain on a less simple grid written to multiple files.
+
 
 ## Notes
 
-- _Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`_
-- _An interactive version can readily be spun up via the `launch binder` badge_
-- _Rerunning the examples can involve data downloads into the `inputs/` folder that can safely be removed afterwards_
-- _For now, this is serial. Efficiency can be improved in various places or simply through parallelization._
-- _Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc._
+- [MeshArrays.jl](https://github.com/juliaclimate/MeshArrays.jl) is a Julia package that handles gridded earth variables. It was introduced in this [JuliaCon-2018 presentation](https://youtu.be/RDxAy_zSUvg) which corresponds to `01_MeshArrays.ipynb` in this folder.
+- Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`
+- An interactive version can readily be spun up via the `launch binder` badge
+- Rerunning the examples can involve data downloads into the `inputs/` folder that can safely be removed afterwards
+- For now, this is serial. Efficiency can be improved in various places or simply through parallelization.
+- Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc.
 
