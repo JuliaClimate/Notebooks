@@ -29,6 +29,7 @@
 
 # +
 #]add ClimateTools#master; add ClimatePlots#master
+#run(`wget http://esgf-data1.diasjp.net/thredds/fileServer/esg_dataroot/cmip5/output1/MIROC/MIROC5/piControl/day/atmos/day/r1i1p1/v20161012/tas/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc`)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Inspect A Data Set File Via NCDataSets
