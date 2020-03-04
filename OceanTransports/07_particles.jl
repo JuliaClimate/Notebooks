@@ -36,7 +36,7 @@ include("helper_functions.jl")
 get_grid_if_needed()
 get_velocity_if_needed()
 
-γ=read_llc90_grid();
+Γ=read_llc90_grid();
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Set Gridded Variables
@@ -47,7 +47,7 @@ get_velocity_if_needed()
 # 4. store everything in `uv_etc` dictionary
 
 # + {"slideshow": {"slide_type": "-"}}
-uv_etc=read_uv_etc(20,γ);
+uv_etc=read_uv_etc(20,Γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Initialize Trajectory Computation
@@ -93,13 +93,11 @@ df=postprocess_ODESolution(sol,uv_etc);
 p=dirname(pathof(IndividualDisplacements));
 
 # + {"slideshow": {"slide_type": "slide"}}
-#include(joinpath(p,"plot_pyplot.jl")); 
+#include(joinpath(p,"plot_pyplot.jl"));
 #PyPlot.figure(); PlotMapProj(df,5000)
 
 #include(joinpath(p,"plot_makie.jl")); AbstractPlotting.inline!(true); #for Juno, set to false
 #scene=PlotMakie(df,5000,180.0) #Makie.save("LatLonCap300mDepth.png", scene)
 
-include(joinpath(p,"plot_plots.jl")); 
+include(joinpath(p,"plot_plots.jl"));
 plt=PlotBasic(df,1000,180.0)
-# -
-
