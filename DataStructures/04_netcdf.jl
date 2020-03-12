@@ -69,7 +69,7 @@ dep_l=-readbin(joinpath(griddir,"RF.data"),prec,(51,1))[2:end]
 dep_c=-readbin(joinpath(griddir,"RC.data"),prec,(50,1))[:]
 dep_lvar = NCvar("dep_l","m",size(dep_l),dep_l,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
 dep_cvar = NCvar("dep_c","m",size(dep_c),dep_c,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
-nsteps = 240
+nsteps = length(readdir(interpdir * "ETAN"))
 timeinterval = 3
 time_steps = timeinterval/2:timeinterval:timeinterval*nsteps
 time_units = "days since 1992-01-01 0:0:0"
