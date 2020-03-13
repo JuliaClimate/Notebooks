@@ -29,9 +29,12 @@
 #
 # _These will be used throughout the notebook_
 
-# +
-#]add MITgcmTools#gfdev01; add NCTiles; add NCDatasets
-# -
+if false
+    using Pkg
+    Pkg.add(PackageSpec(name="MITgcmTools", rev="master"))
+    Pkg.add(PackageSpec(name="NCTiles", rev="master"))
+    Pkg.add("NCDatasets")
+end
 
 using MeshArrays, NCTiles, MITgcmTools
 
