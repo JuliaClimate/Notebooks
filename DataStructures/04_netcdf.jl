@@ -33,14 +33,12 @@
 # +
 if false
     using Pkg
-    Pkg.add(PackageSpec(name="MITgcmTools", rev="master"))
     Pkg.add(PackageSpec(name="NCTiles", rev="master"))
-    Pkg.add("NCDatasets")
+    Pkg.add(PackageSpec(name="MITgcmTools", rev="master"))
 end
 
-using MeshArrays, NCTiles, MITgcmTools
-
-include("nctiles_helper_functions.jl");
+using NCTiles
+include("helper_functions.jl");
 # -
 
 # ### File Paths & I/O Back-End
@@ -114,8 +112,6 @@ close(ds)
 
 # ### 3D example
 
-Γ["readme"]
-
 # +
 # Get the filenames for our first dataset and other information about the field.
 dataset = "WVELMASS"
@@ -151,7 +147,6 @@ close(ds)
 writedir = joinpath(outputs,"tiled")
 ~ispath(writedir) ? mkpath(writedir) : nothing
 
-include("nctiles_helper_functions.jl")
 Γ=grid_etc_native(pth);
 # -
 

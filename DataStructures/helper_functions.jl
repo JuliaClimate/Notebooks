@@ -1,4 +1,4 @@
-using NCDatasets
+using MeshArrays, MITgcmTools
 # this is needed cause writeNetCDFtiles uses `name` etc
 
 """
@@ -23,7 +23,7 @@ function writeNetCDFtiles(flds::Dict,savenamebase::String,README::Array)
         if isa(flds[k].values,TileData)
             addData(fldvars,flds[k])
         else
-            tmpfldvars = [fv[findfirst(isequal(k),name.(fv))] for fv in fldvars]
+            tmpfldvars = [fv[findfirst(isequal(k),NCTiles.NCDatasets.name.(fv))] for fv in fldvars]
             addData.(tmpfldvars,Ref(flds[k]))
         end
     end
