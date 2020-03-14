@@ -85,7 +85,7 @@ README = readlines(readmefile)
 
 lon_c=-179.75:0.5:179.75; lat_c=-89.75:0.5:89.75;
 lon_cvar = NCvar("lon_c","degrees_east",size(lon_c),lon_c,Dict("long_name" => "longitude"),nc)
-lat_cvar = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "longitude"),nc)
+lat_cvar = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "latitude"),nc)
 n1,n2,n3 = (length(lon_c),length(lat_c),length(dep_c))
 
 # ### Interpolate
