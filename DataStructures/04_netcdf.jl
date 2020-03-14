@@ -98,17 +98,8 @@ field = NCvar(fldname,diaginfo["units"],dims,flddata,
 
 # Create the NetCDF file and write data to it.
 
-# +
-# Create the NetCDF file and populate with dimension and field info
-ds,fldvar,dimlist = createfile(joinpath(writedir,fldname*".nc"),field,Γ["readme"])
-
-# Add field and dimension data
-addData(fldvar,field)
-addDimData.(Ref(ds),field.dims)
-
-# Close the file
-close(ds)
-# -
+savename=joinpath(writedir,fldname*".nc")
+write(field,savename,README=Γ["readme"]);
 
 # ### 3D example
 
@@ -126,15 +117,8 @@ flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
 dims = [Γ["lon_c"],Γ["lat_c"],Γ["dep_l"],Γ["tim"]]
 field = NCvar(fldname,diaginfo["units"],dims,flddata,Dict("long_name" => diaginfo["title"]),nc)
 
-# Create the NetCDF file and populate with dimension and field info
-ds,fldvar,dimlist = createfile(joinpath(writedir,fldname*".nc"),field,Γ["readme"])
-
-# Add field and dimension data
-addData(fldvar,field)
-addDimData.(Ref(ds),field.dims)
-
-# Close the file
-close(ds)
+savename=joinpath(writedir,fldname*".nc")
+write(field,savename,README=Γ["readme"]);
 # -
 
 # ## Tiled Data Examples
@@ -181,7 +165,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
             "land" => Γ["land2Dvar"]
 ])
 
-writeNetCDFtiles(flds,savenamebase,Γ["readme"])
+write(flds,savenamebase,README=Γ["readme"]);
 # -
 
 # ### 3D example
@@ -211,7 +195,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
 ])
 
 # Write to NetCDF files
-writeNetCDFtiles(flds,savenamebase,Γ["readme"])
+write(flds,savenamebase,README=Γ["readme"]);
 # -
 
 # ### 3D vector example
@@ -244,7 +228,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
             "thic" => Γ["thiccvar"]
         ])
 
-writeNetCDFtiles(flds,savenamebase,Γ["readme"])
+write(flds,savenamebase,README=Γ["readme"]);
 # -
 
 # Second component : `VVELMASS`
@@ -273,7 +257,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
             "thic" => Γ["thiccvar"]
 ])
 
-writeNetCDFtiles(flds,savenamebase,Γ["readme"])
+write(flds,savenamebase,README=Γ["readme"]);
 # -
 
 # Third component : `WVELMASS`
@@ -302,7 +286,7 @@ flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_
             "thic" => Γ["thiclvar"]
 ])
 
-writeNetCDFtiles(flds,savenamebase,Γ["readme"])
+write(flds,savenamebase,README=Γ["readme"]);
 # -
 
 
