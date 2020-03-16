@@ -60,232 +60,67 @@ nc=NCTiles.NCDatasets
 
 # ## Interpolated Data Examples
 #
-# This example uses 2D and 3D model output that has been interpolated to a rectangular half-degree grid. It reads the data from binary files, adds meta data, and then writes it all to a single `NetCDF` file per model variable. 
-#
-# First, we need to define coordinate variables, array sizes, and meta data:
+# This example uses 2D and 3D model output that has been interpolated to a rectangular half-degree grid. It reads the data from binary files, adds meta data, and then writes it all to a single `NetCDF` file per model variable.
 
-# +
 writedir = joinpath(outputs,"interp") #output files path
 if ~ispath(writedir); mkpath(writedir); end
 
-Γ = grid_etc_interp(pth) #dimensions, sizes, and meta data
-# -
-
 # ### 2D example
 
-# Choose variable to process and get the corresponding list of input files
+# Choose variable to process + specify file set name and precision
 
-prec = Float32
-dataset = "state_2d_set1"
-fldname = "ETAN"
-flddatadir = joinpath(pth["interp"],fldname)
-fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
+nam = "ETAN"
+set = "state_2d_set1"
+prc = Float32
 
-# Get meta data for the chosen variable
-
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
-
-# Define:
+# Get meta data for the chosen variable. Whithin `field` this defines:
 #
-# - a `BinData` struct to contain the file names, precision, and array size.
-# - a `NCvar` struct that sets up the subsequent `write` operation (incl. `BinData` struct.
+# - a `NCvar` struct that sets up the subsequent `write` operation & incl. a `BinData` struct.
+# - a `BinData` struct that contains the file names, precision, and array size.
 
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"]))
-dims = [Γ["lon_c"],Γ["lat_c"],Γ["tim"]]
-field = NCvar(fldname,diaginfo["units"],dims,flddata,
-    Dict("long_name" => diaginfo["title"]),nc)
+(field,savename,readme)=prep_nctiles_interp(pth,set,nam,prc);
 
 # Create the NetCDF file and write data to it.
 
-savename=joinpath(writedir,fldname*".nc")
-write(field,savename,README=Γ["readme"]);
+write(field,savename,README=readme);
 
 # ### 3D example
 
-# +
-# Get the filenames for our first dataset and other information about the field.
-dataset = "WVELMASS"
-fldname = "WVELMASS"
-flddatadir = joinpath(pth["interp"],fldname)
-fnames = flddatadir*'/'.*filter(x -> occursin(".data",x), readdir(flddatadir))
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
-
-# Define the field for writing using an NCvar struct. BinData contains the filenames
-# where the data sits so it's only loaded when needed.
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
-dims = [Γ["lon_c"],Γ["lat_c"],Γ["dep_l"],Γ["tim"]]
-field = NCvar(fldname,diaginfo["units"],dims,flddata,Dict("long_name" => diaginfo["title"]),nc)
-
-savename=joinpath(writedir,fldname*".nc")
-write(field,savename,README=Γ["readme"]);
-# -
+(field,savename,readme)=prep_nctiles_interp(pth,"WVELMASS","WVELMASS",Float32);
+write(field,savename,README=readme);
 
 # ## Tiled Data Examples
 #
-# This example reads in global variables defined over a collection of subdomain arrays (_tiles_) using `MeshArrays.jl`, and writes them to a collection of `NetCDF` files (_nctiles_) using `NCTiles.jl`.
+# This example reads in global variables defined over a collection of subdomain arrays ( _tiles_ ) using `MeshArrays.jl`, and writes them to a collection of `NetCDF` files ( _nctiles_ ) using `NCTiles.jl`.
 #
-# First, we need to define coordinate variables, array sizes, and meta data:
+# ### 2D & 3D examples
 
 # +
+#output folder name
 writedir = joinpath(outputs,"tiled")
 ~ispath(writedir) ? mkpath(writedir) : nothing
 
-Γ=grid_etc_native(pth);
-# -
+#2D example
+(flds,savename,readme)=prep_nctiles_native(pth,"state_2d_set1","ETAN",Float32)
+write(flds,savename,README=readme);
 
-# ### 2D example
-
-# Choose variable to process and get the corresponding list of input files
-
-prec = Float32
-dataset = "state_2d_set1"
-fldname = "ETAN"
-fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(pth["native"]))
-savepath = joinpath(writedir,fldname)
-if ~ispath(savepath); mkpath(savepath); end
-savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname);
-
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"]))
-
-# Prepare dictionary of `NCvar` structs and write to `NetCDF` files.
-
-# +
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"]))
-tilfld = TileData(flddata,Γ["tilesize"],Γ["mygrid"])
-numtiles = Γ["numtiles"]
-
-dims = [Γ["icvar"],Γ["jcvar"],Γ["tim"]]
-coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
-            "lon" => Γ["loncvar"],
-            "lat" => Γ["latcvar"],
-            "area" => Γ["areacvar"],
-            "land" => Γ["land2Dvar"]
-])
-
-write(flds,savenamebase,README=Γ["readme"]);
-# -
-
-# ### 3D example
-
-# +
-# Get the filenames for our first dataset and other information about the field.
-prec = Float32
-dataset = "state_3d_set1"
-fldname = "THETA"
-fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(pth["native"]))
-savepath = joinpath(writedir,fldname)
-if ~ispath(savepath); mkpath(savepath); end
-savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
-
-# Fields to be written to the file are indicated with a dictionary of NCvar structs.
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
-dims = [Γ["icvar"],Γ["jcvar"],Γ["dep_c"],Γ["tim"]]
-tilfld = TileData(flddata,Γ["tilesize"],Γ["mygrid"])
-coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
-            "lon" => Γ["loncvar"],
-            "lat" => Γ["latcvar"],
-            "area" => Γ["areacvar"],
-            "land" => Γ["land3Dvar"],
-            "thic" => Γ["thiccvar"]
-])
-
-# Write to NetCDF files
-write(flds,savenamebase,README=Γ["readme"]);
+#3D example
+(flds,savename,readme)=prep_nctiles_native(pth,"state_3d_set1","THETA",Float32);
+write(flds,savename,README=readme);
 # -
 
 # ### 3D vector example
 #
-# Here we process the three staggered components of a vector field (`UVELMASS`, `VVELMASS` and `WVELMASS`). On a `C-grid` these components are staggered in space.
-#
-# First component : `UVELMASS`
+# Here we process the three components of a vector field called `UVELMASS`, `VVELMASS` and `WVELMASS`. Note: on a `C-grid` these components are staggered in space.
 
 # +
-# Get the filenames for our first dataset and create BinData struct
-prec = Float32
-dataset = "trsp_3d_set1"
-fldname = "UVELMASS"
-fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(pth["native"]))
-savepath = joinpath(writedir,fldname)
-if ~ispath(savepath); mkpath(savepath); end
-savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
+(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","UVELMASS",Float32);
+write(flds,savename,README=readme);
 
-# Define field- BinData contains the filenames where the data sits so it's only loaded when needed
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
-dims = [Γ["iwvar"],Γ["jwvar"],Γ["dep_c"],Γ["tim"]]
-tilfld = TileData(flddata,Γ["tilesize"],Γ["mygrid"])
-coords = join(replace([dim.name for dim in dims],"i_w" => "lon", "j_w" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
-            "lon" => Γ["lonwvar"],
-            "lat" => Γ["latwvar"],
-            "area" => Γ["areawvar"],
-            "land" => Γ["landwvar"],
-            "thic" => Γ["thiccvar"]
-        ])
+(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","VVELMASS",Float32);
+write(flds,savename,README=readme);
 
-write(flds,savenamebase,README=Γ["readme"]);
+(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","WVELMASS",Float32);
+write(flds,savename,README=readme);
 # -
-
-# Second component : `VVELMASS`
-
-# +
-# Get the filenames for our first dataset and create BinData struct
-prec = Float32
-dataset = "trsp_3d_set1"
-fldname = "VVELMASS"
-fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(pth["native"]))
-savepath = joinpath(writedir,fldname)
-if ~ispath(savepath); mkpath(savepath); end
-savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
-
-# Define field- BinData contains the filenames where the data sits so it's only loaded when needed
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
-dims = [Γ["isvar"],Γ["jsvar"],Γ["dep_c"],Γ["tim"]]
-tilfld = TileData(flddata,Γ["tilesize"],Γ["mygrid"])
-coords = join(replace([dim.name for dim in dims],"i_s" => "lon", "j_s" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
-            "lon" => Γ["lonsvar"],
-            "lat" => Γ["latsvar"],
-            "area" => Γ["areasvar"],
-            "land" => Γ["landsvar"],
-            "thic" => Γ["thiccvar"]
-])
-
-write(flds,savenamebase,README=Γ["readme"]);
-# -
-
-# Third component : `WVELMASS`
-
-# +
-# Get the filenames for our first dataset and create BinData struct
-prec = Float32
-dataset = "trsp_3d_set1"
-fldname = "WVELMASS"
-fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(dataset,x)), readdir(pth["native"]))
-savepath = joinpath(writedir,fldname)
-if ~ispath(savepath); mkpath(savepath); end
-savenamebase = joinpath.(Ref(savepath),fldname)
-diaginfo = readAvailDiagnosticsLog(pth["diaglist"],fldname)
-
-# Define field- BinData contains the filenames where the data sits so it's only loaded when needed
-flddata = BinData(fnames,prec,(Γ["n1"],Γ["n2"],Γ["n3"]))
-dims = [Γ["icvar"],Γ["jcvar"],Γ["dep_l"],Γ["tim"]]
-tilfld = TileData(flddata,Γ["tilesize"],Γ["mygrid"])
-coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
-flds = Dict([fldname => NCvar(fldname,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc),
-            "lon" => Γ["loncvar"],
-            "lat" => Γ["latcvar"],
-            "area" => Γ["areacvar"],
-            "land" => Γ["land3Dvar"],
-            "thic" => Γ["thiclvar"]
-])
-
-write(flds,savenamebase,README=Γ["readme"]);
-# -
-
 

@@ -23,8 +23,12 @@ function input_file_paths(inputs)
     "native" => native, "interp" => interp)
 end
 
+"""
+    dimensions_etc_interp(pth::Dict)
 
-function grid_etc_interp(pth)
+Format grid variables as NCvar instances.
+"""
+function dimensions_etc_interp(pth::Dict)
     lon_c=-179.75:0.5:179.75
     lat_c=-89.75:0.5:89.75
     n1,n2 = (length(lon_c),length(lat_c))
@@ -52,7 +56,12 @@ function grid_etc_interp(pth)
     "n1" => n1, "n2" => n2, "n3" => n3)
 end
 
-function grid_etc_native(pth::Dict)
+"""
+    dimensions_etc_native(pth::Dict)
+
+Format grid variables as NCvar instances via MeshArrays.
+"""
+function dimensions_etc_native(pth::Dict)
     n3=50
     prec = Float32
     dep_l=-readbin(joinpath(pth["grid"],"RF.data"),prec,(n3+1,1))[2:end]
@@ -152,4 +161,78 @@ function grid_etc_native(pth::Dict)
     "dep_c" => dep_c,"dep_l" => dep_l,"tim" => tim,
     "n1" => n1, "n2" => n2, "n3" => n3, "mygrid" => γ,
     "tilesize" => tilesize, "numtiles" => numtiles, "readme" => readme)
+end
+
+function prep_nctiles_interp(pth,set,nam,prc)
+    Λ = dimensions_etc_interp(pth) #dimensions, sizes, and meta data
+
+    flddatadir = joinpath(pth["interp"],nam)
+    fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
+    diaginfo = readAvailDiagnosticsLog(pth["diaglist"],nam)
+    if diaginfo["levs"]==1 && diaginfo["code"][2]=='M'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"]))
+        dims = [Λ["lon_c"],Λ["lat_c"],Λ["tim"]]
+    elseif diaginfo["levs"]>1 && diaginfo["code"][2]=='M' && diaginfo["code"][9]=='L'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"],Λ["n3"]))
+        dims = [Λ["lon_c"],Λ["lat_c"],Λ["dep_l"],Λ["tim"]]
+    else
+        error("other cases remain to be implemented...")
+    end
+    field = NCvar(nam,diaginfo["units"],dims,flddata,
+    Dict("long_name" => diaginfo["title"]),nc)
+    savename=joinpath(writedir,nam*".nc")
+    readme=Λ["readme"]
+
+    #nct=...
+    return field,savename,readme
+end
+
+function prep_nctiles_native(pth,set,nam,prc)
+    Λ = dimensions_etc_native(pth) #dimensions, sizes, and meta data
+
+    fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(set,x)), readdir(pth["native"]))
+    savepath = joinpath(writedir,nam)
+    if ~ispath(savepath); mkpath(savepath); end
+    savename = joinpath.(Ref(savepath),nam)
+    diaginfo = readAvailDiagnosticsLog(pth["diaglist"],nam);
+    if diaginfo["levs"]==1 && diaginfo["code"][2]=='M'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"]))
+        dims = [Λ["icvar"],Λ["jcvar"],Λ["tim"]]
+        coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
+        tmp=Dict("lon" => Λ["loncvar"],"lat" => Λ["latcvar"],
+        "area" => Λ["areacvar"],"land" => Λ["land2Dvar"])
+    elseif diaginfo["levs"]>1 && diaginfo["code"][2]=='M' && diaginfo["code"][9]=='M'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"],Λ["n3"]))
+        dims = [Λ["icvar"],Λ["jcvar"],Λ["dep_c"],Λ["tim"]]
+        coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
+        tmp=Dict(    "lon" => Λ["loncvar"],"lat" => Λ["latcvar"],
+        "area" => Λ["areacvar"],"land" => Λ["land3Dvar"],"thic" => Λ["thiccvar"])
+    elseif diaginfo["levs"]>1 && diaginfo["code"][2]=='U' && diaginfo["code"][9]=='M'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"],Λ["n3"]))
+        dims = [Λ["iwvar"],Λ["jwvar"],Λ["dep_c"],Λ["tim"]]
+        coords = join(replace([dim.name for dim in dims],"i_w" => "lon", "j_w" => "lat")," ")
+        tmp=Dict(    "lon" => Λ["lonwvar"],"lat" => Λ["latwvar"],
+        "area" => Λ["areawvar"],"land" => Λ["landwvar"],"thic" => Λ["thiccvar"])
+    elseif diaginfo["levs"]>1 && diaginfo["code"][2]=='V' && diaginfo["code"][9]=='M'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"],Λ["n3"]))
+        dims = [Λ["isvar"],Λ["jsvar"],Λ["dep_c"],Λ["tim"]]
+        coords = join(replace([dim.name for dim in dims],"i_s" => "lon", "j_s" => "lat")," ")
+        tmp=Dict(    "lon" => Λ["lonsvar"],"lat" => Λ["latsvar"],
+        "area" => Λ["areasvar"],"land" => Λ["landsvar"],"thic" => Λ["thiccvar"])
+    elseif diaginfo["levs"]>1 && diaginfo["code"][2]=='M' && diaginfo["code"][9]=='L'
+        flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"],Λ["n3"]))
+        dims = [Λ["icvar"],Λ["jcvar"],Λ["dep_l"],Λ["tim"]]
+        coords = join(replace([dim.name for dim in dims],"i_c" => "lon", "j_c" => "lat")," ")
+        tmp=Dict(    "lon" => Λ["loncvar"],"lat" => Λ["latcvar"],
+        "area" => Λ["areacvar"],"land" => Λ["land3Dvar"],"thic" => Λ["thiclvar"])
+    else
+        error("other cases remain to be implemented...")
+    end
+
+    tilfld = TileData(flddata,Λ["tilesize"],Λ["mygrid"])
+    flds = Dict([nam => NCvar(nam,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc)])
+    merge!(flds,tmp)
+
+    #nct=...
+    return flds,savename,readme
 end
