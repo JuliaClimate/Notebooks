@@ -40,7 +40,7 @@ function grid_etc_interp(pth)
     time_units = "days since 1992-01-01 0:0:0"
 
     lon_c = NCvar("lon_c","degrees_east",size(lon_c),lon_c,Dict("long_name" => "longitude"),nc)
-    lat_c = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "longitude"),nc)
+    lat_c = NCvar("lat_c","degrees_north",size(lat_c),lat_c,Dict("long_name" => "latitude"),nc)
     dep_l = NCvar("dep_l","m",size(dep_l),dep_l,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
     dep_c = NCvar("dep_c","m",size(dep_c),dep_c,Dict(["long_name" => "depth","positive"=>"down","standard_name"=>"depth"]),nc)
     tim = NCvar("tim",time_units,Inf,time_steps,Dict(("long_name" => "time","standard_name" => "time")),nc)
