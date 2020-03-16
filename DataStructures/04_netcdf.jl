@@ -60,7 +60,6 @@ nc=NCTiles.NCDatasets
 
 # ## Interpolated Data Examples
 #
-#
 # This example uses 2D and 3D model output that has been interpolated to a rectangular half-degree grid. It reads the data from binary files, adds meta data, and then writes it all to a single `NetCDF` file per model variable. 
 #
 # First, we need to define coordinate variables, array sizes, and meta data:
