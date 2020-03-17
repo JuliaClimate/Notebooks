@@ -1,6 +1,11 @@
 using MeshArrays, MITgcmTools
 # this is needed cause writeNetCDFtiles uses `name` etc
 
+"""
+    get_testcases_if_needed(pth)
+
+Download and decompress input files if needed.
+"""
 function get_testcases_if_needed(pth)
     if !isdir(pth)
         run(`git clone https://github.com/gaelforget/nctiles-testcases $pth`)
@@ -13,6 +18,11 @@ function get_testcases_if_needed(pth)
     end
 end
 
+"""
+    input_file_paths(inputs)
+
+Put all folder and file paths in a dictionnary.
+"""
 function input_file_paths(inputs)
     diaglist = joinpath(inputs,"available_diagnostics.log")
     readme = joinpath(inputs,"README")
@@ -164,7 +174,13 @@ function dimensions_etc_native(pth::Dict)
     "tilesize" => tilesize, "numtiles" => numtiles, "readme" => readme)
 end
 
-function prep_nctiles_interp(pth,set,nam,prc)
+"""
+    prep_nctiles_interp(inputs,set,nam,prc)
+
+Setup NCvar instance for chosen variable that can then be written to file.
+"""
+function prep_nctiles_interp(inputs,set,nam,prc)
+    pth=input_file_paths(inputs)
     Λ = dimensions_etc_interp(pth) #dimensions, sizes, and meta data
 
     flddatadir = joinpath(pth["interp"],nam)
@@ -188,7 +204,14 @@ function prep_nctiles_interp(pth,set,nam,prc)
     return field,savename,readme
 end
 
-function prep_nctiles_native(pth,set,nam,prc)
+"""
+    prep_nctiles_native(inputs,set,nam,prc)
+
+Setup NCvar array for chosen variable that can then be written to file. The
+    NCvar array includes ancillary variables like lon and lat.
+"""
+function prep_nctiles_native(inputs,set,nam,prc)
+    pth=input_file_paths(inputs)
     Λ = dimensions_etc_native(pth) #dimensions, sizes, and meta data
 
     fnames = pth["native"]*'/'.*filter(x -> (occursin(".data",x) && occursin(set,x)), readdir(pth["native"]))

@@ -49,7 +49,6 @@ include("helper_functions.jl");
 # File Paths
 inputs = "../inputs/nctiles-testcases/"
 get_testcases_if_needed(inputs)
-pth=input_file_paths(inputs)
 
 outputs = "../outputs/nctiles-newfiles/"
 if ~ispath(outputs); mkpath(outputs); end
@@ -78,7 +77,7 @@ prc = Float32
 # - a `NCvar` struct that sets up the subsequent `write` operation & incl. a `BinData` struct.
 # - a `BinData` struct that contains the file names, precision, and array size.
 
-(field,savename,readme)=prep_nctiles_interp(pth,set,nam,prc);
+(field,savename,readme)=prep_nctiles_interp(inputs,set,nam,prc);
 
 # Create the NetCDF file and write data to it.
 
@@ -86,7 +85,7 @@ write(field,savename,README=readme);
 
 # ### 3D example
 
-(field,savename,readme)=prep_nctiles_interp(pth,"WVELMASS","WVELMASS",Float32);
+(field,savename,readme)=prep_nctiles_interp(inputs,"WVELMASS","WVELMASS",Float32);
 write(field,savename,README=readme);
 
 # ## Tiled Data Examples
@@ -101,11 +100,11 @@ writedir = joinpath(outputs,"tiled")
 ~ispath(writedir) ? mkpath(writedir) : nothing
 
 #2D example
-(flds,savename,readme)=prep_nctiles_native(pth,"state_2d_set1","ETAN",Float32)
+(flds,savename,readme)=prep_nctiles_native(inputs,"state_2d_set1","ETAN",Float32)
 write(flds,savename,README=readme);
 
 #3D example
-(flds,savename,readme)=prep_nctiles_native(pth,"state_3d_set1","THETA",Float32);
+(flds,savename,readme)=prep_nctiles_native(inputs,"state_3d_set1","THETA",Float32);
 write(flds,savename,README=readme);
 # -
 
@@ -114,13 +113,13 @@ write(flds,savename,README=readme);
 # Here we process the three components of a vector field called `UVELMASS`, `VVELMASS` and `WVELMASS`. Note: on a `C-grid` these components are staggered in space.
 
 # +
-(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","UVELMASS",Float32);
+(flds,savename,readme)=prep_nctiles_native(inputs,"trsp_3d_set1","UVELMASS",Float32);
 write(flds,savename,README=readme);
 
-(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","VVELMASS",Float32);
+(flds,savename,readme)=prep_nctiles_native(inputs,"trsp_3d_set1","VVELMASS",Float32);
 write(flds,savename,README=readme);
 
-(flds,savename,readme)=prep_nctiles_native(pth,"trsp_3d_set1","WVELMASS",Float32);
+(flds,savename,readme)=prep_nctiles_native(inputs,"trsp_3d_set1","WVELMASS",Float32);
 write(flds,savename,README=readme);
 # -
 
