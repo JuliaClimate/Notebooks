@@ -108,14 +108,14 @@ plot(P,Pexch)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Diffusion-Based Smoothing
 #
-# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Starting from a random noise field, the smoothing efficiency is predictable and can be set via a smoothing scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518). 
+# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Starting from a random noise field, the smoothing efficiency is predictable and can be set via a smoothing scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518).
 #
-# This example also illustrates the generality of the `MeshArrays` approach, where the same code in `demo2` is readily applicable to any `PeriodicDomain`, `PeriodicChanel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid maps onto the `6` faces of a cube with `16*16` points per face, with distances, areas, etc all set to `1.0`.
+# This example also illustrates the generality of the `MeshArrays` approach, where the same code in `demo2` is readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid maps onto the `6` faces of a cube with `16*16` points per face, with distances, areas, etc all set to `1.0`.
 
 # + {"slideshow": {"slide_type": "subslide"}}
 p=dirname(pathof(MeshArrays))
 include(joinpath(p,"../examples/Demos.jl"))
-Γ=GridOfOnes("CubeSphere",6,16)
+γ,Γ=GridOfOnes("CubeSphere",6,16)
 Δ=demo2(Γ);
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
@@ -136,5 +136,3 @@ DXCsm=Δ[3]
 DYCsm=Δ[4]
 @time Rend=smooth(Rini,DXCsm,DYCsm,Γ);
 @time Rend=smooth(Rini,2DXCsm,2DYCsm,Γ);
-
-

@@ -170,7 +170,7 @@ function dimensions_etc_native(pth::Dict)
     "land_w" => land_w, "land_s" => land_s,
     "thic_c" => thic_c, "thic_l" => thic_l,
     "dep_c" => dep_c,"dep_l" => dep_l,"tim" => tim,
-    "n1" => n1, "n2" => n2, "n3" => n3, "mygrid" => γ,
+    "n1" => n1, "n2" => n2, "n3" => n3, "γ" => γ,
     "tilesize" => tilesize, "numtiles" => numtiles, "readme" => readme)
 end
 
@@ -253,7 +253,7 @@ function prep_nctiles_native(inputs,set,nam,prc)
         error("other cases remain to be implemented...")
     end
 
-    tilfld = TileData(flddata,Λ["tilesize"],Λ["mygrid"])
+    tilfld = TileData(flddata,Λ["tilesize"],Λ["γ"])
     flds = Dict([nam => NCvar(nam,diaginfo["units"],dims,tilfld,Dict(["long_name" => diaginfo["title"], "coordinates" => coords]),nc)])
     merge!(flds,tmp)
 
