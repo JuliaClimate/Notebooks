@@ -41,7 +41,8 @@ http="https://github.com/gaelforget/GRID_LLC90"
 #
 # - get map of tile numbers
 # - find nearest neighbor
-#
+# - stereographic projection (tile)
+# - array of quadrilaterals (tile)
 
 # +
 #get map of tile numbers
@@ -120,10 +121,14 @@ jjMin=minimum(tmp11)[2]
 jjMax=maximum(tmp11)[2]
 
 #iiPoints=findall(tmp1.>0)
-XC_tmp=view(XC_e.f[iiFace],iiMin-1:iiMax+1,jjMin-1:jjMax+1)
-YC_tmp=view(YC_e.f[iiFace],iiMin-1:iiMax+1,jjMin-1:jjMax+1)
+XC_tmp=view(XC_e.f[iiFace],iiMin:iiMax+2,jjMin:jjMax+2)
+YC_tmp=view(YC_e.f[iiFace],iiMin:iiMax+2,jjMin:jjMax+2)
 XC0=Γ["XG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
 YC0=Γ["YG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
+
+#to match gcmfaces test case : interp=gcmfaces_interp_coeffs(0.1,0.1);
+XC0=6.5000
+YC0=-0.1994
 
 scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false)
 scatter!([XC0],[YC0],c=:red)
@@ -173,6 +178,7 @@ yy=y./(1 .+z);
 return xx,yy
 end
 
+# +
 (xx,yy)=StereographicProjection(XC0,YC0,XC_tmp,YC_tmp)
 (prof_x,prof_y)=StereographicProjection(XC0,YC0,XC,YC)
 
@@ -180,6 +186,86 @@ end
 scatter(xx,yy,marker=:+,c=:blue,leg=false)
 scatter!([0.],[0.],c=:red)
 scatter!([prof_x],[prof_y],c=:green)
+
+# +
+x_quad=Array{Float64,2}(undef,(ni+1)*(nj+1),4)
+y_quad=Array{Float64,2}(undef,(ni+1)*(nj+1),4)
+i_quad=Array{Int64,2}(undef,(ni+1)*(nj+1),4)
+j_quad=Array{Int64,2}(undef,(ni+1)*(nj+1),4)
+
+didj=[[0 0];[1 0];[1 1];[0 1]]
+for pp=1:4
+    di=didj[pp,1]
+    dj=didj[pp,2]
+
+    #note the shift in indices due to exchange above    
+    tmp=xx[1+di:ni+1+di,1+dj:nj+1+dj]
+    x_quad[:,pp]=vec(tmp)
+    tmp=yy[1+di:ni+1+di,1+dj:nj+1+dj]
+    y_quad[:,pp]=vec(tmp)
+
+    tmp=collect(0+di:ni+di)*ones(1,nj+1)
+    i_quad[:,pp]=vec(tmp)
+    tmp=ones(ni+1,1)*transpose(collect(0+dj:nj+dj));    
+    j_quad[:,pp]=vec(tmp)    
+end
+
+# +
+function PolygonAngle(px,py,x=[],y=[])
+#object:    compute sum of interior angles for polygons (when input
+#           is px,py) or points vs polygons (when input is px,py,x,y)
+#inputs:    px,py are MxN matrices where each line specifies one polygon
+#(optional) x,y are position vectors
+#outputs:   ang are the corresponding sums of interior angles
+
+M=size(px,1); N=size(px,2); P=1;
+doPointsInPolygon=false 
+if length(x)>0;
+    doPointsInPolygon=true
+    x=transpose(vec(x))
+    y=transpose(vec(y))
+    P=length(x)
+end;
+
+angsum=zeros(M,P)
+for ii=0:N-1    
+    ppx=circshift(px,[0 -ii])
+    ppy=circshift(py,[0 -ii])        
+    if ~doPointsInPolygon
+            #compute sum of corner angles
+            v1x=ppx[:,2]-ppx[:,1]
+            v1y=ppy[:,2]-ppy[:,1]
+            v2x=ppx[:,4]-ppx[:,1] 
+            v2y=ppy[:,4]-ppy[:,1]
+    else;
+            #compute sum of sector angles        
+            v1x=ppx[:,1]*ones(1,P)-ones(M,1)*x
+            v1y=ppy[:,1]*ones(1,P)-ones(M,1)*y
+            v2x=ppx[:,2]*ones(1,P)-ones(M,1)*x 
+            v2y=ppy[:,2]*ones(1,P)-ones(M,1)*y
+    end
+    g_acos=acos.( ( v1x.*v2x+v1y.*v2y )./sqrt.( v1x.*v1x+v1y.*v1y )./sqrt.( v2x.*v2x+v2y.*v2y ) )
+    g_sin= ( v1x.*v2y-v1y.*v2x )./sqrt.( v1x.*v1x+v1y.*v1y )./sqrt.( v2x.*v2x+v2y.*v2y )
+    angsum=angsum+rad2deg.(g_acos.*sign.(g_sin));    
+end;
+
+    
+    return angsum
+end
+    
+angsum=PolygonAngle(x_quad,y_quad,[prof_x],[prof_y])
+ii=findall(angsum.>180.)
+II=ii[1].I[1]
+
+scatter(x_quad[II,:],y_quad[II,:])
+scatter!([prof_x],[prof_y],c=:green)
 # -
+
+[i_quad[II,:]' ; j_quad[II,:]']
+[x_quad[II,:]' ; y_quad[II,:]']
+
+
+
+
 
 
