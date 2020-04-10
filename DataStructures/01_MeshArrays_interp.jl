@@ -32,11 +32,12 @@ using MeshArrays, Plots
 
 pth="../inputs/GRID_LLC90/"
 γ=GridSpec("LatLonCap",pth)
+Γ=GridLoad(γ)
 
 http="https://github.com/gaelforget/GRID_LLC90"
 !isdir(pth) ? run(`git clone $http $pth`) : nothing;
-# -
 
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Interpolation Code
 #
 # - get map of tile numbers
@@ -44,7 +45,7 @@ http="https://github.com/gaelforget/GRID_LLC90"
 # - stereographic projection (tile)
 # - array of quadrilaterals (tile)
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
 #get map of tile numbers
 
 using MITgcmTools
@@ -52,7 +53,7 @@ ni=30; nj=30;
 tile=TileMap(γ,ni,nj)
 qwckplot(tile)
 
-# +
+# + {"slideshow": {"slide_type": "slide"}}
 # find nearest neighbor
 
 using NearestNeighbors
@@ -60,7 +61,6 @@ using NearestNeighbors
 XC=collect(0.1:0.5:2.1); YC=collect(0.1:0.5:2.1);
 #XC=0.1; YC=0.1;
 
-Γ=GridLoad(γ)
 XC_a=write(Γ["XC"])
 YC_a=write(Γ["YC"])
 tile_a=write(tile)
@@ -80,7 +80,9 @@ idxs, dists = knn(kdtree, [xx yy zz]', 4, true)
 ik=[idxs[i][1] for i in 1:length(XC)]
 [XC_a[ik] YC_a[ik] tile_a[ik]]
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
+#prepare arrays for interpolation
+
 XC_e=exchange(Γ["XC"])
 YC_e=exchange(Γ["YC"])
 
@@ -106,6 +108,7 @@ YC_tmp=view(YC_e.f[iiFace],iiMin:iiMax+2,jjMin:jjMax+2)
 XC0=Γ["XG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
 YC0=Γ["YG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
 
+# + {"slideshow": {"slide_type": "subslide"}}
 #to match gcmfaces test case : interp=gcmfaces_interp_coeffs(0.1,0.1);
 #iiTile=17
 #XC0=6.5000
@@ -118,7 +121,7 @@ scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false)
 scatter!([XC0],[YC0],c=:red)
 scatter!([XC],[YC],c=:green)
 
-# +
+# + {"slideshow": {"slide_type": "slide"}}
 function StereographicProjection(XC0,YC0,XC,YC)
 #[xx,yy]=gcmfaces_stereoproj(XC0,YC0,XC,YC);
 #object:    compute stereographic projection putting XC0,YC0 at 0,0
@@ -162,7 +165,7 @@ yy=y./(1 .+z);
 return xx,yy
 end
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
 (xx,yy)=StereographicProjection(XC0,YC0,XC_tmp,YC_tmp)
 (prof_x,prof_y)=StereographicProjection(XC0,YC0,XC,YC)
 ~isa(prof_x,Array) ? prof_x=[prof_x] : nothing
@@ -172,6 +175,9 @@ end
 scatter(xx,yy,marker=:+,c=:blue,leg=false)
 scatter!([0.],[0.],c=:red)
 scatter!(prof_x,prof_y,c=:green)
+
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ### Quadrilaterals (xx,yy,i,j)
 
 # +
 x_quad=Array{Float64,2}(undef,(ni+1)*(nj+1),4)
@@ -196,7 +202,7 @@ for pp=1:4
     j_quad[:,pp]=vec(tmp)    
 end
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
 function PolygonAngle(px,py,x=[],y=[])
 #object:    compute sum of interior angles for polygons (when input
 #           is px,py) or points vs polygons (when input is px,py,x,y)
@@ -239,29 +245,20 @@ end;
     return angsum
 end
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
 angsum=PolygonAngle(x_quad,y_quad,prof_x,prof_y)
 ii=findall(angsum.>180.)
 ii=[ii[j].I[1] for j in 1:length(ii)]
 
 scatter(x_quad[ii,:],y_quad[ii,:],c=:blue,leg=false)
 scatter!(prof_x,prof_y,c=:red)
-# -
 
+# + {"slideshow": {"slide_type": "subslide"}}
 [i_quad[ii,:] j_quad[ii,:]]
 [x_quad[ii,:] y_quad[ii,:]]
 
-# ### Left to do : 
-#
-# ```
-#         %5) determine bi-linear interpolation weights:
-#         px=x_quad(ii_quad,:);
-#         py=y_quad(ii_quad,:);
-#         ox=prof_x(ii_prof);
-#         oy=prof_y(ii_prof);
-#         [ow]=gcmfaces_quadmap(px,py,ox,oy);
-# ```
-#
+# + {"slideshow": {"slide_type": "slide"}, "cell_style": "split", "cell_type": "markdown"}
+# ### Interpolation Coefficients
 
 # +
 function QuadCoeffs(px,py,ox=[],oy=[])
@@ -336,19 +333,22 @@ if ~isempty(ox);
         tmp3=pl[:,5:end].*pm[:,5:end]
         tmp4=(1 .-pl[:,5:end]).*pm[:,5:end]
         ow=cat(tmp1,tmp2,tmp3,tmp4; dims=3)
+        #treat pathological cases if needed
+        tmp=ParalCoeffs(px,py,ox,oy)
+        ow[findall(isnan.(ow))].=tmp[findall(isnan.(ow))]
 end
 
 return ow
 end
 
 #test case from https://www.particleincell.com/2012/quad-interpolation/
-QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
+#QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
 
 #However the case of a perfect parallelogram needs special treatment; see:
 #QuadCoeffs([0., 2., 3., 1.]',[0., 0., 1., 1.]',0.1,0.1)
 
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}}
 function ParalCoeffs(px,py,ox=[],oy=[])
 
 tmp1=px[:,1];
@@ -361,11 +361,11 @@ tmp2=-py[:,1]+py[:,2];
 tmp3=-py[:,2]+py[:,3];
 b=[tmp1 tmp2 tmp3];
 
-    #[ox-a[1]; oy-b[1]]
-#return inv([a[2] a[3];b[2] b[3]])*[ox-a[1]; oy-b[1]]
+(m,l)=inv([a[1,2] a[1,3];b[1,2] b[1,3]])*[ox[1]-a[1,1]; oy[1]-b[1,1]]    
 
-(m,l)=inv([a[2] a[3];b[2] b[3]])*[ox-a[1]; oy-b[1]]    
-
+m=( b[:,3].*(ox-a[:,1])-a[:,3].*(oy-b[:,1]) ) ./(a[:,2].*b[:,3]-a[:,3].*b[:,2])
+l=( -b[:,2].*(ox-a[:,1])+a[:,2].*(oy-b[:,1]) ) ./(a[:,2].*b[:,3]-a[:,3].*b[:,2])
+   
 ow=[];
 tmp1=(1 .-l).*(1 .-m)
 tmp4=l.*(1 .-m) #tmp2 v tmp4 may seem reversed in QuadCoeffs but match below
@@ -377,11 +377,11 @@ return ow
 end
 
 #This sends the corners to unit square corners
-x=1.0; y=1.0;
-println(vec(ParalCoeffs([0., 2., 3., 1.]',[0., 0., 1., 1.]',x,y)))
-println(vec(QuadCoeffs([0., 2.01, 3., 1.]',[0., 0., 1., 1.]',x,y)))
+#x=1.0; y=1.0;
+#println(vec(ParalCoeffs([0., 2., 3., 1.]',[0., 0., 1., 1.]',x,y)))
+#println(vec(QuadCoeffs([0., 2.01, 3., 1.]',[0., 0., 1., 1.]',x,y)))
 
-# +
+# + {"slideshow": {"slide_type": "subslide"}, "cell_style": "split"}
 px=x_quad[ii[1],:]'
 py=y_quad[ii[1],:]'
 ox=[prof_x[1]]
@@ -390,8 +390,7 @@ oy=[prof_y[1]]
 ow=QuadCoeffs(px,py,ox,oy)
 
 Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:]', "j" => j_quad[ii,:]', "w" => dropdims(ow,dims=2))
-# + {}
-if false
+# + {"cell_style": "split"}
 px=x_quad[ii,:]
 py=y_quad[ii,:]
 ox=prof_x
@@ -400,8 +399,5 @@ oy=prof_y
 ow=QuadCoeffs(px,py,ox,oy)
 
 Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:], "j" => j_quad[ii,:], "w" => dropdims(ow,dims=2))
-end
 # -
-
-
 
