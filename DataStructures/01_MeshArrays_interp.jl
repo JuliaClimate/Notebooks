@@ -57,8 +57,8 @@ qwckplot(tile)
 
 using NearestNeighbors
 
-#XC=collect(0.1:0.5:2.1); YC=collect(0.1:0.5:2.1);
-XC=0.1; YC=0.1;
+XC=collect(0.1:0.5:2.1); YC=collect(0.1:0.5:2.1);
+#XC=0.1; YC=0.1;
 
 Γ=GridLoad(γ)
 XC_a=write(Γ["XC"])
@@ -78,7 +78,7 @@ kdtree = KDTree([x y z]')
 idxs, dists = knn(kdtree, [xx yy zz]', 4, true)
 
 ik=[idxs[i][1] for i in 1:length(XC)]
-[XC_a[ik] YC_a[ik]]
+[XC_a[ik] YC_a[ik] tile_a[ik]]
 
 # +
 XC_e=exchange(Γ["XC"])
@@ -86,6 +86,9 @@ YC_e=exchange(Γ["YC"])
 
 list_tile=[tile_a[ik]]; 
 ii=1; iiTile=Int(list_tile[ii][1])
+#println(iiTile)
+#iiTile=17
+
 tmp1=1*(tile.==iiTile)
 iiFace=findall(maximum.(tmp1.f).>0)[1]
 
@@ -104,8 +107,12 @@ XC0=Γ["XG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
 YC0=Γ["YG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
 
 #to match gcmfaces test case : interp=gcmfaces_interp_coeffs(0.1,0.1);
-XC0=6.5000
-YC0=-0.1994
+#iiTile=17
+#XC0=6.5000
+#YC0=-0.1994
+#or equivalently
+#ii0=Int(floor((iiMin+iiMax)/2)); jj0=Int(floor((jjMin+jjMax)/2));
+#XC0=Γ["XC"].f[iiFace][ii0,jj0]; YC0=Γ["YC"].f[iiFace][ii0,jj0];
 
 scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false)
 scatter!([XC0],[YC0],c=:red)
@@ -158,11 +165,13 @@ end
 # +
 (xx,yy)=StereographicProjection(XC0,YC0,XC_tmp,YC_tmp)
 (prof_x,prof_y)=StereographicProjection(XC0,YC0,XC,YC)
+~isa(prof_x,Array) ? prof_x=[prof_x] : nothing
+~isa(prof_y,Array) ? prof_y=[prof_y] : nothing
 
 #scatter(xx,yy,c=:blue,leg=false)
 scatter(xx,yy,marker=:+,c=:blue,leg=false)
 scatter!([0.],[0.],c=:red)
-scatter!([prof_x],[prof_y],c=:green)
+scatter!(prof_x,prof_y,c=:green)
 
 # +
 x_quad=Array{Float64,2}(undef,(ni+1)*(nj+1),4)
@@ -199,8 +208,8 @@ M=size(px,1); N=size(px,2); P=1;
 doPointsInPolygon=false 
 if length(x)>0;
     doPointsInPolygon=true
-    x=transpose(vec(x))
-    y=transpose(vec(y))
+    x=reshape(x,1,length(x))
+    y=reshape(y,1,length(y))
     P=length(x)
 end;
 
@@ -229,17 +238,18 @@ end;
     
     return angsum
 end
-    
-angsum=PolygonAngle(x_quad,y_quad,[prof_x],[prof_y])
-ii=findall(angsum.>180.)
-II=ii[1].I[1]
 
-scatter(x_quad[II,:],y_quad[II,:])
-scatter!([prof_x],[prof_y],c=:green)
+# +
+angsum=PolygonAngle(x_quad,y_quad,prof_x,prof_y)
+ii=findall(angsum.>180.)
+ii=[ii[j].I[1] for j in 1:length(ii)]
+
+scatter(x_quad[ii,:],y_quad[ii,:],c=:blue,leg=false)
+scatter!(prof_x,prof_y,c=:red)
 # -
 
-[i_quad[II,:]' ; j_quad[II,:]']
-[x_quad[II,:]' ; y_quad[II,:]']
+[i_quad[ii,:] j_quad[ii,:]]
+[x_quad[ii,:] y_quad[ii,:]]
 
 # ### Left to do : 
 #
@@ -262,12 +272,9 @@ function QuadCoeffs(px,py,ox=[],oy=[])
 #inputs:    px,py are Mx4 matrices where each line specifies one quad
 #(optional) ox,oy are MxP position matrices
 #outputs:   pw are the MxPx4 bilinear interpolation weights
-
-    #the following test case is based upon https://www.particleincell.com/2012/quad-interpolation/
-    #px = [-1, 8, 13, -4];
-    #py = [-1, 3, 11, 8];
-    #ox=0; oy=6;
-
+#
+#the following test case is based upon https://www.particleincell.com/2012/quad-interpolation/
+#QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
 
 #solve linear problem for a,b vectors (knowing px,py)
 #  logical (l,m) to physical (x,y) mapping is then
@@ -312,7 +319,7 @@ a=reshape(a,(size(a,1),1,size(a,2))); a=repeat(a,1,size(x,2),1);
 b=reshape(b,(size(b,1),1,size(b,2))); b=repeat(b,1,size(x,2),1);
 sgn=repeat(sgn,1,size(x,2));
 #
-aa = a[:,:,4].*b[:,:,3] - a[:,:,3].*b[:,:,4]
+aa = a[:,:,4].*b[:,:,3] -a[:,:,3].*b[:,:,4]
 bb = a[:,:,4].*b[:,:,1] -a[:,:,1].*b[:,:,4] + a[:,:,2].*b[:,:,3] - a[:,:,3].*b[:,:,2] + x.*b[:,:,4] - y.*a[:,:,4]
 cc = a[:,:,2].*b[:,:,1] -a[:,:,1].*b[:,:,2] + x.*b[:,:,2] - y.*a[:,:,2]
 
@@ -321,7 +328,7 @@ det = sqrt.(bb.*bb - 4.0*aa.*cc)
 pm = (-bb+sgn.*det)./(2.0*aa)
 #compute l by substitution in equation system
 pl = (x-a[:,:,1]-a[:,:,3].*pm)./(a[:,:,2]+a[:,:,4].*pm)
-
+    
 ow=[];
 if ~isempty(ox); 
         tmp1=(1 .-pl[:,5:end]).*(1 .-pm[:,5:end])
@@ -335,15 +342,66 @@ return ow
 end
 
 #test case from https://www.particleincell.com/2012/quad-interpolation/
-#QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
+QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
+
+#However the case of a perfect parallelogram needs special treatment; see:
+#QuadCoeffs([0., 2., 3., 1.]',[0., 0., 1., 1.]',0.1,0.1)
 
 
 # +
-px=x_quad[II,:]'
-py=y_quad[II,:]'
+function ParalCoeffs(px,py,ox=[],oy=[])
+
+tmp1=px[:,1];
+tmp2=-px[:,1]+px[:,2];
+tmp3=-px[:,2]+px[:,3];
+a=[tmp1 tmp2 tmp3];
+
+tmp1=py[:,1];
+tmp2=-py[:,1]+py[:,2];
+tmp3=-py[:,2]+py[:,3];
+b=[tmp1 tmp2 tmp3];
+
+    #[ox-a[1]; oy-b[1]]
+#return inv([a[2] a[3];b[2] b[3]])*[ox-a[1]; oy-b[1]]
+
+(m,l)=inv([a[2] a[3];b[2] b[3]])*[ox-a[1]; oy-b[1]]    
+
+ow=[];
+tmp1=(1 .-l).*(1 .-m)
+tmp4=l.*(1 .-m) #tmp2 v tmp4 may seem reversed in QuadCoeffs but match below
+tmp3=l.*m
+tmp2=(1 .-l).*m #tmp2 v tmp4 may seem reversed in QuadCoeffs but match below
+ow=cat(tmp1,tmp2,tmp3,tmp4; dims=3)
+
+return ow
+end
+
+#This sends the corners to unit square corners
+x=1.0; y=1.0;
+println(vec(ParalCoeffs([0., 2., 3., 1.]',[0., 0., 1., 1.]',x,y)))
+println(vec(QuadCoeffs([0., 2.01, 3., 1.]',[0., 0., 1., 1.]',x,y)))
+
+# +
+px=x_quad[ii[1],:]'
+py=y_quad[ii[1],:]'
+ox=[prof_x[1]]
+oy=[prof_y[1]]
+
+ow=QuadCoeffs(px,py,ox,oy)
+
+Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:]', "j" => j_quad[ii,:]', "w" => dropdims(ow,dims=2))
+# + {}
+if false
+px=x_quad[ii,:]
+py=y_quad[ii,:]
 ox=prof_x
 oy=prof_y
 
 ow=QuadCoeffs(px,py,ox,oy)
 
-Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[II,:]', "j" => j_quad[II,:]', "w" => vec(ow))
+Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:], "j" => j_quad[ii,:], "w" => dropdims(ow,dims=2))
+end
+# -
+
+
+
