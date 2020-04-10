@@ -79,37 +79,14 @@ idxs, dists = knn(kdtree, [xx yy zz]', 4, true)
 
 ik=[idxs[i][1] for i in 1:length(XC)]
 [XC_a[ik] YC_a[ik]]
-# -
-
-# ```
-#     %1) determine face of current tile ...
-#     tmp1=1*(map_tile==list_tile(ii));
-#     tmp11=sum(sum(tmp1,1),2); tmp12=[];
-#     for ff=1:tmp11.nFaces; tmp12=[tmp12,tmp11{ff}]; end;
-#     iiFace=find(tmp12);
-#     %... and its index range within face ...
-#     tmp1=tmp1{iiFace};
-#     tmp11=sum(tmp1,2);
-#     iiMin=min(find(tmp11)); iiMax=max(find(tmp11));
-#     tmp11=sum(tmp1,1);
-#     jjMin=min(find(tmp11)); jjMax=max(find(tmp11));
-#     %... as well as the list of profiles in tile
-#     ii_prof=find(prof_tile==list_tile(ii));
-#     %tile corners
-#     XC11=mygrid.XC{iiFace}(iiMin,jjMin);
-#     YC11=mygrid.YC{iiFace}(iiMin,jjMin);
-#     XCNINJ=mygrid.XC{iiFace}(iiMax,jjMax);
-#     YCNINJ=mygrid.YC{iiFace}(iiMax,jjMax);
-#
-#     clear tmp*;
-# ```
 
 # +
 XC_e=exchange(Γ["XC"])
 YC_e=exchange(Γ["YC"])
 
-list_tile=[tile_a[ik]]; ii=1;
-tmp1=1*(tile.==list_tile[ii])
+list_tile=[tile_a[ik]]; 
+ii=1; iiTile=Int(list_tile[ii][1])
+tmp1=1*(tile.==iiTile)
 iiFace=findall(maximum.(tmp1.f).>0)[1]
 
 tmp1=tmp1.f[iiFace]
@@ -264,8 +241,109 @@ scatter!([prof_x],[prof_y],c=:green)
 [i_quad[II,:]' ; j_quad[II,:]']
 [x_quad[II,:]' ; y_quad[II,:]']
 
+# ### Left to do : 
+#
+# ```
+#         %5) determine bi-linear interpolation weights:
+#         px=x_quad(ii_quad,:);
+#         py=y_quad(ii_quad,:);
+#         ox=prof_x(ii_prof);
+#         oy=prof_y(ii_prof);
+#         [ow]=gcmfaces_quadmap(px,py,ox,oy);
+# ```
+#
+
+# +
+function QuadCoeffs(px,py,ox=[],oy=[])
+#[ow]=gcmfaces_quadmap(px,py,x,y);
+#object:    compute bilinear interpolation coefficients for x(i,:),y(i,:)
+#           in px(i,:),py(i,:) by remapping x(i,:),y(i,:) along with the
+#           px(i,:),py(i,:) quadrilateral to the 0-1,0-1 square.
+#inputs:    px,py are Mx4 matrices where each line specifies one quad
+#(optional) ox,oy are MxP position matrices
+#outputs:   pw are the MxPx4 bilinear interpolation weights
+
+    #the following test case is based upon https://www.particleincell.com/2012/quad-interpolation/
+    #px = [-1, 8, 13, -4];
+    #py = [-1, 3, 11, 8];
+    #ox=0; oy=6;
 
 
+#solve linear problem for a,b vectors (knowing px,py)
+#  logical (l,m) to physical (x,y) mapping is then
+#  x=a(1)+a(2)*l+a(3)*m+a(2)*l*m;
+#  y=b(1)+b(2)*l+b(3)*m+b(2)*l*m;
+# A=[1 0 0 0;1 1 0 0;1 1 1 1;1 0 1 0]; AI = inv(A);
+# AI=[1 0 0 0;-1 1 0 0;-1 0 0 1; 1 -1 1 -1];
+# a = AI*px';
+# b = AI*py';
+tmp1=px[:,1];
+tmp2=-px[:,1]+px[:,2];
+tmp3=-px[:,1]+px[:,4];
+tmp4=px[:,1]-px[:,2]+px[:,3]-px[:,4];
+a=[tmp1 tmp2 tmp3 tmp4];
+
+tmp1=py[:,1];
+tmp2=-py[:,1]+py[:,2];
+tmp3=-py[:,1]+py[:,4];
+tmp4=py[:,1]-py[:,2]+py[:,3]-py[:,4];
+b=[tmp1 tmp2 tmp3 tmp4];
+
+#chose between the two mapping solutions dep. on sum of interior angles
+angsum=PolygonAngle(px,py)
+sgn=NaN*px[:,1];
+ii=findall(abs.(angsum .-360).<1e-3); sgn[ii].=1.
+ii=findall(abs.(angsum .+360).<1e-3); sgn[ii].=-1.
+ii=findall(isnan.(angsum))
+if length(ii)>0;
+    warning("edge point was found");
+end;
+
+#solve non-linear problem for pl,pm (knowing px,py,a,b)
+#  physical (x,y) to logical (l,m) mapping
+#
+# quadratic equation coeffs, aa*mm^2+bb*m+cc=0
+if ~isempty(ox); 
+    x=[px ox]; y=[py oy]; 
+else; 
+    x=px; y=py; 
+end;
+a=reshape(a,(size(a,1),1,size(a,2))); a=repeat(a,1,size(x,2),1);
+b=reshape(b,(size(b,1),1,size(b,2))); b=repeat(b,1,size(x,2),1);
+sgn=repeat(sgn,1,size(x,2));
+#
+aa = a[:,:,4].*b[:,:,3] - a[:,:,3].*b[:,:,4]
+bb = a[:,:,4].*b[:,:,1] -a[:,:,1].*b[:,:,4] + a[:,:,2].*b[:,:,3] - a[:,:,3].*b[:,:,2] + x.*b[:,:,4] - y.*a[:,:,4]
+cc = a[:,:,2].*b[:,:,1] -a[:,:,1].*b[:,:,2] + x.*b[:,:,2] - y.*a[:,:,2]
+
+#compute m = (-b+sqrt(b^2-4ac))/(2a)
+det = sqrt.(bb.*bb - 4.0*aa.*cc)
+pm = (-bb+sgn.*det)./(2.0*aa)
+#compute l by substitution in equation system
+pl = (x-a[:,:,1]-a[:,:,3].*pm)./(a[:,:,2]+a[:,:,4].*pm)
+
+ow=[];
+if ~isempty(ox); 
+        tmp1=(1 .-pl[:,5:end]).*(1 .-pm[:,5:end])
+        tmp2=pl[:,5:end].*(1 .-pm[:,5:end])
+        tmp3=pl[:,5:end].*pm[:,5:end]
+        tmp4=(1 .-pl[:,5:end]).*pm[:,5:end]
+        ow=cat(tmp1,tmp2,tmp3,tmp4; dims=3)
+end
+
+return ow
+end
+
+#test case from https://www.particleincell.com/2012/quad-interpolation/
+#QuadCoeffs([-1., 8., 13., -4.]',[-1., 3., 11., 8.]',0.,6.)
 
 
+# +
+px=x_quad[II,:]'
+py=y_quad[II,:]'
+ox=prof_x
+oy=prof_y
 
+ow=QuadCoeffs(px,py,ox,oy)
+
+Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[II,:]', "j" => j_quad[II,:]', "w" => vec(ow))
