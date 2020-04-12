@@ -179,8 +179,9 @@ ii=findall(angsum.>180.)
 ii=[ii[j].I[1] for j in 1:length(ii)]
 
 scatter(xx,yy,marker=:+,c=:blue,leg=false)
-scatter!(x_quad[ii,:],y_quad[ii,:],c=:gray)
-scatter!(prof_x,prof_y,c=:red)
+scatter!([0.],[0.],c=:red)
+scatter!(x_quad[ii,:],y_quad[ii,:],c=:orange)
+scatter!(prof_x,prof_y,c=:green)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_style": "center", "cell_type": "markdown"}
 # ### Interpolation Coefficients
@@ -203,5 +204,30 @@ oy=prof_y
 ow=QuadCoeffs(px,py,ox,oy)
 
 Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:], "j" => j_quad[ii,:], "w" => dropdims(ow,dims=2))
+# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# ### Verify Results
+#
+# Interpolate longitude and latitude from coefficients and compare with initial `XC,YC`.
+#
+# _Note that `XC_tmp,YC_tmp` each are `tile+halo`, which explains the `+1` index shift_
+
+# +
+XC_interp=similar(XC)
+YC_interp=similar(YC)
+
+for j=1:length(ox)
+w=vec(ow[j,:,:])
+x=[XC_tmp[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
+y=[YC_tmp[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
+#println([sum(w.*x) sum(w.*y)])
+XC_interp[j]=sum(w.*x)
+YC_interp[j]=sum(w.*y)
+end
+
+scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
+scatter!([XC0],[YC0],c=:red)
+scatter!(XC_interp,YC_interp,c=:yellow,marker=:square)
+scatter!(XC,YC,c=:red,marker=:star4)
 # -
+
 
