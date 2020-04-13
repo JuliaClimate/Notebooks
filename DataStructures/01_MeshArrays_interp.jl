@@ -58,7 +58,7 @@ ni=30; nj=30;
 τ=Tiles(γ,ni,nj)
 
 tiles=MeshArray(γ,Int);
-[tiles[τ[i]["face"]][τ[i]["i"],τ[i]["j"]].=i for i in 1:length(τ)];   
+[tiles[τ[i]["face"]][τ[i]["i"],τ[i]["j"]].=i for i in 1:length(τ)];
 
 using Plots
 include(joinpath(dirname(pathof(MeshArrays)),"../examples/Plots.jl"))
@@ -68,41 +68,21 @@ heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 # ### find nearest neighbor
 
 # + {"slideshow": {"slide_type": "-"}}
-using NearestNeighbors
-
-XC=collect(0.1:0.5:2.1); YC=collect(0.1:0.5:2.1);
-#XC=0.1; YC=0.1;
-
-XC_a=write(Γ["XC"])
-YC_a=write(Γ["YC"])
-tiles_a=write(tiles)
-kk=findall(isfinite.(XC_a))
-
-x=sin.(pi/2 .-YC_a[kk]*pi/180).*cos.(XC_a[kk]*pi/180);
-y=sin.(pi/2 .-YC_a[kk]*pi/180).*sin.(XC_a[kk]*pi/180);
-z=cos.(pi/2 .-YC_a[kk]*pi/180);
-
-xx=sin.(pi/2 .-YC*pi/180).*cos.(XC*pi/180);
-yy=sin.(pi/2 .-YC*pi/180).*sin.(XC*pi/180);
-zz=cos.(pi/2 .-YC*pi/180);
-
-kdtree = KDTree([x y z]')
-idxs, dists = knn(kdtree, [xx yy zz]', 4, true)
-
-ik=[idxs[i][1] for i in 1:length(XC)]
-[XC_a[ik] YC_a[ik] tiles_a[ik]]
+lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
+(f,i,j,a)=knn(Γ["XC"],Γ["YC"],lon,lat)
+[write(Γ["XC"])[a] write(Γ["YC"])[a] write(tiles)[a]]
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### Prepare Arrays For Interpolation
 
 # + {"slideshow": {"slide_type": "-"}}
-list_tile=[tiles_a[ik]];
-ii=1; iiTile=Int(list_tile[ii][1])
-#println(iiTile)
-#iiTile=17
+list_tile=unique(write(tiles)[a])
 
-XC_tmp=Tiles(τ,exchange(Γ["XC"]))[iiTile]
-YC_tmp=Tiles(τ,exchange(Γ["YC"]))[iiTile]
+ii=1;
+iiTile=list_tile[ii]
+
+XCt=Tiles(τ,exchange(Γ["XC"]))[iiTile]
+YCt=Tiles(τ,exchange(Γ["YC"]))[iiTile]
 
 iiFace=τ[iiTile]["face"]
 ii0=minimum(τ[iiTile]["i"])+Int(ni/2)
@@ -121,21 +101,21 @@ YC0=Γ["YG"].f[iiFace][ii0,jj0]
 # ### Example Setup (Grid Space)
 
 # + {"slideshow": {"slide_type": "-"}}
-scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
+scatter(XCt,YCt,marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
 scatter!([XC0],[YC0],c=:red)
-scatter!([XC],[YC],c=:green)
+scatter!([lon],[lat],c=:green)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Local Stereographic Projection
 
 # + {"slideshow": {"slide_type": "-"}}
-(xx,yy)=StereographicProjection(XC0,YC0,XC_tmp,YC_tmp)
-(prof_x,prof_y)=StereographicProjection(XC0,YC0,XC,YC)
-~isa(prof_x,Array) ? prof_x=[prof_x] : nothing
-~isa(prof_y,Array) ? prof_y=[prof_y] : nothing
+(x_grid,y_grid)=StereographicProjection(XC0,YC0,XCt,YCt)
+(x_trgt,y_trgt)=StereographicProjection(XC0,YC0,lon,lat)
+~isa(x_trgt,Array) ? x_trgt=[x_trgt] : nothing
+~isa(y_trgt,Array) ? y_trgt=[y_trgt] : nothing
 
-scatter(xx,yy,marker=:+,c=:blue,leg=false,xlabel="x",ylabel="y")
-scatter!([0.],[0.],c=:red); scatter!(prof_x,prof_y,c=:green)
+scatter(x_grid,y_grid,marker=:+,c=:blue,leg=false,xlabel="x",ylabel="y")
+scatter!([0.],[0.],c=:red); scatter!(x_trgt,y_trgt,c=:green)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Define Quadrilaterals
@@ -152,9 +132,9 @@ for pp=1:4
     dj=didj[pp,2]
 
     #note the shift in indices due to exchange above
-    tmp=xx[1+di:ni+1+di,1+dj:nj+1+dj]
+    tmp=x_grid[1+di:ni+1+di,1+dj:nj+1+dj]
     x_quad[:,pp]=vec(tmp)
-    tmp=yy[1+di:ni+1+di,1+dj:nj+1+dj]
+    tmp=y_grid[1+di:ni+1+di,1+dj:nj+1+dj]
     y_quad[:,pp]=vec(tmp)
 
     tmp=collect(0+di:ni+di)*ones(1,nj+1)
@@ -167,14 +147,14 @@ end
 # ### Identify Quadrilaterals
 
 # + {"slideshow": {"slide_type": "-"}}
-angsum=PolygonAngle(x_quad,y_quad,prof_x,prof_y)
+angsum=PolygonAngle(x_quad,y_quad,x_trgt,y_trgt)
 ii=findall(angsum.>180.)
 ii=[ii[j].I[1] for j in 1:length(ii)]
 
-scatter(xx,yy,marker=:+,c=:blue,leg=false)
+scatter(x_grid,y_grid,marker=:+,c=:blue,leg=false)
 scatter!([0.],[0.],c=:red)
 scatter!(x_quad[ii,:],y_quad[ii,:],c=:orange)
-scatter!(prof_x,prof_y,c=:green)
+scatter!(x_trgt,y_trgt,c=:green)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_style": "center", "cell_type": "markdown"}
 # ### Interpolation Coefficients
@@ -182,8 +162,8 @@ scatter!(prof_x,prof_y,c=:green)
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 px=x_quad[ii[1],:]'
 py=y_quad[ii[1],:]'
-ox=[prof_x[1]]
-oy=[prof_y[1]]
+ox=[x_trgt[1]]
+oy=[y_trgt[1]]
 
 ow=QuadCoeffs(px,py,ox,oy)
 
@@ -191,8 +171,8 @@ Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:]', "j" => j_quad[ii,
 # + {"cell_style": "split"}
 px=x_quad[ii,:]
 py=y_quad[ii,:]
-ox=prof_x
-oy=prof_y
+ox=x_trgt
+oy=y_trgt
 
 ow=QuadCoeffs(px,py,ox,oy)
 
@@ -202,25 +182,24 @@ Dict("face" => iiFace, "tile" => iiTile, "i" => i_quad[ii,:], "j" => j_quad[ii,:
 #
 # Interpolate longitude and latitude from coefficients and compare with initial `XC,YC`.
 #
-# _Note that `XC_tmp,YC_tmp` each are `tile+halo`, which explains the `+1` index shift_
+# _Note that `XCt,YCt` each are `tile+halo`, which explains the `+1` index shift_
 
 # +
-XC_interp=similar(XC)
-YC_interp=similar(YC)
-
+lon_i=similar(lon)
+lat_i=similar(lat)
 for j=1:length(ox)
-w=vec(ow[j,:,:])
-x=[XC_tmp[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
-y=[YC_tmp[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
-#println([sum(w.*x) sum(w.*y)])
-XC_interp[j]=sum(w.*x)
-YC_interp[j]=sum(w.*y)
+    w=vec(ow[j,:,:])
+    x=[XCt[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
+    y=[YCt[i_quad[ii[j],i]+1,j_quad[ii[j],i]+1] for i=1:4]
+    #println([sum(w.*x) sum(w.*y)])
+    lon_i[j]=sum(w.*x)
+    lat_i[j]=sum(w.*y)
 end
 
-scatter(XC_tmp,YC_tmp,marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
+scatter(XCt,YCt,marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
 scatter!([XC0],[YC0],c=:red)
-scatter!(XC_interp,YC_interp,c=:yellow,marker=:square)
-scatter!(XC,YC,c=:red,marker=:star4)
+scatter!(lon_i,lat_i,c=:yellow,marker=:square)
+scatter!(lon,lat,c=:red,marker=:star4)
 # -
 
 
