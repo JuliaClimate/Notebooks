@@ -17,7 +17,7 @@
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Interpolate `MeshArray` To Arbitrary Location
 #
-# Each `MeshArray` contains elementary arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations. This is commonly done e.g. to compare climate models to sparse field observations. 
+# Each `MeshArray` contains elementary arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations. This is commonly done e.g. to compare climate models to sparse field observations.
 #
 # In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) t o allow for parallelism. It outputs interpolation coefficients -- reusing those is easy and fast.
 
@@ -51,14 +51,18 @@ http="https://github.com/gaelforget/GRID_LLC90"
 #     - compute interpolation coefficients
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
-# ### Get Map Of Tile Numbers
+# ### Define Subdomain Tiles
 
 # + {"slideshow": {"slide_type": "-"}}
-#get map of tile numbers
-
 ni=30; nj=30;
-tile=TileMap(γ,ni,nj)
-qwckplot(tile)
+τ=Tiles(γ,ni,nj)
+
+tiles=MeshArray(γ,Int);
+[tiles[τ[i]["face"]][τ[i]["i"],τ[i]["j"]].=i for i in 1:length(τ)];   
+
+using Plots
+include(joinpath(dirname(pathof(MeshArrays)),"../examples/Plots.jl"))
+heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### find nearest neighbor
@@ -71,7 +75,7 @@ XC=collect(0.1:0.5:2.1); YC=collect(0.1:0.5:2.1);
 
 XC_a=write(Γ["XC"])
 YC_a=write(Γ["YC"])
-tile_a=write(tile)
+tiles_a=write(tiles)
 kk=findall(isfinite.(XC_a))
 
 x=sin.(pi/2 .-YC_a[kk]*pi/180).*cos.(XC_a[kk]*pi/180);
@@ -86,36 +90,25 @@ kdtree = KDTree([x y z]')
 idxs, dists = knn(kdtree, [xx yy zz]', 4, true)
 
 ik=[idxs[i][1] for i in 1:length(XC)]
-[XC_a[ik] YC_a[ik] tile_a[ik]]
+[XC_a[ik] YC_a[ik] tiles_a[ik]]
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### Prepare Arrays For Interpolation
 
 # + {"slideshow": {"slide_type": "-"}}
-XC_e=exchange(Γ["XC"])
-YC_e=exchange(Γ["YC"])
-
-list_tile=[tile_a[ik]]; 
+list_tile=[tiles_a[ik]];
 ii=1; iiTile=Int(list_tile[ii][1])
 #println(iiTile)
 #iiTile=17
 
-tmp1=1*(tile.==iiTile)
-iiFace=findall(maximum.(tmp1.f).>0)[1]
+XC_tmp=Tiles(τ,exchange(Γ["XC"]))[iiTile]
+YC_tmp=Tiles(τ,exchange(Γ["YC"]))[iiTile]
 
-tmp1=tmp1.f[iiFace]
-tmp11=findall(sum(tmp1,dims=2).>0)
-iiMin=minimum(tmp11)[1]
-iiMax=maximum(tmp11)[1]
-tmp11=findall(sum(tmp1,dims=1).>0)
-jjMin=minimum(tmp11)[2]
-jjMax=maximum(tmp11)[2]
-
-#iiPoints=findall(tmp1.>0)
-XC_tmp=view(XC_e.f[iiFace],iiMin:iiMax+2,jjMin:jjMax+2)
-YC_tmp=view(YC_e.f[iiFace],iiMin:iiMax+2,jjMin:jjMax+2)
-XC0=Γ["XG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
-YC0=Γ["YG"].f[iiFace][iiMin+Int(ni/2),jjMin+Int(nj/2)]
+iiFace=τ[iiTile]["face"]
+ii0=minimum(τ[iiTile]["i"])+Int(ni/2)
+jj0=minimum(τ[iiTile]["j"])+Int(nj/2)
+XC0=Γ["XG"].f[iiFace][ii0,jj0]
+YC0=Γ["YG"].f[iiFace][ii0,jj0]
 
 #to match gcmfaces test case (`interp=gcmfaces_interp_coeffs(0.1,0.1);`) set:
 #  iiTile=17; XC0=6.5000; YC0=-0.1994
@@ -158,7 +151,7 @@ for pp=1:4
     di=didj[pp,1]
     dj=didj[pp,2]
 
-    #note the shift in indices due to exchange above    
+    #note the shift in indices due to exchange above
     tmp=xx[1+di:ni+1+di,1+dj:nj+1+dj]
     x_quad[:,pp]=vec(tmp)
     tmp=yy[1+di:ni+1+di,1+dj:nj+1+dj]
@@ -166,8 +159,8 @@ for pp=1:4
 
     tmp=collect(0+di:ni+di)*ones(1,nj+1)
     i_quad[:,pp]=vec(tmp)
-    tmp=ones(ni+1,1)*transpose(collect(0+dj:nj+dj));    
-    j_quad[:,pp]=vec(tmp)    
+    tmp=ones(ni+1,1)*transpose(collect(0+dj:nj+dj));
+    j_quad[:,pp]=vec(tmp)
 end
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
