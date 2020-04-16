@@ -25,12 +25,12 @@
 # 4. derive streamfunction from the rotational component
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ### Read Model Grid & Transports From File
+# ### Read Transports & Grid From File
 #
 # 1. pre-requisites
 # 2. read variables
 
-# +
+# + {"slideshow": {"slide_type": "skip"}}
 #]add MITgcmTools#master
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
@@ -72,12 +72,12 @@ TyR = Ty-TyD
 #vector Potential
 TrspPsi=VectorPotential(TxR,TyR,Γ);
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# + {"slideshow": {"slide_type": "skip"}, "cell_type": "markdown"}
 # ### Verify The Results Consistency
 #
 # _TrspCon-tmpCon should be negligible compared with TrspCon_
 
-# + {"slideshow": {"slide_type": "-"}}
+# + {"slideshow": {"slide_type": "skip"}}
 tmpCon=convergence(TxD,TyD)
 tmp1=TrspCon[3]
 tmp2=tmp1[findall(isfinite.(tmp1))]
@@ -87,7 +87,7 @@ heatmap(errCon)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Map Out Streamfunction And Scalar Potential
 #
-# _Interpolation is used to create global maps_
+# _Here we rely on precomputed interpolation coefficients to create global maps_
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
 TrspPsiI=MatrixInterp(write(1e-6*msk*TrspPsi),SPM,size(lon))
@@ -98,3 +98,21 @@ contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPsiI),
 TrspPotI=MatrixInterp(write(1e-6*msk*TrspPot),SPM,size(lon))
 contourf(vec(lon[:,1]),vec(lat[1,:]),transpose(TrspPotI),
     title="Scalar Potential",clims=(-0.4,0.4))
+
+# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# ### Plot via `Interpolate()`
+#
+# _Here all interpolation coefficients are recomputed on the fly -- rather than reloaded from file._
+
+# +
+lon=[i for i=-179.5:1.0:179.5, j=-89.5:1.0:89.5]
+lat=[j for i=-179.5:1.0:179.5, j=-89.5:1.0:89.5]
+
+(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
+
+D=1e-6*msk*TrspPsi
+DD=Interpolate(D,f,i,j,w);
+
+
+# + {"slideshow": {"slide_type": "subslide"}}
+contourf(vec(lon[:,1]),vec(lat[1,:]),DD,title="Streamfunction",clims=(-50,50))

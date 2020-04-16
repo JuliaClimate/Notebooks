@@ -55,6 +55,7 @@ http="https://github.com/gaelforget/GRID_LLC90"
 
 # + {"slideshow": {"slide_type": "-"}}
 lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
+#lon=[66.75]; lat=[-69.75];
 (f,i,j,c)=knn(Γ["XC"],Γ["YC"],lon,lat)
 [write(Γ["XC"])[c] write(Γ["YC"])[c]]
 
@@ -86,10 +87,11 @@ heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 XCtiles=Tiles(τ,exchange(Γ["XC"]))
 YCtiles=Tiles(τ,exchange(Γ["YC"]))
 
-iiTile=17; iiFace=τ[iiTile]["face"]
+iiTile=tiles[f[1]][i[1],j[1]]; iiFace=τ[iiTile]["face"]
 
 ii0=minimum(τ[iiTile]["i"])+Int(ni/2); jj0=minimum(τ[iiTile]["j"])+Int(nj/2)
 XC0=Γ["XG"].f[iiFace][ii0,jj0]; YC0=Γ["YG"].f[iiFace][ii0,jj0]
+#XC0=66.5000; YC0=-64.4201
 
 scatter(XCtiles[iiTile],YCtiles[iiTile],marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
 scatter!([XC0],[YC0],c=:red); scatter!([lon],[lat],c=:green)
@@ -130,13 +132,15 @@ scatter!(x_trgt,y_trgt,c=:green)
 # +
 (f,i,j,w)=InterpolationFactors(Γ,lon,lat)
 
-lon_i=similar(lon)
-lat_i=similar(lat)
+lon_i=NaN*similar(lon)
+lat_i=NaN*similar(lat)
 for jj=1:length(lon)
-    x=[Γ["XC"][f[jj]][i[jj,ii],j[jj,ii]] for ii=1:4]
-    y=[Γ["YC"][f[jj]][i[jj,ii],j[jj,ii]] for ii=1:4]
-    lon_i[jj]=sum(w[jj,:].*x)
-    lat_i[jj]=sum(w[jj,:].*y)
+    if !isnan(sum(w[jj,:]))
+        x=[Γ["XC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
+        y=[Γ["YC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
+        lon_i[jj]=sum(w[jj,:].*x)
+        lat_i[jj]=sum(w[jj,:].*y)
+    end
 end
 
 
