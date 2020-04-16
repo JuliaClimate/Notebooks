@@ -32,7 +32,7 @@ The following notebooks demonstrate various standard computations related to oce
 - `01_MeshArrays.ipynb` illustrates the main data structures defined in `MeshArrays.jl` [(documented here)](https://juliaclimate.github.io/MeshArrays.jl/stable/), the exchange of data between neighboring arrays in a `MeshArray`, and demo's these concepts in a simulation of diffusive transport.
 - `02_climatetools.ipynb` illustrates the use of [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/) and [ClimatePlots.jl](https://juliaclimate.github.io/ClimatePlots.jl/dev/)
 - `03_nctiles.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using `NCTiles.jl` for (1) a simple rectangular grid written to single file; (2) a tiled model domain on a less simple grid written to multiple files.
-
+- `04_interpolation.ipynb` illustrates how the `Interpolate` method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
 
 ## Notes
 
