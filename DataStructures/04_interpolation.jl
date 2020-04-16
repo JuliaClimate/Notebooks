@@ -132,37 +132,41 @@ scatter!(x_trgt,y_trgt,c=:green)
 # +
 (f,i,j,w)=InterpolationFactors(Γ,lon,lat)
 
-lon_i=NaN*similar(lon)
-lat_i=NaN*similar(lat)
+lon_a=NaN*similar(lon)
+lat_a=NaN*similar(lat)
 for jj=1:length(lon)
     if !isnan(sum(w[jj,:]))
         x=[Γ["XC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
         y=[Γ["YC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
-        lon_i[jj]=sum(w[jj,:].*x)
-        lat_i[jj]=sum(w[jj,:].*y)
+        lon_a[jj]=sum(w[jj,:].*x)
+        lat_a[jj]=sum(w[jj,:].*y)
     end
 end
+
+#or equivalently:
+lon_b=Interpolate(Γ["XC"],f,i,j,w)
+lat_b=Interpolate(Γ["YC"],f,i,j,w)
 
 
 # + {"slideshow": {"slide_type": "subslide"}}
 scatter(XCtiles[iiTile],YCtiles[iiTile],marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
-scatter!([XC0],[YC0],c=:red); scatter!(lon_i,lat_i,c=:yellow,marker=:square)
+scatter!([XC0],[YC0],c=:red); scatter!(lon_a,lat_a,c=:yellow,marker=:square)
 scatter!(lon,lat,c=:green,marker=:star4)
 
 # + {"slideshow": {"slide_type": "skip"}}
 #or equivalently:
 
-lon_i=similar(lon)
-lat_i=similar(lat)
+lon_c=similar(lon)
+lat_c=similar(lat)
 for jj=1:length(lon)
     x=[XCtiles[iiTile][i_quad[ii[jj],i]+1,j_quad[ii[jj],i]+1] for i=1:4]
     y=[YCtiles[iiTile][i_quad[ii[jj],i]+1,j_quad[ii[jj],i]+1] for i=1:4]
-    lon_i[jj]=sum(x.*w[jj,:])
-    lat_i[jj]=sum(y.*w[jj,:])
+    lon_c[jj]=sum(x.*w[jj,:])
+    lat_c[jj]=sum(y.*w[jj,:])
 end
 
 scatter(XCtiles[iiTile],YCtiles[iiTile],marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
-scatter!([XC0],[YC0],c=:red); scatter!(lon_i,lat_i,c=:yellow,marker=:square)
+scatter!([XC0],[YC0],c=:red); scatter!(lon_c,lat_c,c=:yellow,marker=:square)
 scatter!(lon,lat,c=:green,marker=:star4)
 # -
 
