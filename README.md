@@ -33,6 +33,9 @@ The following notebooks demonstrate various standard computations related to oce
 - `02_climatetools.ipynb` illustrates the use of [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/) and [ClimatePlots.jl](https://juliaclimate.github.io/ClimatePlots.jl/dev/)
 - `03_nctiles.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using `NCTiles.jl` for (1) a simple rectangular grid written to single file; (2) a tiled model domain on a less simple grid written to multiple files.
 - `04_interpolation.ipynb` illustrates how the `Interpolate` method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
+- `05_ZarrCloud.ipynb` access [CMIP6](https://bit.ly/2WiWmoh) climate model output via `AWSCore.jl` and `Zarr.jl`; then compute and plot the time mean and deviations from it. See 
+also [this notebook](https://bit.ly/2VRMgvl) and [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
+
 
 ## Notes
 
