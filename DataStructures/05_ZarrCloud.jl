@@ -90,7 +90,7 @@ m = dropdims(mean(m,dims=3),dims=3)
 heatmap(ζ["lon"], ζ["lat"], transpose(m),title="time mean")
 
 # + {"slideshow": {"slide_type": "subslide"}}
-# time evolving global mean
+# compute time evolving global mean
 
 t = ζ["time"]
 t = timedecode(t[:], t.attrs["units"], t.attrs["calendar"])
@@ -99,8 +99,19 @@ y = ζ[S[3]]
 ylab=y.attrs["long_name"]*" in "*y.attrs["units"]
 
 y=y[:,:,:]
-y=[sum(y[:, :, i].*Å) for i in 1:length(t)]./sum(Å)
+y=[sum(y[:, :, i].*Å) for i in 1:length(t)]./sum(Å);
+# + {}
+#plot by month to hightlight trend
 
-plot(t, y,xlabel="time",ylabel=ylab,label=S[1],title="global mean")
-# -
+plt=plot(t[1:12:end],y[1:12:end],xlabel="time",ylabel=ylab,title=S[1]*" (global mean, month by month)")
+[plot!(t[i:12:end],y[i:12:end], leg = false) for i in 2:12]
+display(plt)
 
+# +
+#plot time mean seasonal cycle
+
+ny=Int(length(t)/12)
+a_y=fill(0.0,(ny,12))
+[a_y[:,i].=y[i:12:end] for i in 1:12]
+
+plot([0.5:1:11.5],vec(mean(a_y,dims=1)), xlabel="month",ylabel=ylab, leg = false, title=S[1]*" (global mean, seasonal cycle)")
