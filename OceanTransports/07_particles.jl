@@ -47,7 +47,7 @@ get_velocity_if_needed()
 # 4. store everything in `uv_etc` dictionary
 
 # + {"slideshow": {"slide_type": "-"}}
-uv_etc=read_uv_etc(20,Γ);
+uvetc=read_uvetc(20,Γ,"../inputs/nctiles_climatology/");
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Initialize Trajectory Computation
@@ -57,7 +57,7 @@ uv_etc=read_uv_etc(20,Γ);
 
 # + {"slideshow": {"slide_type": "-"}}
 du_dt=IndividualDisplacements.VelComp!
-(u0,du)=initialize_locations(uv_etc,10);
+(u0,du)=initialize_locations(uvetc,10);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Compute Trajectories
@@ -65,9 +65,9 @@ du_dt=IndividualDisplacements.VelComp!
 # _Note: `ODEProblem` and `solve` settings can still be refined_
 # -
 
-tspan = (0.0,uv_etc["t1"]-uv_etc["t0"])
-prob = ODEProblem(du_dt,u0,tspan,uv_etc)
-sol = solve(prob,Euler(),dt=uv_etc["dt"])
+tspan = (0.0,uvetc["t1"]-uvetc["t0"])
+prob = ODEProblem(du_dt,u0,tspan,uvetc)
+sol = solve(prob,Euler(),dt=uvetc["dt"])
 size(sol)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -77,7 +77,7 @@ size(sol)
 # 2. Map position to lon,lat coordinates
 
 # + {"slideshow": {"slide_type": "subslide"}}
-df=postprocess_ODESolution(sol,uv_etc);
+df=postprocess_ODESolution(sol,uvetc);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Plot Trajectories
@@ -93,11 +93,16 @@ df=postprocess_ODESolution(sol,uv_etc);
 p=dirname(pathof(IndividualDisplacements));
 
 # + {"slideshow": {"slide_type": "slide"}}
-#include(joinpath(p,"plot_pyplot.jl"));
+#include(joinpath(p,"../examples/plot_pyplot.jl"));
 #PyPlot.figure(); PlotMapProj(df,5000)
 
-#include(joinpath(p,"plot_makie.jl")); AbstractPlotting.inline!(true); #for Juno, set to false
-#scene=PlotMakie(df,5000,180.0) #Makie.save("LatLonCap300mDepth.png", scene)
+#include(joinpath(p,"../examples/plot_makie.jl")); 
+#AbstractPlotting.inline!(true); #for Juno, set to false
+#scene=PlotMakie(df,5000,180.0) 
+##Makie.save("LatLonCap300mDepth.png", scene)
 
-include(joinpath(p,"plot_plots.jl"));
+include(joinpath(p,"../examples/plot_plots.jl"));
 plt=PlotBasic(df,1000,180.0)
+# -
+
+
