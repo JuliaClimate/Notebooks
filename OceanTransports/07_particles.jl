@@ -47,7 +47,7 @@ get_velocity_if_needed()
 # 4. store everything in `uv_etc` dictionary
 
 # + {"slideshow": {"slide_type": "-"}}
-uvetc=read_uvetc(20,Γ,"../inputs/nctiles_climatology/");
+uvetc=IndividualDisplacements.read_uvetc(20,Γ,"../inputs/nctiles_climatology/");
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Initialize Trajectory Computation
