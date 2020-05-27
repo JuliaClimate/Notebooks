@@ -56,8 +56,8 @@ uvetc=IndividualDisplacements.read_uvetc(20,Γ,"../inputs/nctiles_climatology/")
 # 2. set `u0` initial location array
 
 # + {"slideshow": {"slide_type": "-"}}
-du_dt=IndividualDisplacements.VelComp!
-(u0,du)=initialize_locations(uvetc,10);
+du_dt=⬡!
+(u0,du)=initialize_grid_locations(uvetc,10);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Compute Trajectories
