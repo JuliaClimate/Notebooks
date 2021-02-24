@@ -9,37 +9,33 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# # `MeshArrays.jl` defines the `MeshArray` type
+# # Gridded Domains Using `MeshArrays.jl`
 #
-# Each `MeshArray` contains an array of elementary arrays that (1) are connected at their edges and (2) collectively form a global grid. Overall grid specifications are contained within `gcmgrid` instances, which merely define array sizes and how e.g. grid variables are represented in memory. Importantly, it is only when e.g. grid variables are read from file that sizable memory is allocated.
+# A `MeshArray` contains an array of subdomain arrays that (1) are connected at their edges and (2) collectively form a global grid. Grid specifications are contained in `gcmgrid` data structures. These merely define array sizes and how e.g. grid variables are represented in memory -- it is only when variables are read from file that larger memory allocations occur.
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Initialize Framework
+# ## Grid Configuration
 #
 # 1. import `MeshArrays` and plotting tools
 # 2. choose e.g. a standard `MITgcm` grid
-# 3. download the grid if needed
-#
 
 # + {"cell_style": "center", "slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots
 
-pth="../inputs/GRID_LLC90/"
-γ=GridSpec("LatLonCap",pth)
-
-http="https://github.com/gaelforget/GRID_LLC90"
-!isdir(pth) ? run(`git clone $http $pth`) : nothing;
+pth=MeshArrays.GRID_LLC90
+γ=GridSpec("LatLonCap",pth);
+#Γ=GridLoad(γ)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Read Example
 #
-# A `MeshArray` instance, on the chosen grid, can be obtained from a file path (argument #1). Format conversion occur inside the `read` function based on a propotype argument (#2). `read` / `write` calls then convert back and forth between `MeshArray` and `Array` formats.
+# A `MeshArray` variable, on the chosen grid, can be accessed from file via `γ.read`(argument #1). Format conversion occurs inside the `read` function based on a propotype (argument #2). Further `read` / `write` calls convert back and forth between `MeshArray` and `Array` formats if needed.
 
 # + {"slideshow": {"slide_type": "subslide"}}
 D=γ.read(γ.path*"Depth.data",MeshArray(γ,Float64))
@@ -49,7 +45,7 @@ show(D)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Subdomain Arrays
 #
-# The heatmap function as specialized in `../examples/Plots.jl` operates on each `inner-array` sequentially, one after the other.
+# The heatmap method is specialized for `MeshArray`s in `../examples/Plots.jl`. It operates on each `inner-array` sequentially, one after the other, as often done in methods that have been specialized for `MeshArray`s.
 
 # + {"slideshow": {"slide_type": "subslide"}}
 p=dirname(pathof(MeshArrays))
@@ -58,7 +54,7 @@ heatmap(D,title="Ocean Depth",clims=(0.,6000.))
 
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## A `MeshArray` Behaves Like A `Array`
+# ## `MeshArray` Behaves Like `Array`
 #
 # Here are a few examples that would be coded similarly in both cases
 
@@ -78,15 +74,12 @@ D[findall(D .< 1.)] .= NaN
 D[1]=0.0 .+ D[1]
 tmp=cos.(D);
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Let's switch grid now
+# ## Try Another Grid
+#
+# The `cube-sphere` grid in `MeshArrays.GRID_CS32` has 6 subdomains, each of size `32x32`.
+# -
 
-# +
-pth="../inputs/GRID_CS32/"
-γ=GridSpec("LatLonCap",pth)
-
-http="https://github.com/gaelforget/GRID_CS32"
-!isdir(pth) ? run(`git clone $http $pth`) : nothing
-
+pth=MeshArrays.GRID_CS32
 γ=GridSpec("CubeSphere",pth)
 D=γ.read(γ.path*"Depth.data",MeshArray(γ,Float32))
 show(D)
@@ -94,11 +87,13 @@ show(D)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## The `exchange` Function
 #
-# It adds neighboring points at face edges to slightly extend the computational domain as often needed e.g. to compute partial derivatives.
+# This function adds neighboring data points (columns or rows) at face edges to slightly extend the computational domain. Doing this is often needed e.g. to compute partial derivatives between subdomains of the climate system.
 # -
 
 Dexch=exchange(D,4)
 show(Dexch)
+
+# Here is a visualization for subdomain `#6`:
 
 # + {"slideshow": {"slide_type": "subslide"}}
 P=heatmap(D.f[6],title="Ocean Depth (D, Face 6)",lims=(-4,36))
@@ -106,11 +101,11 @@ Pexch=heatmap(Dexch.f[6],title="...(Dexch, Face 6)",lims=(0,40))
 plot(P,Pexch)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# # Diffusion-Based Smoothing
+# # Global Diffusion Example
 #
-# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Starting from a random noise field, the smoothing efficiency is predictable and can be set via a smoothing scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518).
+# Regular testing of `MeshArrays.jl` uses the `smooth()` function as an example. Starting from a random noise field, diffusive smoothing efficiency is predictable and can be set via a scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518).
 #
-# This example also illustrates the generality of the `MeshArrays` approach, where the same code in `demo2` is readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid maps onto the `6` faces of a cube with `16*16` points per face, with distances, areas, etc all set to `1.0`.
+# This example also illustrates the generality of the approach chosen in `MeshArrays.jl`, where the same code (see `demo2`) is pretty much readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid crudely represents the Earth as a unit-cube with `16*16` points on each of the 6 faces. Grid cell areas and distances are all artificially set to `1.0` for simplicity.
 
 # + {"slideshow": {"slide_type": "subslide"}}
 p=dirname(pathof(MeshArrays))

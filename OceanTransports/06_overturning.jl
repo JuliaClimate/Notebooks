@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -27,17 +27,23 @@
 # 3. conversion to transports
 
 # +
-#]add MITgcmTools#master
-
-# + {"slideshow": {"slide_type": "subslide"}}
-using MeshArrays, Plots, Statistics, MITgcmTools
-
+using MeshArrays, Plots, Statistics
 include("helper_functions.jl")
-get_grid_if_needed()
-get_velocity_if_needed()
 
-Γ =read_llc90_grid()
+pth=MeshArrays.GRID_LLC90
+γ=GridSpec("LatLonCap",pth)
+Γ=GridLoad(γ)
 LC=LatitudeCircles(-89.0:89.0,Γ);
+
+# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# using MeshArrays, Plots, Statistics, MITgcmTools
+#
+# include("helper_functions.jl")
+# get_grid_if_needed()
+# get_velocity_if_needed()
+#
+# Γ =read_llc90_grid()
+# LC=LatitudeCircles(-89.0:89.0,Γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
@@ -82,3 +88,6 @@ z=reverse(tmp,dims=2); z[z.==0.0].=NaN
 contourf(x,y,1e-6*transpose(z),clims=(-40,40),
     title="Overturning standard deviation (Eulerian; in Sv)",titlefontsize=10)
 #savefig("MOC_std.png")
+# -
+
+

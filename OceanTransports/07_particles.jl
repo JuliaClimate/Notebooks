@@ -9,100 +9,72 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Lagrangian particle tracking
 #
-# Material particles following ocean currents can be analyzed in terms of trajectories. These can simply be computed by integrating velocities through time within a [Lagrangian framework](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). In `Julia` this is easily done using the [IndividualDisplacements.jl](https://JuliaClimate.github.io/IndividualDisplacements.jl/dev/) and [OrdinaryDiffEq.jl](https://docs.juliadiffeq.org/latest) packages.
+# Material particles that tend to follow ocean currents can be analyzed in terms of trajectories. These can simply be computed by integrating velocities through time within a [Lagrangian framework](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). 
+#
+# In `Julia` this is easily done using the [IndividualDisplacements.jl](https://JuliaClimate.github.io/IndividualDisplacements.jl/dev/) package.
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Import software, grid, and velocity fields
-#
-# 1. pre-requisites
-# 2. read variables
-
-# + {"slideshow": {"slide_type": "subslide"}}
-#]add MITgcmTools#master; add OrdinaryDiffEq; add IndividualDisplacements#master;
+# ## 1. Software, Grid, And Velocities
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
-using IndividualDisplacements, MeshArrays, OrdinaryDiffEq
-using Plots, Statistics, MITgcmTools, DataFrames
+using IndividualDisplacements, DataFrames, Statistics
+pth=dirname(pathof(IndividualDisplacements))
+include(joinpath(pth,"../examples/helper_functions.jl")) 
+include(joinpath(pth,"../examples/recipes_plots.jl"))
 
-include("helper_functions.jl")
-get_grid_if_needed()
-get_velocity_if_needed()
+# +
+IndividualDisplacements.get_ecco_velocity_if_needed() #download data if needed
 
-Γ=read_llc90_grid();
+𝑃,𝐷=global_ocean_circulation(k=20,ny=2) #grid etc
+ODL=OceanDepthLog(𝐷.Γ) #used for plotting later
+
+fieldnames(typeof(𝑃)) #FlowFields data structure
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Set Gridded Variables
-#
-# 1. Select depth
-# 2. time average & normalize to grid units
-# 3. apply exchange function to `u,v,lon,lat`
-# 4. store everything in `uv_etc` dictionary
+# ## 2. Initialize Individuals
 
 # + {"slideshow": {"slide_type": "-"}}
-uvetc=IndividualDisplacements.read_uvetc(20,Γ,"../inputs/nctiles_climatology/");
+𝐷.🔄(𝑃,𝐷,0.0) #update velocity fields (here, to Dec and Jan bracketing t=0.0)
+
+np=100
+xy = init_global_randn(np,𝐷)
+df=DataFrame(x=xy[1,:],y=xy[2,:],f=xy[3,:]) #initial positions
+
+𝐼=Individuals(𝑃,df.x[1:np],df.y[1:np],df.f[1:np]) #Individuals data structure
+
+fieldnames(typeof(𝐼))
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Initialize Trajectory Computation
-#
-# 1. set `duComp` to interpolation function
-# 2. set `u0` initial location array
+# ## 3. Compute Trajectories
 
-# + {"slideshow": {"slide_type": "-"}}
-du_dt=IndividualDisplacements.VelComp!
-(u0,du)=initialize_locations(uvetc,10);
+# +
+𝑇=(0.0,𝐼.𝑃.𝑇[2]) #first half of January
+∫!(𝐼,𝑇) #mid-Dec to mid-Jan
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Compute Trajectories
-#
-# _Note: `ODEProblem` and `solve` settings can still be refined_
-# -
-
-tspan = (0.0,uvetc["t1"]-uvetc["t0"])
-prob = ODEProblem(du_dt,u0,tspan,uvetc)
-sol = solve(prob,Euler(),dt=uvetc["dt"])
-size(sol)
+for m=1:12
+    𝐷.🔄(𝑃,𝐷,0.0) #update velocity fields
+    ∫!(𝐼) #integrate forward by one more month
+end
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Post-Process Trajectories
-#
-# 1. Copy `sol` to a `DataFrame`
-# 2. Map position to lon,lat coordinates
+# ## 4. Post-Processing
 
 # + {"slideshow": {"slide_type": "subslide"}}
-df=postprocess_ODESolution(sol,uvetc);
+add_lonlat!(𝐼.🔴,𝐷.XC,𝐷.YC)
+𝐼.🔴[end-3:end,:]
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Plot Trajectories
+# ## 5. Plot Trajectories
 #
-#
-# For example, you can:
-#
-# - use either `Makie.jl` via `PlotMakie`
-# - or use `PyPlot.jl` via `PlotMapProj`
-#
+# In this example we simply map out individual positions (red to yellow) over a map of ocean depth (log10).
 
 # + {"slideshow": {"slide_type": "-"}}
-p=dirname(pathof(IndividualDisplacements));
-
-# + {"slideshow": {"slide_type": "slide"}}
-#include(joinpath(p,"../examples/plot_pyplot.jl"));
-#PyPlot.figure(); PlotMapProj(df,5000)
-
-#include(joinpath(p,"../examples/plot_makie.jl")); 
-#AbstractPlotting.inline!(true); #for Juno, set to false
-#scene=PlotMakie(df,5000,180.0) 
-##Makie.save("LatLonCap300mDepth.png", scene)
-
-include(joinpath(p,"../examples/plot_plots.jl"));
-plt=PlotBasic(df,1000,180.0)
-# -
-
-
+map(𝐼,ODL)

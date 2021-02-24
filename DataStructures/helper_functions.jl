@@ -185,7 +185,7 @@ function prep_nctiles_interp(inputs,set,nam,prc)
 
     flddatadir = joinpath(pth["interp"],nam)
     fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
-    diaginfo = readAvailDiagnosticsLog(pth["diaglist"],nam)
+    diaginfo = read_available_diagnostics(nam, filename=pth["diaglist"])
     if diaginfo["levs"]==1 && diaginfo["code"][2]=='M'
         flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"]))
         dims = [Λ["lon_c"],Λ["lat_c"],Λ["tim"]]
@@ -218,7 +218,7 @@ function prep_nctiles_native(inputs,set,nam,prc)
     savepath = joinpath(writedir,nam)
     if ~ispath(savepath); mkpath(savepath); end
     savename = joinpath.(Ref(savepath),nam)
-    diaginfo = readAvailDiagnosticsLog(pth["diaglist"],nam);
+    diaginfo = read_available_diagnostics(nam, filename=pth["diaglist"])
     if diaginfo["levs"]==1 && diaginfo["code"][2]=='M'
         flddata = BinData(fnames,prc,(Λ["n1"],Λ["n2"]))
         dims = [Λ["i_c"],Λ["j_c"],Λ["tim"]]

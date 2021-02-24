@@ -9,17 +9,25 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# # Interpolate `MeshArray` To Arbitrary Location
+# # `MeshArray.Interpolate` To Arbitrary Coordinates
 #
-# Each `MeshArray` contains elementary arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations. This is commonly done e.g. to compare climate models to sparse field observations.
+# A `MeshArray` is a collection of arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations as is commonly done e.g. to compare climate models to sparse field observations. 
 #
-# In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) t o allow for parallelism. It outputs interpolation coefficients -- reusing those is easy and fast.
+# ```
+# using MeshArrays
+# Γ=GridLoad(GridSpec("LatLonCap",MeshArrays.GRID_LLC90))
+# lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
+# (f,i,j,w,j_f,j_x,j_y)=InterpolationFactors(Γ,vec(lon),vec(lat))
+# Depth_interpolated=Interpolate(Γ["Depth"],f,i,j,w)
+# ```
+#
+# This notebook breaks down the `MeshArray.Interpolate` function, normally called as shown here. In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) t o allow for parallelism. It outputs interpolation coefficients -- reusing those is easy and fast.
 
 # + {"slideshow": {"slide_type": "skip"}, "cell_type": "markdown"}
 # ## Initialize Framework
@@ -32,12 +40,9 @@
 # + {"cell_style": "center", "slideshow": {"slide_type": "skip"}}
 using MeshArrays, MITgcmTools, Plots
 
-pth="../inputs/GRID_LLC90/"
+pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
-Γ=GridLoad(γ)
-
-http="https://github.com/gaelforget/GRID_LLC90"
-!isdir(pth) ? run(`git clone $http $pth`) : nothing;
+Γ=GridLoad(γ);
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Interpolation Code
