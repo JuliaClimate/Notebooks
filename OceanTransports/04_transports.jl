@@ -17,13 +17,13 @@
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Ocean Transports -- Integration And Mapping
 #
-# Transports in the climate system are often represented as gridded vector fields (e.g. on a `C-grid`) and integrated across `grid edge paths` that e.g. (1) connect location pairs or (2) tracks latitude circles. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) (incl. appendices)
+# Transports in the climate system are often represented as gridded vector fields (e.g. on a `C-grid`) and integrated across model grid lines. These paths may for examples connect a pair of coordinates, or track latitude circles. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) and appendices.
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Read grid & transports from file
 #
 # 1. pre-requisites
-# 2. read variables
+# 2. read transports
 
 # + {"slideshow": {"slide_type": "subslide"}}
 using MeshArrays, Plots, Statistics
@@ -35,6 +35,9 @@ pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
 Γ=GridLoad(γ)
 (Tx,Ty,τx,τy,η)=trsp_read("LatLonCap",pth);
+# -
+
+# Prepare for visualization:
 
 # +
 msk=1.0 .+ 0.0 * mask(view(Γ["hFacC"],:,1),NaN,0.0)
@@ -63,7 +66,7 @@ plot(L,T,xlabel="latitude",ylabel="Northward Transport (in Sv)",label="ECCO esti
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Transport Directions
 #
-# 1. `u,v` are oriented in the `Eastward,Northward` directions
+# 1. `u,v` are oriented in standard `Eastward,Northward` directions
 # 2. `uC,vC` are oriented along the `x,y` directions of each subdomain
 
 # + {"slideshow": {"slide_type": "-"}}

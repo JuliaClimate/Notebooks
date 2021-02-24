@@ -17,7 +17,7 @@
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Meridional Overturning Circulation
 #
-# Global Ocean transport depictions often involve concepts like the [AMOC](https://en.wikipedia.org/wiki/Atlantic_meridional_overturning_circulation), [Thermohaline Circulation](https://en.wikipedia.org/wiki/Thermohaline_circulation), or [conveyor Belt](http://oceanmotion.org/html/background/ocean-conveyor-belt.html). To apply these concepts to gridded ocean and climate models, one can compute an `overturning streamfunction` as shown below. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) and the other [GlobalOceanNotebooks](https://github.com/JuliaClimate/GlobalOceanNotebooks).
+# Global Ocean transport depictions often involve concepts like the [AMOC](https://en.wikipedia.org/wiki/Atlantic_meridional_overturning_circulation), [Thermohaline Circulation](https://en.wikipedia.org/wiki/Thermohaline_circulation), or [conveyor Belt](http://oceanmotion.org/html/background/ocean-conveyor-belt.html). To apply these concepts to gridded ocean and climate models, one can compute an _overturning streamfunction_ as shown below. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) and the other [GlobalOceanNotebooks](https://github.com/JuliaClimate/GlobalOceanNotebooks).
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Read grid & velocities from file
@@ -35,20 +35,10 @@ pth=MeshArrays.GRID_LLC90
 Γ=GridLoad(γ)
 LC=LatitudeCircles(-89.0:89.0,Γ);
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
-# using MeshArrays, Plots, Statistics, MITgcmTools
-#
-# include("helper_functions.jl")
-# get_grid_if_needed()
-# get_velocity_if_needed()
-#
-# Γ =read_llc90_grid()
-# LC=LatitudeCircles(-89.0:89.0,Γ);
-
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
 #
-# 1. integrate across `latitude circle paths`
+# 1. integrate along latitude circles
 # 2. integrate from the bottom
 
 # + {"slideshow": {"slide_type": "-"}}
