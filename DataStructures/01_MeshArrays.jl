@@ -17,7 +17,7 @@
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Gridded Domains Using `MeshArrays.jl`
 #
-# A `MeshArray` variable contains an array of elementary arrays that (1) are connected at their edges and (2) collectively form a global grid. Grid specifications are contained in `gcmgrid` data structures. These merely define array sizes and how e.g. grid variables are represented in memory -- it is only when variables are e.g. read from file that larger memory allocatations occur.
+# A `MeshArray` contains an array of subdomain arrays that (1) are connected at their edges and (2) collectively form a global grid. Grid specifications are contained in `gcmgrid` data structures. These merely define array sizes and how e.g. grid variables are represented in memory -- it is only when variables are read from file that larger memory allocations occur.
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Grid Configuration
@@ -87,7 +87,7 @@ show(D)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## The `exchange` Function
 #
-# It adds neighboring points at face edges to slightly extend the computational domain as often needed e.g. to compute partial derivatives across subdomains of the climate system.
+# This function adds neighboring data points (columns or rows) at face edges to slightly extend the computational domain. Doing this is often needed e.g. to compute partial derivatives between subdomains of the climate system.
 # -
 
 Dexch=exchange(D,4)
@@ -103,9 +103,9 @@ plot(P,Pexch)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # Global Diffusion Example
 #
-# The unit testing of `MeshArrays.jl` uses the `smooth()` function. Starting from a random noise field, the smoothing efficiency is predictable and can be set via a smoothing scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518).
+# Regular testing of `MeshArrays.jl` uses the `smooth()` function as an example. Starting from a random noise field, diffusive smoothing efficiency is predictable and can be set via a scale parameter [(see Weaver and Courtier, 2001)](https://doi.org/10.1002/qj.49712757518).
 #
-# This example also illustrates the generality of the `MeshArrays` approach, where the same code in `demo2` is readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid maps onto the `6` faces of a cube with `16*16` points per face, with distances, areas, etc all set to `1.0`.
+# This example also illustrates the generality of the approach chosen in `MeshArrays.jl`, where the same code (see `demo2`) is pretty much readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid crudely represents the Earth as a unit-cube with `16*16` points on each of the 6 faces. Grid cell areas and distances are all artificially set to `1.0` for simplicity.
 
 # + {"slideshow": {"slide_type": "subslide"}}
 p=dirname(pathof(MeshArrays))
