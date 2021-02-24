@@ -9,12 +9,12 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
-# # `NCTiles.jl` Creates Files With Meta Data
+# # `NCTiles.jl` : Create Files, Embed Meta Data
 #
 # [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev/) creates [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files that follow the [CF Metadata Conventions](http://cfconventions.org). It can be used either (1) in stand-alone mode or (2) in combination with [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/dev/). The examples below include:
 #
@@ -27,19 +27,9 @@
 #   - 3D staggered vector example
 
 # ### Packages & Helper Functions
-#
-# _These will be used throughout the notebook_
-
-# +
-if false
-    using Pkg
-    Pkg.add(PackageSpec(name="NCTiles", rev="master"))
-    Pkg.add(PackageSpec(name="MITgcmTools", rev="master"))
-end
 
 using NCTiles
 include("helper_functions.jl");
-# -
 
 # ### File Paths & I/O Back-End
 #
@@ -76,6 +66,12 @@ prc = Float32
 #
 # - a `NCvar` struct that sets up the subsequent `write` operation & incl. a `BinData` struct.
 # - a `BinData` struct that contains the file names, precision, and array size.
+
+    pth=input_file_paths(inputs)
+    flddatadir = joinpath(pth["interp"],nam)
+    fnames = joinpath.(Ref(flddatadir),filter(x -> occursin(".data",x), readdir(flddatadir)))
+    diaginfo = read_available_diagnostics(nam, filename=pth["diaglist"])
+
 
 (field,savename,readme)=prep_nctiles_interp(inputs,set,nam,prc);
 

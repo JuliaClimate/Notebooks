@@ -8,9 +8,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.3.1
+#     display_name: Julia 1.5.0
 #     language: julia
-#     name: julia-1.3
+#     name: julia-1.5
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -83,12 +83,24 @@ contourf(model2, region = "Quebec");
 #model1
 model2
 # -
-# ## Read & Plot A Variable (bis)
+# ## Read & Plot Another Variable
+#
+# Here we read data **from a file you would create by running** `DataStructures/03_nctiles.ipynb` after veryfing that the file is indeed found on disk (i.e., it has already been created by a user via `03_nctiles`).
 
 p3="../outputs/nctiles-newfiles/interp"
 tst=sum(occursin.("ETAN.nc",readdir(p3)))>0
 if tst
+    #access data
     model3 = load("$p3/ETAN.nc", "ETAN")
+    #deal with missing values
+    m=model3.data
+    for i in eachindex(m)
+        m[i]>1e10 ? m[i]=NaN : nothing
+    end
+    model3.data
+    #create map    
     contourf(model3, region = "Mollweide")
 end
+
+
 
