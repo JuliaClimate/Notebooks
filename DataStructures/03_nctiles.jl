@@ -28,8 +28,12 @@
 
 # ### Packages & Helper Functions
 
+# +
+#import Pkg; Pkg.add("NCTiles")
+
 using NCTiles
 include("helper_functions.jl");
+# -
 
 # ### File Paths & I/O Back-End
 #

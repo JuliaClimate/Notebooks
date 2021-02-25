@@ -52,7 +52,7 @@ ov=Array{Float64,3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
 for t=1:nt
-    (U,V)=read_velocities(Γ["XC"].grid,t)
+    (U,V)=read_velocities(Γ["XC"].grid,t,ECCOclim_path)
     (U,V)=convert_velocities(U,V,Γ)
     for z=1:nz
         UV=Dict("U"=>U[:,z],"V"=>V[:,z],"dimensions"=>["x","y"])
