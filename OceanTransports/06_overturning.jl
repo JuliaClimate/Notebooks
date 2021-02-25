@@ -34,6 +34,11 @@ pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
 Γ=GridLoad(γ)
 LC=LatitudeCircles(-89.0:89.0,Γ);
+# -
+
+using IndividualDisplacements
+IndividualDisplacements.get_ecco_velocity_if_needed();
+#IndividualDisplacements.get_occa_velocity_if_needed();
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
