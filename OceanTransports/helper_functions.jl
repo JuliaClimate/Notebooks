@@ -1,40 +1,6 @@
 using CSV, DataFrames, Statistics
 using FortranFiles, MeshArrays, MITgcmTools
-
-##
-
-function get_from_dataverse(nam::String,pth::String)
-    tmp = CSV.File("nctiles_climatology.csv") |> DataFrame!
-    ii = findall([occursin("$nam", tmp[i,:name]) for i=1:size(tmp,1)])
-    !isdir("$pth"*"$nam") ? mkdir("$pth"*"$nam") : nothing
-    for i in ii
-        ID=tmp[i,:ID]
-        nam1=tmp[i,:name]
-        nam2=joinpath("$pth"*"$nam/",nam1)
-        run(`wget --content-disposition https://dataverse.harvard.edu/api/access/datafile/$ID`);
-        run(`mv $nam1 $nam2`);
-    end
-end
-
-function get_grid_if_needed()
-    if !isdir("../inputs/GRID_LLC90")
-        run(`git clone https://github.com/gaelforget/GRID_LLC90 ../inputs/GRID_LLC90`)
-    end
-end
-
-function get_velocity_if_needed()
-    pth="../inputs/nctiles_climatology/"
-    !isdir("$pth") ? mkdir("$pth") : nothing
-    !isdir("$pth"*"UVELMASS") ? get_from_dataverse("UVELMASS",pth) : nothing
-    !isdir("$pth"*"VVELMASS") ? get_from_dataverse("VVELMASS",pth) : nothing
-end
-
-function read_velocities(γ::gcmgrid,t::Int)
-    pth="../inputs/nctiles_climatology/"
-    u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",γ,I=(:,:,:,t))
-    v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",γ,I=(:,:,:,t))
-    return u,v
-end
+using OceanStateEstimation
 
 #Convert Velocity (m/s) to transport (m^3/s)
 function convert_velocities(U,V,γ)
@@ -193,13 +159,4 @@ function interp_uv(u,v)
     uI=MatrixInterp(write(u),SPM,size(lon)) #interpolation itself
     vI=MatrixInterp(write(v),SPM,size(lon)); #interpolation itself
     return transpose(uI),transpose(vI),vec(lon[:,1]),vec(lat[1,:])
-end
-
-"""
-    read_llc90_grid()
-"""
-function read_llc90_grid()
-    mypath="../inputs/GRID_LLC90/"
-    γ=GridSpec("LatLonCap",mypath)
-    GridLoad(γ)
 end

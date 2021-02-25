@@ -34,6 +34,11 @@ pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
 Γ=GridLoad(γ)
 LC=LatitudeCircles(-89.0:89.0,Γ);
+# -
+
+using IndividualDisplacements
+IndividualDisplacements.get_ecco_velocity_if_needed();
+#IndividualDisplacements.get_occa_velocity_if_needed();
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Compute Overturning Streamfunction
@@ -47,7 +52,7 @@ ov=Array{Float64,3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
 for t=1:nt
-    (U,V)=read_velocities(Γ["XC"].grid,t)
+    (U,V)=read_velocities(Γ["XC"].grid,t,ECCOclim_path)
     (U,V)=convert_velocities(U,V,Γ)
     for z=1:nz
         UV=Dict("U"=>U[:,z],"V"=>V[:,z],"dimensions"=>["x","y"])

@@ -40,12 +40,21 @@ pth=MeshArrays.GRID_LLC90
 # Prepare for visualization:
 
 # +
-msk=1.0 .+ 0.0 * mask(view(Γ["hFacC"],:,1),NaN,0.0)
+μ =Γ["hFacC"][:,1]
+μ[findall(μ.>0.0)].=1.0
+μ[findall(μ.==0.0)].=NaN
 
-lon=[i for i=-179.5:1.0:179.5, j=-89.5:1.0:89.5]
-lat=[j for i=-179.5:1.0:179.5, j=-89.5:1.0:89.5]
-(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
-λ=Dict("f" => f,"i" => i,"j" => j,"w" => w);
+lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
+lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
+
+#(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
+#λ=(lon=lon,lat=lat,f=f,i=i,j=j,w=w);
+#df = DataFrame(f=λ.f[:], i=λ.i[:], j=λ.j[:], w=Float32.(λ.w[:]));
+#CSV.write("interp_coeffs.csv", df)
+
+df=DataFrame(CSV.File("interp_coeffs.csv"))
+λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
+    j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4));
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Integrate transport across latitude lines
@@ -85,14 +94,10 @@ heatmap(uC,clims=(-20.0,20.0),title="x-ward")
 #
 # 1. interpolate `u,v` to a `1/2 x 1/2` degree grid for plotting
 # 2. map out the Eastward,Northward transport components
-
-# + {"slideshow": {"slide_type": "-"}}
-lon=[i for i=20.:2.0:380., j=-79.:2.0:89.]
-lat=[j for i=20.:2.0:380., j=-79.:2.0:89.]
-(f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat));
 # -
-uI=reshape(Interpolate(u,f,i,j,w),size(lon))
-vI=reshape(Interpolate(v,f,i,j,w),size(lon))
+
+uI=reshape(Interpolate(u,λ.f,λ.i,λ.j,λ.w),size(lon))
+vI=reshape(Interpolate(v,λ.f,λ.i,λ.j,λ.w),size(lon))
 size(lon)
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "split"}
@@ -104,5 +109,4 @@ heatmap(lon[:,1],lat[1,:],
     permutedims(vI),clims=(-20.0,20.0),
     title="Northward transport (in Sv / cell)")
 # -
-
 

@@ -42,22 +42,21 @@ pth=MeshArrays.GRID_LLC90
 (Tx,Ty,τx,τy,η)=trsp_read("LatLonCap",pth);
 
 # +
-msk=1.0 .+ 0.0 * mask(view(Γ["hFacC"],:,1),NaN,0.0)
-
-lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
-lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
-(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
-λ=Dict("f" => f,"i" => i,"j" => j,"w" => w);
-
-# +
 μ =Γ["hFacC"][:,1]
 μ[findall(μ.>0.0)].=1.0
 μ[findall(μ.==0.0)].=NaN
 
 lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
 lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
-(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
-λ=(lon=lon,lat=lat,f=f,i=i,j=j,w=w);
+
+#(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
+#λ=(lon=lon,lat=lat,f=f,i=i,j=j,w=w);
+#df = DataFrame(f=λ.f[:], i=λ.i[:], j=λ.j[:], w=Float32.(λ.w[:]));
+#CSV.write("interp_coeffs.csv", df)
+
+df=DataFrame(CSV.File("interp_coeffs.csv"))
+λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
+    j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4));
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ### Helmholtz Decomposition
@@ -71,7 +70,7 @@ lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
 
 # + {"slideshow": {"slide_type": "subslide"}}
 #convergence & land mask
-TrspCon=msk.*convergence(Tx,Ty)
+TrspCon=μ.*convergence(Tx,Ty)
 
 #scalar potential
 TrspPot=ScalarPotential(TrspCon)
@@ -108,12 +107,12 @@ extrema(errCon)
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 TrspPsiI=Interpolate(1e-6*μ*TrspPsi,λ.f,λ.i,λ.j,λ.w)
-contourf(vec(λ.lon[:,1]),vec(λ.lat[1,:]),
+contourf(vec(lon[:,1]),vec(lat[1,:]),
     TrspPsiI,title="Streamfunction",clims=(-50,50))
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 TrspPotI=Interpolate(1e-6*μ*TrspPot,λ.f,λ.i,λ.j,λ.w)
-contourf(vec(λ.lon[:,1]),vec(λ.lat[1,:]),
+contourf(vec(lon[:,1]),vec(lat[1,:]),
         TrspPotI,title="Scalar Potential",clims=(-0.4,0.4))
 # -
 

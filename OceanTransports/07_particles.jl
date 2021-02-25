@@ -22,21 +22,27 @@
 # In `Julia` this is easily done e.g. using the [IndividualDisplacements.jl](https://JuliaClimate.github.io/IndividualDisplacements.jl/dev/) package.
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## 1. Software, Grid, And Velocities
+# ## 1. Software, Grid, And Background Map
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
-using IndividualDisplacements, DataFrames, Statistics
+using IndividualDisplacements, DataFrames, Statistics, CSV, Plots
 pth=dirname(pathof(IndividualDisplacements))
-include(joinpath(pth,"../examples/helper_functions.jl")) 
-include(joinpath(pth,"../examples/recipes_plots.jl"))
+include(joinpath(pth,"../examples/helper_functions.jl"));
 
 # +
 IndividualDisplacements.get_ecco_velocity_if_needed() #download data if needed
 
-𝑃,𝐷=global_ocean_circulation(k=20,ny=2) #grid etc
-ODL=OceanDepthLog(𝐷.Γ) #used for plotting later
+𝑃,𝐷=global_ocean_circulation(k=20,ny=2); #grid etc
 
-fieldnames(typeof(𝑃)) #FlowFields data structure
+# +
+lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
+lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
+
+df=DataFrame(CSV.File("interp_coeffs.csv"))
+λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
+    j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4))
+OceanDepth=Interpolate(𝐷.Γ["Depth"],λ.f,λ.i,λ.j,λ.w)
+OceanDepth=reshape(OceanDepth,size(lon));
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## 2. Initialize Individuals
@@ -74,7 +80,17 @@ add_lonlat!(𝐼.🔴,𝐷.XC,𝐷.YC)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## 5. Plot Trajectories
 #
-# In this example we simply map out individual positions (red to yellow) over a map of ocean depth (log10).
+# In this example we simply map out individual positions (red to blue) over a map of ocean depth (log10).
 
-# + {"slideshow": {"slide_type": "-"}}
-map(𝐼,ODL)
+# +
+plt=contourf(vec(lon[:,1]),vec(lat[1,:]),permutedims(OceanDepth),clims=(-2500.,5000.),c = :grays, colorbar=false)
+xli=extrema(lon)
+
+🔴_by_t = groupby(𝐼.🔴, :t)
+lo=deepcopy(🔴_by_t[1].lon); lo[findall(lo.<xli[1])]=lo[findall(lo.<xli[1])].+360
+scatter!(lo,🔴_by_t[1].lat,markersize=1.5,c=:red,leg=:none,marker = (:circle, stroke(0)))
+lo=deepcopy(🔴_by_t[end].lon); lo[findall(lo.<xli[1])]=lo[findall(lo.<xli[1])].+360
+scatter!(lo,🔴_by_t[end].lat,markersize=1.5,c=:blue,leg=:none,marker = (:dot, stroke(0)))
+# -
+
+
