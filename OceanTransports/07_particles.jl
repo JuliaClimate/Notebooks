@@ -27,7 +27,8 @@
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
 using IndividualDisplacements, DataFrames, Statistics
 pth=dirname(pathof(IndividualDisplacements))
-include(joinpath(pth,"../examples/helper_functions.jl")) 
+include(joinpath(pth,"../examples/helper_functions.jl"))
+import Base: map
 include(joinpath(pth,"../examples/recipes_plots.jl"))
 
 # +
