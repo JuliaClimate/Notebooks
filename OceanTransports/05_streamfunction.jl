@@ -42,14 +42,6 @@ pth=MeshArrays.GRID_LLC90
 (Tx,Ty,τx,τy,η)=trsp_read("LatLonCap",pth);
 
 # +
-msk=1.0 .+ 0.0 * mask(view(Γ["hFacC"],:,1),NaN,0.0)
-
-lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
-lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
-(f,i,j,w)=InterpolationFactors(Γ,vec(lon),vec(lat))
-λ=Dict("f" => f,"i" => i,"j" => j,"w" => w);
-
-# +
 μ =Γ["hFacC"][:,1]
 μ[findall(μ.>0.0)].=1.0
 μ[findall(μ.==0.0)].=NaN

@@ -2,15 +2,6 @@ using CSV, DataFrames, Statistics
 using FortranFiles, MeshArrays, MITgcmTools
 using OceanStateEstimation
 
-##
-
-function read_velocities(γ::gcmgrid,t::Int)
-    pth=ECCOclim_path
-    u=Main.read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",γ,I=(:,:,:,t))
-    v=Main.read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",γ,I=(:,:,:,t))
-    return u,v
-end
-
 #Convert Velocity (m/s) to transport (m^3/s)
 function convert_velocities(U,V,γ)
     for i in eachindex(U)
