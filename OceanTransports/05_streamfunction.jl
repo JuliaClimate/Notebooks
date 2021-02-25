@@ -63,7 +63,7 @@ lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
 
 # + {"slideshow": {"slide_type": "subslide"}}
 #convergence & land mask
-TrspCon=msk.*convergence(Tx,Ty)
+TrspCon=μ.*convergence(Tx,Ty)
 
 #scalar potential
 TrspPot=ScalarPotential(TrspCon)
