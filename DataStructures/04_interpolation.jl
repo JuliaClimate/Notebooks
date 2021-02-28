@@ -20,14 +20,11 @@
 # A `MeshArray` is a collection of arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations as is commonly done e.g. to compare climate models to sparse field observations. 
 #
 # ```
-# using MeshArrays
-# Γ=GridLoad(GridSpec("LatLonCap",MeshArrays.GRID_LLC90))
-# lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
-# (f,i,j,w,j_f,j_x,j_y)=InterpolationFactors(Γ,vec(lon),vec(lat))
+# (f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat))
 # Depth_interpolated=Interpolate(Γ["Depth"],f,i,j,w)
 # ```
 #
-# This notebook breaks down the `MeshArray.Interpolate` function, normally called as shown here. In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) t o allow for parallelism. It outputs interpolation coefficients -- reusing those is easy and fast.
+# This notebook breaks down the `MeshArray.Interpolate` function, normally called as shown here. In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) to allow for parallelism. `MeshArrays.InterpolationFactors` outputs interpolation coefficients -- reusing those is easy and fast, as shown here.
 
 # + {"slideshow": {"slide_type": "skip"}, "cell_type": "markdown"}
 # ## Initialize Framework
@@ -43,9 +40,19 @@ using MeshArrays, MITgcmTools, Plots
 pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
 Γ=GridLoad(γ);
+# -
+
+# ## Choose Target Coordinates And Interpolate
+
+# +
+lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
+#lon=[66.75]; lat=[-69.75];
+
+(f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat))
+Depth_int=Interpolate(Γ["Depth"],f,i,j,w)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# ## Interpolation Code
+# ## The Interpolation Code? Let's Break It Down:
 #
 # - find nearest neighbor (`MeshArray` & `set`)
 # - define subdomain tiles (`MeshArray` -> `tiles`)
@@ -59,8 +66,6 @@ pth=MeshArrays.GRID_LLC90
 # ### Find Nearest Neighbor
 
 # + {"slideshow": {"slide_type": "-"}}
-lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
-#lon=[66.75]; lat=[-69.75];
 (f,i,j,c)=knn(Γ["XC"],Γ["YC"],lon,lat)
 [write(Γ["XC"])[c] write(Γ["YC"])[c]]
 
@@ -115,14 +120,15 @@ scatter!([XC0],[YC0],c=:red); scatter!([lon],[lat],c=:green)
 
 #Identify Enclosing Quadrilaterals
 (x_quad,y_quad,i_quad,j_quad)=MeshArrays.QuadArrays(x_grid,y_grid)
-angsum=MeshArrays.PolygonAngle(x_quad,y_quad,x_trgt,y_trgt)
+angsum=zeros(size(x_quad,1),size(x_trgt,1))
+MeshArrays.PolygonAngle(x_quad,y_quad,x_trgt,y_trgt,angsum)
 ii=findall(angsum.>180.)
 ii=[ii[j].I[1] for j in 1:length(ii)]
 
 #Interpolation Coefficients
-px=x_quad[ii[1],:]'; py=y_quad[ii[1],:]'
-ox=[x_trgt[1]]; oy=[y_trgt[1]]
-ow=MeshArrays.QuadCoeffs(px,py,ox,oy);
+px=permutedims(x_quad[ii[1],:]); py=permutedims(y_quad[ii[1],:])
+ox=x_trgt[1]; oy=y_trgt[1]; ow=zeros(4)
+MeshArrays.QuadCoeffs(px,py,ox,oy,ow);
 
 # + {"slideshow": {"slide_type": "subslide"}}
 scatter(x_grid,y_grid,marker=:+,c=:blue,leg=false,xlabel="x",ylabel="y")
