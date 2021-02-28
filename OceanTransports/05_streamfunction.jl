@@ -81,7 +81,7 @@ TxD=TxD.*Γ["DXC"]
 TyD=TyD.*Γ["DYC"]
 
 #Rotational transport component
-TxR = Tx-TyD
+TxR = Tx-TxD
 TyR = Ty-TyD
 
 #vector Potential

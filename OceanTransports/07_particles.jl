@@ -38,9 +38,9 @@ IndividualDisplacements.get_ecco_velocity_if_needed() #download data if needed
 lon=[i for i=-179.:2.0:179., j=-89.:2.0:89.]
 lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
 
-df=DataFrame(CSV.File("interp_coeffs.csv"))
-λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
-    j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4))
+(f,i,j,w)=InterpolationFactors(𝐷.Γ,vec(lon),vec(lat))
+λ=(lon=lon,lat=lat,f=f,i=i,j=j,w=w);
+
 OceanDepth=Interpolate(𝐷.Γ["Depth"],λ.f,λ.i,λ.j,λ.w)
 OceanDepth=reshape(OceanDepth,size(lon));
 
