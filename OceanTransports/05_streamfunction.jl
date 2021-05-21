@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -42,7 +42,7 @@ pth=MeshArrays.GRID_LLC90
 (Tx,Ty,τx,τy,η)=trsp_read("LatLonCap",pth);
 
 # +
-μ =Γ["hFacC"][:,1]
+μ =Γ.hFacC[:,1]
 μ[findall(μ.>0.0)].=1.0
 μ[findall(μ.==0.0)].=NaN
 
@@ -77,8 +77,8 @@ TrspPot=ScalarPotential(TrspCon)
 
 #Divergent transport component
 (TxD,TyD)=gradient(TrspPot,Γ)
-TxD=TxD.*Γ["DXC"]
-TyD=TyD.*Γ["DYC"]
+TxD=TxD.*Γ.DXC
+TyD=TyD.*Γ.DYC
 
 #Rotational transport component
 TxR = Tx-TxD
