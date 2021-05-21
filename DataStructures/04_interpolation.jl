@@ -9,19 +9,19 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
-# # `MeshArray.Interpolate` To Arbitrary Coordinates
+# # `MeshArrays.Interpolate` To Arbitrary Coordinates
 #
 # A `MeshArray` is a collection of arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations as is commonly done e.g. to compare climate models to sparse field observations. 
 #
 # ```
 # (f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat))
-# Depth_interpolated=Interpolate(Γ["Depth"],f,i,j,w)
+# Depth_interpolated=Interpolate(Γ.Depth,f,i,j,w)
 # ```
 #
 # This notebook breaks down the `MeshArray.Interpolate` function, normally called as shown here. In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) to allow for parallelism. `MeshArrays.InterpolationFactors` outputs interpolation coefficients -- reusing those is easy and fast, as shown here.
@@ -49,7 +49,7 @@ lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
 #lon=[66.75]; lat=[-69.75];
 
 (f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat))
-Depth_int=Interpolate(Γ["Depth"],f,i,j,w)
+Depth_int=Interpolate(Γ.Depth,f,i,j,w)
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## The Interpolation Code? Let's Break It Down:
@@ -66,8 +66,8 @@ Depth_int=Interpolate(Γ["Depth"],f,i,j,w)
 # ### Find Nearest Neighbor
 
 # + {"slideshow": {"slide_type": "-"}}
-(f,i,j,c)=knn(Γ["XC"],Γ["YC"],lon,lat)
-[write(Γ["XC"])[c] write(Γ["YC"])[c]]
+(f,i,j,c)=knn(Γ.XC,Γ.YC,lon,lat)
+[write(Γ.XC)[c] write(Γ.YC)[c]]
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
 # ### Define Subdomain Tiles
@@ -79,10 +79,16 @@ ni=30; nj=30;
 τ=Tiles(γ,ni,nj)
 
 tiles=MeshArray(γ,Int);
-[tiles[τ[i]["face"]][τ[i]["i"],τ[i]["j"]].=i for i in 1:length(τ)];
+[tiles[τ[i].face][τ[i].i,τ[i].j].=i for i in 1:length(τ)];
 
-using Plots
-include(joinpath(dirname(pathof(MeshArrays)),"../examples/Plots.jl"))
+import Plots: heatmap
+function heatmap(x::MeshArray; args...)
+    n=x.grid.nFaces
+    p=()
+    for i=1:n; p=(p...,heatmap(x[i]; args...)); end
+    plot(p...)
+end
+
 heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 
 # + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
@@ -94,13 +100,13 @@ heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 # 2. in the local stereographic coordinates used for interpolation.
 
 # + {"slideshow": {"slide_type": "subslide"}}
-XCtiles=Tiles(τ,exchange(Γ["XC"]))
-YCtiles=Tiles(τ,exchange(Γ["YC"]))
+XCtiles=Tiles(τ,exchange(Γ.XC))
+YCtiles=Tiles(τ,exchange(Γ.YC))
 
-iiTile=tiles[f[1]][i[1],j[1]]; iiFace=τ[iiTile]["face"]
+iiTile=tiles[f[1]][i[1],j[1]]; iiFace=τ[iiTile].face
 
-ii0=minimum(τ[iiTile]["i"])+Int(ni/2); jj0=minimum(τ[iiTile]["j"])+Int(nj/2)
-XC0=Γ["XG"].f[iiFace][ii0,jj0]; YC0=Γ["YG"].f[iiFace][ii0,jj0]
+ii0=minimum(τ[iiTile].i)+Int(ni/2); jj0=minimum(τ[iiTile].j)+Int(nj/2)
+XC0=Γ.XG.f[iiFace][ii0,jj0]; YC0=Γ.YG.f[iiFace][ii0,jj0]
 #XC0=66.5000; YC0=-64.4201
 
 scatter(XCtiles[iiTile],YCtiles[iiTile],marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
@@ -147,16 +153,16 @@ lon_a=NaN*similar(lon)
 lat_a=NaN*similar(lat)
 for jj=1:length(lon)
     if !isnan(sum(w[jj,:]))
-        x=[Γ["XC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
-        y=[Γ["YC"][f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
+        x=[Γ.XC[f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
+        y=[Γ.YC[f[jj,ii]][i[jj,ii],j[jj,ii]] for ii=1:4]
         lon_a[jj]=sum(w[jj,:].*x)
         lat_a[jj]=sum(w[jj,:].*y)
     end
 end
 
 #or equivalently:
-lon_b=Interpolate(Γ["XC"],f,i,j,w)
-lat_b=Interpolate(Γ["YC"],f,i,j,w)
+lon_b=Interpolate(Γ.XC,f,i,j,w)
+lat_b=Interpolate(Γ.YC,f,i,j,w)
 
 
 # + {"slideshow": {"slide_type": "subslide"}}

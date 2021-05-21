@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -45,11 +45,18 @@ show(D)
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # ## Subdomain Arrays
 #
-# The heatmap method is specialized for `MeshArray`s in `../examples/Plots.jl`. It operates on each `inner-array` sequentially, one after the other, as often done in methods that have been specialized for `MeshArray`s.
+# The heatmap method is specialized for `MeshArray`s below. It operates on each `inner-array` sequentially, one after the other.
 
 # + {"slideshow": {"slide_type": "subslide"}}
-p=dirname(pathof(MeshArrays))
-include(joinpath(p,"../examples/Plots.jl"))
+import Plots: heatmap
+
+function heatmap(x::MeshArray; args...)
+    n=x.grid.nFaces
+    p=()
+    for i=1:n; p=(p...,heatmap(x[i]; args...)); end
+    plot(p...)
+end
+
 heatmap(D,title="Ocean Depth",clims=(0.,6000.))
 
 
@@ -108,8 +115,8 @@ plot(P,Pexch)
 # This example also illustrates the generality of the approach chosen in `MeshArrays.jl`, where the same code (see `demo2`) is pretty much readily applicable to any `PeriodicDomain`, `PeriodicChannel`, `CubeSphere`, or `LatLonCap` grid. Here the chosen grid crudely represents the Earth as a unit-cube with `16*16` points on each of the 6 faces. Grid cell areas and distances are all artificially set to `1.0` for simplicity.
 
 # + {"slideshow": {"slide_type": "subslide"}}
-p=dirname(pathof(MeshArrays))
-include(joinpath(p,"../examples/Demos.jl"))
+pth=dirname(pathof(MeshArrays))
+include(joinpath(pth,"../examples/Demos.jl"))
 γ,Γ=GridOfOnes("CubeSphere",6,16)
 Δ=demo2(Γ);
 
