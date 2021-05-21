@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -25,7 +25,8 @@
 # ## 1. Software, Grid, And Background Map
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
-using IndividualDisplacements, DataFrames, Statistics, CSV, Plots
+include("helper_functions.jl")
+using IndividualDisplacements
 pth=dirname(pathof(IndividualDisplacements))
 include(joinpath(pth,"../examples/helper_functions.jl"));
 
@@ -41,7 +42,7 @@ lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
 (f,i,j,w)=InterpolationFactors(𝐷.Γ,vec(lon),vec(lat))
 λ=(lon=lon,lat=lat,f=f,i=i,j=j,w=w);
 
-OceanDepth=Interpolate(𝐷.Γ["Depth"],λ.f,λ.i,λ.j,λ.w)
+OceanDepth=Interpolate(𝐷.Γ.Depth,λ.f,λ.i,λ.j,λ.w)
 OceanDepth=reshape(OceanDepth,size(lon));
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}

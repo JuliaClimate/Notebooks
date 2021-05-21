@@ -1,14 +1,28 @@
-using CSV, DataFrames, Statistics
-using FortranFiles, MeshArrays, MITgcmTools
-using OceanStateEstimation
+using MeshArrays, MITgcmTools, OceanStateEstimation
+using CSV, DataFrames, Statistics, Plots
+#using FortranFiles, 
+
+import Plots: heatmap
+
+"""
+    heatmap(x::MeshArray; args...)
+
+Apply heatmap to each subdomain in a MeshArray    
+"""
+function heatmap(x::MeshArray; args...)
+    n=x.grid.nFaces
+    p=()
+    for i=1:n; p=(p...,heatmap(x[i]; args...)); end
+    plot(p...)
+end
 
 #Convert Velocity (m/s) to transport (m^3/s)
-function convert_velocities(U,V,γ)
+function convert_velocities(U::MeshArray,V::MeshArray,G::NamedTuple)
     for i in eachindex(U)
         tmp1=U[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
         tmp1=V[i]; tmp1[(!isfinite).(tmp1)] .= 0.0
-        U[i]=γ["DRF"][i[2]]*U[i].*γ["DYG"][i[1]]
-        V[i]=γ["DRF"][i[2]]*V[i].*γ["DXG"][i[1]]
+        U[i]=G.DRF[i[2]]*U[i].*G.DYG[i[1]]
+        V[i]=G.DRF[i[2]]*V[i].*G.DXG[i[1]]
     end
     return U,V
 end
@@ -42,7 +56,7 @@ include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))
 (TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(γ,Γ,"GRID_LLC90/");
 ```
 """
-function trsp_prep(γ::gcmgrid,Γ::Dict,dirOut::String="")
+function trsp_prep(γ::gcmgrid,Γ::NamedTuple,dirOut::String="")
 
     #wind stress
     fileName="nctiles_climatology/oceTAUX/oceTAUX"
@@ -70,20 +84,20 @@ function trsp_prep(γ::gcmgrid,Γ::Dict,dirOut::String="")
     V=mask(V,0.0)
 
     #time averaging and vertical integration
-    TrspX=similar(Γ["DXC"])
-    TrspY=similar(Γ["DYC"])
-    TauX=similar(Γ["DXC"])
-    TauY=similar(Γ["DYC"])
-    SSH=similar(Γ["XC"])
+    TrspX=similar(Γ.DXC)
+    TrspY=similar(Γ.DYC)
+    TauX=similar(Γ.DXC)
+    TauY=similar(Γ.DYC)
+    SSH=similar(Γ.XC)
 
     for i=1:γ.nFaces
         tmpX=mean(U.f[i],dims=4)
         tmpY=mean(V.f[i],dims=4)
-        for k=1:length(Γ["RC"])
-            tmpX[:,:,k]=tmpX[:,:,k].*Γ["DYG"].f[i]
-            tmpX[:,:,k]=tmpX[:,:,k].*Γ["DRF"][k]
-            tmpY[:,:,k]=tmpY[:,:,k].*Γ["DXG"].f[i]
-            tmpY[:,:,k]=tmpY[:,:,k].*Γ["DRF"][k]
+        for k=1:length(Γ.RC)
+            tmpX[:,:,k]=tmpX[:,:,k].*Γ.DYG.f[i]
+            tmpX[:,:,k]=tmpX[:,:,k].*Γ.DRF[k]
+            tmpY[:,:,k]=tmpY[:,:,k].*Γ.DXG.f[i]
+            tmpY[:,:,k]=tmpY[:,:,k].*Γ.DRF[k]
         end
         TrspX.f[i]=dropdims(sum(tmpX,dims=3),dims=(3,4))
         TrspY.f[i]=dropdims(sum(tmpY,dims=3),dims=(3,4))
@@ -127,10 +141,10 @@ end
     3. Convert to `Eastward/Northward` transport
     4. Display Subdomain Arrays (optional)
 """
-function rotate_uv(uv,γ)
+function rotate_uv(uv::Dict,G::NamedTuple)
     u=1e-6 .*uv["U"]; v=1e-6 .*uv["V"];
-    u[findall(γ["hFacW"][:,1].==0)].=NaN
-    v[findall(γ["hFacS"][:,1].==0)].=NaN;
+    u[findall(G.hFacW[:,1].==0)].=NaN
+    v[findall(G.hFacS[:,1].==0)].=NaN;
 
     nanmean(x) = mean(filter(!isnan,x))
     nanmean(x,y) = mapslices(nanmean,x,dims=y)
@@ -142,8 +156,8 @@ function rotate_uv(uv,γ)
         vC[iF]=reshape(nanmean([tmp1[:] tmp2[:]],2),size(tmp1))
     end
 
-    cs=γ["AngleCS"]
-    sn=γ["AngleSN"]
+    cs=G.AngleCS
+    sn=G.AngleSN
     u=uC.*cs-vC.*sn
     v=uC.*sn+vC.*cs;
 

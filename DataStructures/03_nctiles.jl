@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # # `NCTiles.jl` : Create Files, Embed Meta Data

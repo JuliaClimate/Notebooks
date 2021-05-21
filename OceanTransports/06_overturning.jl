@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -27,7 +27,6 @@
 # 3. conversion to transports
 
 # +
-using MeshArrays, Plots, Statistics
 include("helper_functions.jl")
 
 pth=MeshArrays.GRID_LLC90
@@ -47,12 +46,12 @@ IndividualDisplacements.get_ecco_velocity_if_needed();
 # 2. integrate from the bottom
 
 # + {"slideshow": {"slide_type": "-"}}
-nz=size(Γ["hFacC"],2); nt=12; nl=length(LC)
+nz=size(Γ.hFacC,2); nt=12; nl=length(LC)
 ov=Array{Float64,3}(undef,nl,nz,nt)
 
 #integrate across latitude circles
 for t=1:nt
-    (U,V)=read_velocities(Γ["XC"].grid,t,ECCOclim_path)
+    (U,V)=read_velocities(Γ.XC.grid,t,ECCOclim_path)
     (U,V)=convert_velocities(U,V,Γ)
     for z=1:nz
         UV=Dict("U"=>U[:,z],"V"=>V[:,z],"dimensions"=>["x","y"])
@@ -67,7 +66,7 @@ ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 # ### Plot Annual Mean And Variability
 # -
 
-x=vec(-89.0:89.0); y=reverse(vec(Γ["RF"][1:end-1])); #coordinate variables
+x=vec(-89.0:89.0); y=reverse(vec(Γ.RF[1:end-1])); #coordinate variables
 
 # + {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
 tmp=dropdims(mean(ov,dims=3),dims=3)

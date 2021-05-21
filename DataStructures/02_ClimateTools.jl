@@ -8,15 +8,17 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
 # # `ClimateTools.jl` and `ClimatePlots.jl`
 #
 # [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/) is a collection of commonly-used tools aimed to ease the typical steps in (1) analyzing climate models outputs from netCDF files that follow CF-conventions and (2) creating climate scenarios. [ClimatePlots.jl](https://juliaclimate.github.io/ClimatePlots.jl/dev/) is the associated plotting library.
+#
+# **Note : This has not been tested since 2020, and may not currently work**
 
 # + {"slideshow": {"slide_type": "subslide"}}
 if false #set to true if you have not yet installed packages listed below

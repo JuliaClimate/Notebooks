@@ -9,9 +9,9 @@
 #       format_version: '1.4'
 #       jupytext_version: 1.2.4
 #   kernelspec:
-#     display_name: Julia 1.5.0
+#     display_name: Julia 1.6.0
 #     language: julia
-#     name: julia-1.5
+#     name: julia-1.6
 # ---
 
 # + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
@@ -26,9 +26,6 @@
 # 2. read transports
 
 # + {"slideshow": {"slide_type": "subslide"}}
-using MeshArrays, Plots, Statistics
-pth=dirname(pathof(MeshArrays))
-include(joinpath(pth,"../examples/Plots.jl"))
 include("helper_functions.jl")
 
 pth=MeshArrays.GRID_LLC90
@@ -40,7 +37,7 @@ pth=MeshArrays.GRID_LLC90
 # Prepare for visualization:
 
 # +
-μ =Γ["hFacC"][:,1]
+μ =Γ.hFacC[:,1]
 μ[findall(μ.>0.0)].=1.0
 μ[findall(μ.==0.0)].=NaN
 
