@@ -95,7 +95,9 @@ version = "0.2.5"
 
 [[ClimateModels]]
 deps = ["AWS", "CFTime", "CSV", "DataFrames", "Dates", "Downloads", "Git", "NetCDF", "OrderedCollections", "Pkg", "Statistics", "Suppressor", "TOML", "Test", "UUIDs", "Zarr"]
-git-tree-sha1 = "78ea51c78aa08f493589a8831789ea88e764fce5"
+git-tree-sha1 = "b164be5ddd8ac743b00d342741b03e83f2455b5c"
+repo-rev = "master"
+repo-url = "https://github.com/gaelforget/ClimateModels.jl.git"
 uuid = "f6adb021-9183-4f40-84dc-8cea6f651bb0"
 version = "0.1.6"
 
@@ -437,9 +439,11 @@ version = "0.1.0"
 
 [[IndividualDisplacements]]
 deps = ["CFTime", "CSV", "CyclicArrays", "DataFrames", "Dates", "MITgcmTools", "MeshArrays", "NetCDF", "OceanStateEstimation", "OrdinaryDiffEq", "Pkg", "Random", "UnPack"]
-git-tree-sha1 = "3af7911ffec2a92ce6231d29e415438505ee4bb0"
+git-tree-sha1 = "2b51b3b06a60e96fe933c8c517ff548987ef2e0b"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaClimate/IndividualDisplacements.jl.git"
 uuid = "b92f0c32-5b7e-11e9-1d7b-238b2da8b0e6"
-version = "0.3.0"
+version = "0.3.1"
 
 [[Inflate]]
 git-tree-sha1 = "f5fc07d4e706b84f72d54eedcc1c13d92fb0871c"
@@ -638,6 +642,8 @@ version = "1.9.3+0"
 [[MITgcmTools]]
 deps = ["ClimateModels", "DataFrames", "Dates", "MeshArrays", "NetCDF", "OrderedCollections", "Pkg", "Printf", "SparseArrays", "Suppressor", "UUIDs"]
 git-tree-sha1 = "acdc3134a78523136a7178cd864fb49d98de2aaa"
+repo-rev = "master"
+repo-url = "https://github.com/gaelforget/MITgcmTools.jl.git"
 uuid = "62725fbc-3a66-4df3-9000-e33e85b3a198"
 version = "0.1.20"
 
@@ -669,6 +675,8 @@ version = "0.3.1"
 [[MeshArrays]]
 deps = ["CatViews", "NearestNeighbors", "Pkg", "Printf", "SparseArrays", "Statistics", "Unitful"]
 git-tree-sha1 = "74dc3449aa61cd8a65304ba2b5ce614e9669ffba"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaClimate/MeshArrays.jl.git"
 uuid = "cb8c808f-1acf-59a3-9d2b-6e38d009f683"
 version = "0.2.19"
 
@@ -756,6 +764,8 @@ version = "0.3.8"
 [[OceanStateEstimation]]
 deps = ["FortranFiles", "MITgcmTools", "MeshArrays", "Pkg", "Statistics"]
 git-tree-sha1 = "737f9301b7b839c203c7a08bc85edff3029ec4f4"
+repo-rev = "master"
+repo-url = "https://github.com/gaelforget/OceanStateEstimation.jl.git"
 uuid = "891f6deb-a4f5-4bc5-a2e3-1e8f649cdd2c"
 version = "0.1.7"
 

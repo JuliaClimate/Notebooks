@@ -29,11 +29,11 @@
 # ### Packages & Helper Functions
 
 # +
-#import Pkg; Pkg.add("NCTiles")
+#import Pkg; Pkg.add("NCDatasets"); Pkg.add("NCTiles"); Pkg.test("NCTiles")
+# -
 
 using NCTiles
 include("helper_functions.jl");
-# -
 
 # ### File Paths & I/O Back-End
 #
