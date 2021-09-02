@@ -2,19 +2,20 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # `MeshArrays.Interpolate` To Arbitrary Coordinates
 #
 # A `MeshArray` is a collection of arrays that collectively form a global domain grid. Here we interpolate from the global grid to a set of arbitary locations as is commonly done e.g. to compare climate models to sparse field observations. 
@@ -26,7 +27,7 @@
 #
 # This notebook breaks down the `MeshArray.Interpolate` function, normally called as shown here. In brief, the program finds a grid point quadrilateral (4 grid points) that encloses each chosen location. Computation is chuncked in subdomains (tiles) to allow for parallelism. `MeshArrays.InterpolationFactors` outputs interpolation coefficients -- reusing those is easy and fast, as shown here.
 
-# + {"slideshow": {"slide_type": "skip"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "skip"}}
 # ## Initialize Framework
 #
 # 1. import `MeshArrays` and plotting tools
@@ -51,7 +52,7 @@ lon=collect(0.1:0.5:2.1); lat=collect(0.1:0.5:2.1);
 (f,i,j,w,_,_,_)=InterpolationFactors(Γ,vec(lon),vec(lat))
 Depth_int=Interpolate(Γ.Depth,f,i,j,w)
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## The Interpolation Code? Let's Break It Down:
 #
 # - find nearest neighbor (`MeshArray` & `set`)
@@ -62,14 +63,14 @@ Depth_int=Interpolate(Γ.Depth,f,i,j,w)
 #     - find enclosing quadrilaterals
 #     - compute interpolation coefficients
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ### Find Nearest Neighbor
 
 # + {"slideshow": {"slide_type": "-"}}
 (f,i,j,c)=knn(Γ.XC,Γ.YC,lon,lat)
 [write(Γ.XC)[c] write(Γ.YC)[c]]
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ### Define Subdomain Tiles
 #
 # _(as done in `InterpolationFactors`)_
@@ -91,7 +92,7 @@ end
 
 heatmap(tiles,title="Tile ID",clims=(0,length(τ)))
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ### Example Setup
 #
 # Hereafter we depict the interpolation problem setup:
@@ -112,7 +113,7 @@ XC0=Γ.XG.f[iiFace][ii0,jj0]; YC0=Γ.YG.f[iiFace][ii0,jj0]
 scatter(XCtiles[iiTile],YCtiles[iiTile],marker=:+,c=:blue,leg=false,xlabel="longitude",ylabel="latitude")
 scatter!([XC0],[YC0],c=:red); scatter!([lon],[lat],c=:green)
 
-# + {"slideshow": {"slide_type": "subslide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ### Projection, Quadrilaterals, & Coefficients
 #
 # _(as done in `InterpolationFactors`)_
@@ -141,7 +142,7 @@ scatter(x_grid,y_grid,marker=:+,c=:blue,leg=false,xlabel="x",ylabel="y")
 scatter!([0.],[0.],c=:red); scatter!(x_quad[ii,:],y_quad[ii,:],c=:orange)
 scatter!(x_trgt,y_trgt,c=:green)
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Putting It All Together
 #
 # Here we just call `InterpolationFactors`. We then interpolate longitude and latitude using the pre-computed coefficients and compare with initial `XC,YC` as a verification.
