@@ -2,26 +2,27 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Lagrangian particle tracking
 #
 # Materials and particles that tend to follow ocean currents can be analyzed in terms of trajectories. These are simply computed by integrating velocities over time within a [Lagrangian framework](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). 
 #
 # In `Julia` this is easily done e.g. using the [IndividualDisplacements.jl](https://JuliaClimate.github.io/IndividualDisplacements.jl/dev/) package.
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## 1. Software, Grid, And Background Map
 
 # + {"slideshow": {"slide_type": "-"}, "cell_style": "center"}
@@ -45,7 +46,7 @@ lat=[j for i=-179.:2.0:179., j=-89.:2.0:89.]
 OceanDepth=Interpolate(𝐷.Γ.Depth,λ.f,λ.i,λ.j,λ.w)
 OceanDepth=reshape(OceanDepth,size(lon));
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## 2. Initialize Individuals
 
 # + {"slideshow": {"slide_type": "-"}}
@@ -59,7 +60,7 @@ df=DataFrame(x=xy[1,:],y=xy[2,:],f=xy[3,:]) #initial positions
 
 fieldnames(typeof(𝐼))
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## 3. Compute Trajectories
 
 # +
@@ -71,14 +72,14 @@ for m=1:12
     ∫!(𝐼) #integrate forward by one more month
 end
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## 4. Post-Processing
 
 # + {"slideshow": {"slide_type": "subslide"}}
 add_lonlat!(𝐼.🔴,𝐷.XC,𝐷.YC)
 𝐼.🔴[end-3:end,:]
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## 5. Plot Trajectories
 #
 # In this example we simply map out individual positions (red to blue) over a map of ocean depth (log10).

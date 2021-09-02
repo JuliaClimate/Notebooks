@@ -2,19 +2,20 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Transport Streamfunction And Divergent Component
 #
 # Here we apply such [Helmholtz Decomposition](https://en.wikipedia.org/wiki/Helmholtz_decomposition) to vertically integrated transports defined over a Global Ocean model (`C-grid`).
@@ -24,7 +25,7 @@
 # 3. decompose into rotational and divergent components
 # 4. derive streamfunction from the rotational component
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Read Transports & Grid From File
 #
 # 1. pre-requisites
@@ -58,7 +59,7 @@ df=DataFrame(CSV.File("interp_coeffs.csv"))
 λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
     j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4));
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Helmholtz Decomposition
 #
 # 1. convergence & land mask
@@ -87,7 +88,7 @@ TyR = Ty-TyD
 #vector Potential
 TrspPsi=VectorPotential(TxR,TyR,Γ);
 
-# + {"slideshow": {"slide_type": "skip"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "skip"}}
 # ### Verify The Results Consistency
 #
 # _Next plot below normally shows that TrspCon-tmpCon is negligible compared with TrspCon_
@@ -100,7 +101,7 @@ errCon=1/sqrt(mean(tmp2.^2)).*(tmpCon[3]-TrspCon[3])
 errCon[findall(isnan.(errCon))].=0.0
 extrema(errCon)
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Map Out Streamfunction And Scalar Potential
 #
 # _In plots below we interpolate MeshArrays to a regular global grid_
