@@ -1,19 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # `ClimateTools.jl` and `ClimatePlots.jl`
 #
 # [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/) is a collection of commonly-used tools aimed to ease the typical steps in (1) analyzing climate models outputs from netCDF files that follow CF-conventions and (2) creating climate scenarios. [ClimatePlots.jl](https://juliaclimate.github.io/ClimatePlots.jl/dev/) is the associated plotting library.
@@ -24,7 +25,6 @@
 if false #set to true if you have not yet installed packages listed below
     using Pkg
     Pkg.add(PackageSpec(name="ClimateTools", rev="master"))
-
     Pkg.add("PyCall")
     ENV["PYTHON"]=""
     Pkg.build("PyCall")
@@ -34,7 +34,7 @@ if false #set to true if you have not yet installed packages listed below
     run(`mv tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc ../inputs/`)
 end
 
-# + {"slideshow": {"slide_type": "-"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "-"}}
 # _Note: `tas_day_MIROC5_piControl_*.nc` was downloaded [here](http://esgf-data1.diasjp.net/thredds/fileServer/esg_dataroot/cmip5/output1/MIROC/MIROC5/piControl/day/atmos/day/r1i1p1/v20161012/tas/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc) by selecting `piControl,day,tas,MIROC5` in [the search engine](https://esgf-node.llnl.gov/search/cmip5/)_
 #
 # ```
@@ -43,7 +43,7 @@ end
 # Description: MIROC5 model output prepared for CMIP5 pre-industrial control 
 # ```
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Get Meta-Data From File
 #
 # _Note: uncomment the final line to display the file meta data_
@@ -56,7 +56,7 @@ fil="$p/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc"
 #fil="$p/clt_day_MIROC5_historical_r4i1p1_19500101-19591231.nc"
 d=Dataset(fil);
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Read & Plot A Variable
 
 # + {"slideshow": {"slide_type": "fragment"}}
@@ -67,7 +67,7 @@ fil1="$p1/sresa1b_ncar_ccsm3-example.nc"
 model1 = load(fil1, "pr", data_units="mm")
 contourf(model1, region = "Mollweide");
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Extract Subset And Plot Region
 #
 # _Note : see `ClimatePlots.jl/src/maps_definition.jl`_
@@ -77,7 +77,7 @@ poly_reg = [[NaN -65 -80 -80 -65 -65];[NaN 42 42 52 52 42]]
 model2 = load(fil, "tas", poly=poly_reg)
 contourf(model2, region = "Quebec");
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Inspect Meta Data
 
 # + {"slideshow": {"slide_type": "fragment"}}

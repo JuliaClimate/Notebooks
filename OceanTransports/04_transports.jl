@@ -2,24 +2,25 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Ocean Transports -- Integration And Mapping
 #
 # Transports in the climate system are often represented as gridded vector fields (e.g. on a `C-grid`) and integrated across model grid lines. These paths may for examples connect a pair of coordinates, or track latitude circles. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) and appendices.
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Read grid & transports from file
 #
 # 1. pre-requisites
@@ -53,7 +54,7 @@ df=DataFrame(CSV.File("interp_coeffs.csv"))
 λ=(f=reshape(df.f,length(lon[:]),4), i=reshape(df.i,length(lon[:]),4),
     j=reshape(df.j,length(lon[:]),4), w=reshape(df.w,length(lon[:]),4));
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Integrate transport across latitude lines
 #
 # 1. `LatitudeCircles` computes `grid edge path`s that track latitude circles
@@ -69,7 +70,7 @@ T=Array{Float64,1}(undef,length(LC))
 
 plot(L,T,xlabel="latitude",ylabel="Northward Transport (in Sv)",label="ECCO estimate")
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Transport Directions
 #
 # 1. `u,v` are oriented in standard `Eastward,Northward` directions
@@ -86,7 +87,7 @@ heatmap(u,clims=(-20.0,20.0),title="East-ward")
 heatmap(uC,clims=(-20.0,20.0),title="x-ward")
 #heatmap(vC,clims=(-20.0,20.0),title="y-ward")
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Global Maps
 #
 # 1. interpolate `u,v` to a `1/2 x 1/2` degree grid for plotting

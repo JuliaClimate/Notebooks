@@ -2,24 +2,25 @@
 # ---
 # jupyter:
 #   jupytext:
+#     cell_metadata_json: true
 #     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.4
+#       format_version: '1.5'
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.6.0
+#     display_name: Julia 1.7.0-beta3
 #     language: julia
-#     name: julia-1.6
+#     name: julia-1.7
 # ---
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Meridional Overturning Circulation
 #
 # Global Ocean transport depictions often involve concepts like the [AMOC](https://en.wikipedia.org/wiki/Atlantic_meridional_overturning_circulation), [Thermohaline Circulation](https://en.wikipedia.org/wiki/Thermohaline_circulation), or [conveyor Belt](http://oceanmotion.org/html/background/ocean-conveyor-belt.html). To apply these concepts to gridded ocean and climate models, one can compute an _overturning streamfunction_ as shown below. For more detail, please refer to [Forget et al, 2015](https://doi.org/10.5194/gmd-8-3071-2015) and the other [GlobalOceanNotebooks](https://github.com/JuliaClimate/GlobalOceanNotebooks).
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Read grid & velocities from file
 #
 # 1. pre-requisites
@@ -39,7 +40,7 @@ using IndividualDisplacements
 IndividualDisplacements.get_ecco_velocity_if_needed();
 #IndividualDisplacements.get_occa_velocity_if_needed();
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Compute Overturning Streamfunction
 #
 # 1. integrate along latitude circles
@@ -62,7 +63,7 @@ end
 #integrate from bottom
 ov=reverse(cumsum(reverse(ov,dims=2),dims=2),dims=2);
 
-# + {"slideshow": {"slide_type": "slide"}, "cell_type": "markdown"}
+# + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Plot Annual Mean And Variability
 # -
 
