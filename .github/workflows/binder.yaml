@@ -1,0 +1,23 @@
+name: Build plutonotebooks for mybinder.org
+on:
+  push:
+    branches:
+      - master
+      - gfdev09a
+
+jobs:
+  binder:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: update jupyter dependencies with repo2docker
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        BINDER_CACHE: true
+        PUBLIC_REGISTRY_CHECK: true
