@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/base-notebook:latest
 
 USER root
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-rc1-linux-x86_64.tar.gz && \
@@ -28,7 +28,7 @@ ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
-RUN julia -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile();"
+RUN julia -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate();"
 
 USER root
 RUN apt-get update && \
