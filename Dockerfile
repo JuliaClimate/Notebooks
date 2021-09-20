@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:latest
+FROM jupyter/minimal-notebook:latest
 
 USER root
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-rc1-linux-x86_64.tar.gz && \
@@ -37,6 +37,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libnetcdf-dev && \
     apt-get install -y --no-install-recommends libnetcdff-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN julia create_sysimage.jl
 
 USER ${NB_USER}
 
