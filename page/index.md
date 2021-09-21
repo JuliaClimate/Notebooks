@@ -44,8 +44,6 @@ The **Data Structures** section provide examples for reading and writing files (
 
 \end{section}
 
-\end{section}
-
 \begin{section}{title="Sample Plots",name="Plots"}
 
 \begin{center}
@@ -54,7 +52,7 @@ The **Data Structures** section provide examples for reading and writing files (
   
   \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png", width="50%", style="border-radius:5px;", caption="Scalar Potential"} \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png", width="50%", style="border-radius:5px;", caption="Vector Potential"}
 
-\figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="25%", style="border-radius:5px;", caption="Particle Tracking"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="35%", style="border-radius:5px;", caption="Particle Tracking"} 
 
 \end{center}
 
