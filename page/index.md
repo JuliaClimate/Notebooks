@@ -6,29 +6,31 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-**MeshArrays.jl**, for example, is used to analyze global ocean transports derived accurately from gridded model output. An important requirement in climate science is to derive transports using native model grid output to allow for maximum precision e.g. in closing energy budgets. 
+An important requirement in climate science is to derive transports using native model grid output to allow for maximum precision e.g. in closing energy budgets. This is one of the applications of **MeshArrays.jl** -- the computation and analysis of global ocean transports derived accurately from gridded model output. 
 
-**IndividualDisplacements.jl** extends this approach by providing a [Lagrangian tracking](Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on any model `C-grid` supported by **MeshArrays.jl**. In our examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded into `MeshArray` using functions provided by **MITgcmTools.jl**.
+**IndividualDisplacements.jl** extends this approach by providing a [particle tracking](Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` (see **MeshArrays.jl**). In the examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded using functions provided by **MITgcmTools.jl**.
 
 The **Data Structures** section provide examples for reading and writing files (incl. NetCDF and Zarr files), as well as interpolation of variables, and other common tasks in climate and data science.
+
+The **ClimateModels.jl** package furthermore provides an interface to models often used in climate science. Included notebooks can be used to run these models (e.g. in the mybinder cloud).
 
 \end{section}
 
 \begin{section}{title="Examples / Ocean Transports",name="OceanTransports"}
 
-- [04_transports](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/04_transports.ipynb) computes total ocean currents over latitude bands. It plots interpolated results over the Global Ocean.
-- [05_streamfunction](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/05_streamfunction.ipynb) provides a synthetic view of ocean currents from above. It computes a horizontal streamfunction along with the other, divergent, transport component.
-- [06_overturning](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/06_overturning.ipynb) computes meridional overturning circulation (the _M.O.C._; also sometimes described as _ocean conveyor belt_).
-- [07_particles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/07_particles.ipynb) tracks particles in the Global Ocean. It computes particle trajectories from gridded flow fields.
+- [transports](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/04_transports.ipynb) computes total ocean currents over latitude bands. It plots interpolated results over the Global Ocean.
+- [streamfunction](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/05_streamfunction.ipynb) provides a synthetic view of ocean currents from above. It computes a horizontal streamfunction along with the other, divergent, transport component.
+- [overturning](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/06_overturning.ipynb) computes meridional overturning circulation (the _M.O.C._; also sometimes described as _ocean conveyor belt_).
+- [particles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/07_particles.ipynb) tracks particles in the Global Ocean. It computes particle trajectories from gridded flow fields.
 
 \end{section}
 
 \begin{section}{title="Examples / Data Structures",name="DataStructures"}
 
-- [04_interpolation](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/04_interpolation.ipynb) illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
-- [05_ZarrCloud](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/05_ZarrCloud.ipynb) accesses climate model output hosted in the cloud, from the [CMIP6](https://bit.ly/2WiWmoh) archive, using `AWS.jl` and `Zarr.jl` via [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
-- [01_MeshArrays](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/01_MeshArrays.ipynb)  illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
-- [03_nctiles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/03_nctiles.ipynb) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
+- [interpolation](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/04_interpolation.ipynb) illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
+- [ZarrCloud](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/05_ZarrCloud.ipynb) accesses climate model output hosted in the cloud, from the [CMIP6](https://bit.ly/2WiWmoh) archive, using `AWS.jl` and `Zarr.jl` via [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
+- [MeshArrays](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/01_MeshArrays.ipynb)  illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
+- [NCTiles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/03_nctiles.ipynb) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 \end{section}
 
