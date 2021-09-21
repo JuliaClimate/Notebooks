@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - gfdev10a
+      - gfdev10b
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
