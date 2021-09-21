@@ -73,6 +73,21 @@ It also supports e.g. cloud computing workflows that start from previous model o
 
 \end{section}
 
+
+\begin{section}{title="IndividualDisplacements.jl notebooks",name="IndividualDisplacements"}
+
+**IndividualDisplacements.jl** computes point displacements over a gridded domain. It is geared towards the analysis of Climate, Ocean, etc models (`Arakawa C-grids` are natively supported) and the simulation of material transports within the Earth System (e.g. plastics or planktons in the Ocean; dusts or chemicals in the Atmosphere). 
+
+- [solid\_body\_rotation.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/solid_body_rotation.ipynb)
+- [random\_flow\_field.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/random_flow_field.ipynb)
+- [detailed\_look.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/detailed_look.ipynb)
+- [particle\_cloud.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/particle_cloud.ipynb)
+- [global\_ocean\_circulation.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/global_ocean_circulation.ipynb)
+- [three\_dimensional\_ocean.ipynb](https://nbviewer.jupyter.org/github/JuliaClimate/IndividualDisplacements.jl/blob/gh-pages/dev/notebooks/three_dimensional_ocean.ipynb)
+
+\end{section}
+
+
 \begin{section}{title="Sample Plots",name="Plots"}
 
 \begin{center}
