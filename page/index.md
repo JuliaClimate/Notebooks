@@ -20,9 +20,8 @@ The **Data Structures** section provide examples for reading and writing files (
 - `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
 </details>
 
-<details>
-  <summary><b>Examples / Data Structures </b></summary>
-  
+### Examples / Data Structures
+
 - `01_MeshArrays.ipynb` illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
 - `03_nctiles.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 - `04_interpolation.ipynb` illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
