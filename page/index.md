@@ -16,28 +16,27 @@ The **Data Structures** section provide examples for reading and writing files (
 
 \begin{section}{title="Examples / Ocean Transports",name="OceanTransports"}
 
-- `04_transports.ipynb` uses `TransportThrough()` and `LatCircles()` to compute seawater transports between latitude bands. It plots interpolated results over the Global Ocean.
-- `05_streamfunction.ipynb` uses `ScalarPotential()` and `VectorPotential()` to compute horizontal streamfunction along with the divergent transport component.
-- `06_overturning.ipynb` computes meridional overturning streamfunctions (the _MOC_).
-- `07_particles.ipynb` computes particle trajectories that follow a gridded flow field.
+- [04_transports](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/04_transports.ipynb) computes total ocean currents over latitude bands. It plots interpolated results over the Global Ocean.
+- [05_streamfunction](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/05_streamfunction.ipynb) provides a synthetic view of ocean currents from above. It computes a horizontal streamfunction along with the other, divergent, transport component.
+- [06_overturning](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/06_overturning.ipynb) computes meridional overturning circulation (the _M.O.C._; also sometimes described as _ocean conveyor belt_).
+- [07_particles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/07_particles.ipynb) tracks particles in the Global Ocean. It computes particle trajectories from gridded flow fields.
 
 \end{section}
 
 \begin{section}{title="Examples / Data Structures",name="DataStructures"}
 
-- `01_MeshArrays.ipynb` illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
-- `03_nctiles.ipynb` converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
-- `04_interpolation.ipynb` illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
-- `05_ZarrCloud.ipynb` accesses climate model output hosted in the cloud, from the [CMIP6](https://bit.ly/2WiWmoh) archive, using `AWS.jl` and `Zarr.jl` via [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
+- [04_interpolation](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/04_interpolation.ipynb) illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
+- [05_ZarrCloud](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/05_ZarrCloud.ipynb) accesses climate model output hosted in the cloud, from the [CMIP6](https://bit.ly/2WiWmoh) archive, using `AWS.jl` and `Zarr.jl` via [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
+- [01_MeshArrays](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/01_MeshArrays.ipynb)  illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
+- [03_nctiles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/03_nctiles.ipynb) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 \end{section}
 
 
 \begin{section}{title="Notes",name="Notes"}
 
-
 - Each `.ipynb` notebook is paired with a `.jl` file via `jupytext`
-- An interactive version can readily be started via the `launch binder` badge
+- To start an interactive version, e.g., [use this mybinder.org link](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
 - Data downloaded into the `inputs/` folder can safely be removed afterwards
 - Efficiency can be improved in various places or simply through parallelization.
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) for queries, bug reports, new contributions, etc.
