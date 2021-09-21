@@ -18,10 +18,10 @@ The latter allows you to plug in values that you would have defined here.
              `prepath` to an empty string. Finally, adjust this if you want the
              deployed page to be in a subfolder e.g.: `YourPackage.jl/web/`.
 -->
-@def title       = "JuliaClimate notebooks"
+@def title       = "JuliaClimate Notebooks"
 @def prepath     = "GlobalOceanNotebooks"
 @def description = """
-                   Jupyter / Julia notebooks that illustrate some of the JuliaClimate packages working in concert.
+                 Notebooks that show Julia packages related to climate working in concert.
                    """
 @def authors     = "Gaël Forget"
 
