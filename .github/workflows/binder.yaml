@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - gfdev10c
 
 jobs:
   binder:
