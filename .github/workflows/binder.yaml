@@ -1,4 +1,4 @@
-name: Build plutonotebooks for mybinder.org
+name: Pluto, sysimage, & build for mybinder.org
 on:
   push:
     branches:
