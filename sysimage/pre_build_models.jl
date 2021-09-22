@@ -1,3 +1,4 @@
+using Pkg; Pkg.add("PlutoSliderServer")
 
 using PlutoSliderServer, ClimateModels
 pth=dirname(pathof(ClimateModels))
