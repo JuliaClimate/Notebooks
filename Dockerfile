@@ -16,6 +16,7 @@ RUN cp ./sysimage/environment.yml ./environment.yml
 RUN cp ./sysimage/setup.py ./setup.py
 RUN cp ./sysimage/runpluto.sh ./runpluto.sh
 RUN cp ./sysimage/warmup.jl ./warmup.jl
+RUN cp ./sysimage/create_sysimage.jl ./create_sysimage.jl
  
 COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
 COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
@@ -37,7 +38,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libnetcdf-dev && \
     apt-get install -y --no-install-recommends libnetcdff-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN julia sysimage/create_sysimage.jl
+RUN julia create_sysimage.jl
 
 USER ${NB_USER}
 
