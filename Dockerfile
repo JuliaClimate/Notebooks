@@ -10,18 +10,17 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-rc1-li
 USER ${NB_USER}
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
-COPY --chown=${NB_USER}:users ./environment.yml ./environment.yml
-COPY --chown=${NB_USER}:users ./setup.py ./setup.py
-COPY --chown=${NB_USER}:users ./runpluto.sh ./runpluto.sh
+COPY --chown=${NB_USER}:users ./sysimage ./sysimage
 
+RUN cp ./sysimage/environment.yml ./environment.yml
+RUN cp ./sysimage/setup.py ./setup.py
+RUN cp ./sysimage/runpluto.sh ./runpluto.sh
+ 
 COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
 COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
 COPY --chown=${NB_USER}:users ./inputs ./inputs
 COPY --chown=${NB_USER}:users ./outputs ./outputs
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
-
-COPY --chown=${NB_USER}:users ./warmup.jl ./warmup.jl
-COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
@@ -37,7 +36,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libnetcdf-dev && \
     apt-get install -y --no-install-recommends libnetcdff-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN julia create_sysimage.jl
+RUN julia sysimage/create_sysimage.jl
 
 USER ${NB_USER}
 
@@ -46,3 +45,4 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
+RUN julia sysimage/pre_build_models.jl
