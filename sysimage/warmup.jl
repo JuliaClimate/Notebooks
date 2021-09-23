@@ -2,6 +2,8 @@ using ClimateModels
 using MITgcmTools
 using Pluto
 using PlutoUI
+import Plots
+import CairoMakie
 
 #MC=MITgcm_config(configuration="global_with_exf")
 #setup(MC)

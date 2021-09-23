@@ -21,6 +21,7 @@ COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
 COPY --chown=${NB_USER}:users ./inputs ./inputs
 COPY --chown=${NB_USER}:users ./outputs ./outputs
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
+COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
