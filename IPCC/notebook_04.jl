@@ -20,8 +20,8 @@ begin
 	col=[:lightblue,:darkblue,:orange,:red,:darkred]
 
 	g = Figure(resolution = (1200, 600))
-	set_theme!(theme_ggplot2())
 	a = Axis(g[1:3, 1],yticks=-20:20:140, title="Carbon dioxide (GtCO2/yr)")
+
 	dat=DataFrame(CSV.File(joinpath(pth,"panel_a","Carbon_dioxide_Gt_CO2_yr.csv")))
 	for i in 1:length(nam)
 		lines!(dat.years,dat[!,var[i]],label=nam[i],color=col[i])
@@ -30,26 +30,26 @@ begin
 
 	Legend(g[2, 2], a)
 
-	a = Axis(g[1, 3],yticks=-20:20:140, title="Methane (MtCH4/yr)")
+	a = Axis(g[1, 3],yticks=0:200:800, title="Methane (MtCH4/yr)")
 	dat=DataFrame(CSV.File(joinpath(pth,"panel_a","Methane_Mt_CO2_yr.csv")))
 	for i in 1:length(nam)
 		lines!(dat.years,dat[!,var[i]],label=nam[i],color=col[i])
 	end
-	xlims!(2015,2100)
+	xlims!(2015,2100); ylims!(0,800)
 
-	a = Axis(g[2, 3],yticks=-20:20:140, title="Nitrous oxide (MtN2O/yr)")
+	a = Axis(g[2, 3],yticks=0:5:20, title="Nitrous oxide (MtN2O/yr)")
 	dat=DataFrame(CSV.File(joinpath(pth,"panel_a","Nitrous_oxide_Mt_N2O_yr.csv")))	
 	for i in 1:length(nam)
 		lines!(dat.years,dat[!,var[i]],label=nam[i],color=col[i])
 	end
-	xlims!(2015,2100)
+	xlims!(2015,2100); ylims!(0,20)
 
-	a = Axis(g[3, 3],yticks=-20:20:140, title="Sulfur dioxide (MtSO2/yr)")
+	a = Axis(g[3, 3],yticks=0:40:120, title="Sulfur dioxide (MtSO2/yr)")
 	dat=DataFrame(CSV.File(joinpath(pth,"panel_a","Sulfur_dioxide_Mt_SO2_yr.csv")))
 	for i in 1:length(nam)
 		lines!(dat.years,dat[!,var[i]],label=nam[i],color=col[i])
 	end
-	xlims!(2015,2100)
+	xlims!(2015,2100); ylims!(0,120)
 
 	#save("fig4a.png", g)
 
