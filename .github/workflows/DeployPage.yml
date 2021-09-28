@@ -40,9 +40,9 @@ jobs:
             import PkgPage;
             PkgPage.optimize(input="page", output="")'
     - run: julia --project=./ -e '
-            using Pkg
-            Pkg.instantiate()
-            include("sysimage/run_notebooks.jl")'
+            using Pkg;
+            Pkg.instantiate();
+            include("sysimage/run_notebooks.jl");'
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
