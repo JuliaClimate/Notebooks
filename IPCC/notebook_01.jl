@@ -7,71 +7,25 @@ using InteractiveUtils
 # ╔═╡ 11175afc-1d36-11ec-3600-951ad0aa6e5b
 using CairoMakie, DataFrames, CSV, PlutoUI
 
-# ╔═╡ 3b81b1bc-986a-43bb-8056-890170c01740
-md"""## Fig 1"""
-
 # ╔═╡ c9ca6405-24ed-4026-9a92-fc031dbb8261
-pth="dap.ceda.ac.uk/badc/ar6_wg1/data/spm/spm_01/v20210809/"
-
-# ╔═╡ e17d4b90-7a4b-4037-84e1-88a86bc5d957
-md""" #### Fig 1a"""
-
-# ╔═╡ ea9ade8d-5173-483d-b83c-1bf298933724
-files=readdir(joinpath(pth,"panel_a"))
-
-# ╔═╡ 0820d4f7-0c73-4edd-90ac-5b4defc3fad3
 begin
-	input=joinpath(pth,"panel_a",files[1])
-	dat=DataFrame(CSV.File(input))
-	rename!(dat, Dict(Symbol("5%") => :t5, Symbol("95%") => :t95))
-	
-	input=joinpath(pth,"panel_a",files[2])
-	dat1=sort(DataFrame(CSV.File(input)),:year)
-	
-	input=joinpath(pth,"panel_a",files[3])
-	dat2=DataFrame(CSV.File(input))
-	rename!(dat2, Dict(Symbol("5%") => :t5, Symbol("95%") => :t95))
-	
-	"data loaded"
+	include("pth_ipcc.jl")
+	pth=joinpath(pth_ipcc,"spm_01/v20210809/")
 end
 
-# ╔═╡ 5f6058a5-9235-4013-ab30-e3e2ca26368d
-begin
-	set_theme!(theme_black())
-	fig1a = Figure(resolution = (1200, 900))
-	
-	##
-	
-	fig1a_ax1 = Axis(fig1a[1,1],xticksvisible=false,xticklabelsvisible=false,yticks=[0.2, 1.0])
-	band!([0.0,1.0],fill(dat2.t5[1],2),fill(dat2.t95[1],2) ; color = (:greenyellow, 0.5))		
+# ╔═╡ b8173a87-3bb1-4813-8df8-194c77352528
+md"""This notebook is a non-official rendering of graphics provided in the following report, published in 2021 by  the _Intergovernmental Panel on Climate Change_. For additional informatin about the plots, please refer to the report.
 
-	ylims!(-0.5,2.0)
-	hidespines!(fig1a_ax1,:t,:r,:b)
-	
-	##
-	
-	fig1a_ax2 = Axis(fig1a[1,2], title="Change in global surface temperature", ylabel="degree C")
+```
+Climate Change 2021
+The Physical Science Basis Summary for Policymakers
 
-	l1=lines!(dat.year,dat.temp; color = :dodgerblue)
-	band!(dat.year, dat.t5, dat.t95; color = (:dodgerblue, 0.5))
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
+"""	
 
-	l2=lines!(dat1.year,dat1.temp; color = :red,linewidth=2.0)
-
-	band!([1850.0,2000.0],fill(-0.5,2),fill(2.0,2) ; color = (:greenyellow, 0.25))
-
-	ylims!(-0.5,2.0)
-	axislegend(fig1a_ax2,[l1, l2],["reconstructed","observed"],position=:lt)
-
-	##
-	
-	colsize!(fig1a.layout, 2, Relative(0.95))
-
-	#save("fig1a.png", fig1a)
-	fig1a
-end
-
-# ╔═╡ 1bbbbfb1-acac-4611-8009-4b2caff53153
-md"""#### Fig 1b"""
+# ╔═╡ 3b81b1bc-986a-43bb-8056-890170c01740
+md"""## Fig 1 : History of global temperature change and causes of recent warming"""
 
 # ╔═╡ 54539342-f977-4d1d-aaef-c3034953f11a
 begin
@@ -109,6 +63,66 @@ begin
 	"header read"
 end
 
+# ╔═╡ e17d4b90-7a4b-4037-84e1-88a86bc5d957
+md""" #### Fig 1a : Changes in global surface temperature reconstructed from paleoclimate archives and direct observations"""
+
+# ╔═╡ ea9ade8d-5173-483d-b83c-1bf298933724
+files=readdir(joinpath(pth,"panel_a"))
+
+# ╔═╡ 0820d4f7-0c73-4edd-90ac-5b4defc3fad3
+begin
+	input=joinpath(pth,"panel_a",files[1])
+	dat=DataFrame(CSV.File(input))
+	rename!(dat, Dict(Symbol("5%") => :t5, Symbol("95%") => :t95))
+	
+	input=joinpath(pth,"panel_a",files[2])
+	dat1=sort(DataFrame(CSV.File(input)),:year)
+	
+	input=joinpath(pth,"panel_a",files[3])
+	dat2=DataFrame(CSV.File(input))
+	rename!(dat2, Dict(Symbol("5%") => :t5, Symbol("95%") => :t95))
+	
+	"data loaded"
+end
+
+# ╔═╡ 5f6058a5-9235-4013-ab30-e3e2ca26368d
+begin
+	set_theme!(theme_black())
+	fig1a = Figure(resolution = (900, 600))
+	
+	##
+	
+	fig1a_ax1 = Axis(fig1a[1,1],xticksvisible=false,xticklabelsvisible=false,yticks=[0.2, 1.0])
+	band!([0.0,1.0],fill(dat2.t5[1],2),fill(dat2.t95[1],2) ; color = (:greenyellow, 0.5))		
+
+	ylims!(-0.5,2.0)
+	hidespines!(fig1a_ax1,:t,:r,:b)
+	
+	##
+	
+	fig1a_ax2 = Axis(fig1a[1,2], title="Change in global surface temperature", ylabel="degree C")
+
+	l1=lines!(dat.year,dat.temp; color = :dodgerblue)
+	band!(dat.year, dat.t5, dat.t95; color = (:dodgerblue, 0.5))
+
+	l2=lines!(dat1.year,dat1.temp; color = :red,linewidth=2.0)
+
+	band!([1850.0,2000.0],fill(-0.5,2),fill(2.0,2) ; color = (:greenyellow, 0.25))
+
+	ylims!(-0.5,2.0)
+	axislegend(fig1a_ax2,[l1, l2],["reconstructed","observed"],position=:lt)
+
+	##
+	
+	colsize!(fig1a.layout, 2, Relative(0.95))
+
+	#save("fig1a.png", fig1a)
+	fig1a
+end
+
+# ╔═╡ 1bbbbfb1-acac-4611-8009-4b2caff53153
+md"""#### Fig 1b : Changes in global surface temperature over the past 170 years"""
+
 # ╔═╡ 5f8a534c-563f-417c-a7bc-7cf526a5f915
 begin
 	set_theme!(theme_black())
@@ -135,6 +149,9 @@ begin
 
 	fig1b
 end
+
+# ╔═╡ c290715e-d3f0-4fca-b911-a6d3ebecfbe9
+files_b=readdir(joinpath(pth,"panel_b"))
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1293,16 +1310,18 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─b8173a87-3bb1-4813-8df8-194c77352528
 # ╠═11175afc-1d36-11ec-3600-951ad0aa6e5b
 # ╟─3b81b1bc-986a-43bb-8056-890170c01740
 # ╟─c9ca6405-24ed-4026-9a92-fc031dbb8261
-# ╟─e17d4b90-7a4b-4037-84e1-88a86bc5d957
-# ╟─ea9ade8d-5173-483d-b83c-1bf298933724
 # ╟─0820d4f7-0c73-4edd-90ac-5b4defc3fad3
-# ╟─5f6058a5-9235-4013-ab30-e3e2ca26368d
-# ╟─1bbbbfb1-acac-4611-8009-4b2caff53153
 # ╟─54539342-f977-4d1d-aaef-c3034953f11a
 # ╟─21e79a00-4c84-4efa-9489-048db80e978d
+# ╟─e17d4b90-7a4b-4037-84e1-88a86bc5d957
+# ╟─5f6058a5-9235-4013-ab30-e3e2ca26368d
+# ╟─ea9ade8d-5173-483d-b83c-1bf298933724
+# ╟─1bbbbfb1-acac-4611-8009-4b2caff53153
 # ╟─5f8a534c-563f-417c-a7bc-7cf526a5f915
+# ╟─c290715e-d3f0-4fca-b911-a6d3ebecfbe9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

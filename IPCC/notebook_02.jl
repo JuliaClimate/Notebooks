@@ -7,17 +7,34 @@ using InteractiveUtils
 # ╔═╡ 65ba3c00-1d72-11ec-2e03-c7125d28a8b1
 using CairoMakie, DataFrames, CSV, PlutoUI
 
+# ╔═╡ ecbb84f0-19e6-4968-859f-e751fb8f280d
+begin
+        include("pth_ipcc.jl")
+        pth=joinpath(pth_ipcc,"spm_02/v20210809/")
+end
+
+# ╔═╡ c454f16c-8e50-4a4e-aec4-394f980fc001
+md"""This notebook is a non-official rendering of graphics provided in the following report, published in 2021 by  the _Intergovernmental Panel on Climate Change_. For additional informatin about the plots, please refer to the report.
+
+```
+Climate Change 2021
+The Physical Science Basis Summary for Policymakers
+
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
+"""
+
+# ╔═╡ 51b1bfbb-9840-4bbe-9d03-10a1a42079d9
+md"""#### Fig 2 : Assessed contributions to observed warming in 2010–2019 relative to 1850–1900"""
+
 # ╔═╡ 359c1813-6007-45dd-9153-d7966b849942
 md"""## Read CSV Files Into DataFrames
 
-The followin cells show the tabular data plotted in this slide."
+The following code cells show how the tabular data plotted in this slide are read from file.
 """
 
 # ╔═╡ 5616d634-410e-4a50-86d7-935baf357cfe
-begin
-	pth="dap.ceda.ac.uk/badc/ar6_wg1/data/spm/spm_02/v20210809/"
-	files=readdir(joinpath(pth,"panel_a"))
-end
+files=readdir(joinpath(pth,"panel_a"))
 
 # ╔═╡ 71d23705-a548-4f7d-88cf-a107ba0796a3
 begin
@@ -1256,9 +1273,12 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─9ac22d5c-4882-48be-91ce-55f7d9080ac1
+# ╟─c454f16c-8e50-4a4e-aec4-394f980fc001
 # ╠═65ba3c00-1d72-11ec-2e03-c7125d28a8b1
+# ╟─51b1bfbb-9840-4bbe-9d03-10a1a42079d9
+# ╟─9ac22d5c-4882-48be-91ce-55f7d9080ac1
 # ╟─359c1813-6007-45dd-9153-d7966b849942
+# ╟─ecbb84f0-19e6-4968-859f-e751fb8f280d
 # ╟─5616d634-410e-4a50-86d7-935baf357cfe
 # ╟─71d23705-a548-4f7d-88cf-a107ba0796a3
 # ╟─d54b3847-cd71-4c6a-8cf8-505091fb664b

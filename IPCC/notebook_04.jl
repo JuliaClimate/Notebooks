@@ -7,8 +7,22 @@ using InteractiveUtils
 # ╔═╡ 656099ca-1fcb-11ec-086e-27d413b8a9b5
 begin
 	using GeometryBasics, CairoMakie, DataFrames, CSV, PlutoUI
-	pth="dap.ceda.ac.uk/badc/ar6_wg1/data/spm/spm_04/v20210809/"
+	include("pth_ipcc.jl")
+	pth=joinpath(pth_ipcc,"spm_04/v20210809/")
 end
+
+# ╔═╡ 4de40902-a745-45ca-a958-2944f860df9b
+md"""This notebook is a non-official rendering of graphics provided in the following report, published in 2021 by  the _Intergovernmental Panel on Climate Change_. For additional informatin about the plots, please refer to the report.
+
+```
+Climate Change 2021
+The Physical Science Basis Summary for Policymakers
+
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
+
+## Fig 4 : Future anthropogenic emissions of key drivers of climate change and warming contributions by groups of drivers for the five illustrative scenarios used in this report.
+"""
 
 # ╔═╡ 6319e113-ef5b-4980-a542-f728ac44ee9a
 md"""#### a) Future annual emissions of CO2 (left) and of a subset of key non-CO2 drivers (right), across five illustrative scenarios"""
@@ -19,7 +33,7 @@ begin
 	var=["ssp119","ssp126","ssp245","ssp370","ssp585"]
 	col=[:lightblue,:darkblue,:orange,:red,:darkred]
 
-	g = Figure(resolution = (1200, 600))
+	g = Figure(resolution = (900, 600))
 	a = Axis(g[1:3, 1],yticks=-20:20:140, title="Carbon dioxide (GtCO2/yr)")
 
 	dat=DataFrame(CSV.File(joinpath(pth,"panel_a","Carbon_dioxide_Gt_CO2_yr.csv")))
@@ -97,7 +111,7 @@ end
 
 # ╔═╡ 4e26971f-cb7a-4bc7-b343-0d3bf68e393e
 begin
-	h = Figure(resolution = (1200, 900))
+	h = Figure(resolution = (900, 600))
 	set_theme!(theme_light())
 	
 	xtla=["total (observed)","CO2","Non-CO2 GHGs","Aerosols, land use"]
@@ -1282,6 +1296,7 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─4de40902-a745-45ca-a958-2944f860df9b
 # ╠═656099ca-1fcb-11ec-086e-27d413b8a9b5
 # ╟─6319e113-ef5b-4980-a542-f728ac44ee9a
 # ╟─687d8986-99d3-4572-a186-0eed03a59ad5

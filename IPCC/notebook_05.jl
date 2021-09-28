@@ -8,9 +8,27 @@ using InteractiveUtils
 using CairoMakie, DataFrames, NetCDF, PlutoUI, Proj4, 
 Downloads, GeoJSON, GeoMakie, GeoInterface
 
+# ╔═╡ 4ea7e47d-cb3d-4e01-ab89-0946839530ab
+begin
+        include("pth_ipcc.jl")
+        pth=joinpath(pth_ipcc,"spm_05/v20210809/")
+end
+
+# ╔═╡ a1f0b05a-9d7f-4e42-a9c3-955d1e9b33e2
+md"""This notebook is a non-official rendering of graphics provided in the following report, published in 2021 by  the _Intergovernmental Panel on Climate Change_. For additional informatin about the plots, please refer to the report.
+
+```
+Climate Change 2021
+The Physical Science Basis Summary for Policymakers
+
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
+
+## Fig 6 : Changes in annual mean surface temperature, precipitation, and soil moisture.
+"""
+
 # ╔═╡ 19700040-a506-4c49-b695-01bb0aafe242
 begin
-	pth="dap.ceda.ac.uk/badc/ar6_wg1/data/spm/spm_05/v20210809/"
 	readme="Readme_for_figure_SPM5.txt"
 	lst=readdir(pth)
 	fil="Panel_a2_Simulated_temperature_change_at_1C.nc"
@@ -1497,13 +1515,15 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─a1f0b05a-9d7f-4e42-a9c3-955d1e9b33e2
 # ╠═2742e226-1dff-11ec-3535-3b0f1144e703
+# ╟─8f981e09-471a-4962-a9d3-89517ca36a1e
 # ╟─19700040-a506-4c49-b695-01bb0aafe242
 # ╟─66b17846-ea43-4821-8a67-6357d68fc18b
 # ╟─2c6825ef-bc4b-4e14-bae4-5416588fc652
 # ╟─421f31f1-0ce8-48b9-8deb-a3cf6e55e357
+# ╟─4ea7e47d-cb3d-4e01-ab89-0946839530ab
 # ╟─d1068bfe-ee9d-4632-b0b2-48618b510c7f
-# ╟─8f981e09-471a-4962-a9d3-89517ca36a1e
 # ╟─f4de1ad9-923a-4b8c-9719-6565505dd2a1
 # ╟─36b849eb-8195-406e-95a1-a4afa4162907
 # ╟─e741c445-9880-4412-b879-9272d999bf49

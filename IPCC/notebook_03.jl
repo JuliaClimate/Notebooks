@@ -7,6 +7,26 @@ using InteractiveUtils
 # ╔═╡ fa75c3d8-1f9f-11ec-2825-8fb55355a16e
 using GeometryBasics, CairoMakie, DataFrames, PlutoUI
 
+# ╔═╡ 14e4b2e0-1111-4c0d-90e2-3a3a4ff06d45
+begin
+        include("pth_ipcc.jl")
+        pth=joinpath(pth_ipcc,"spm_03/v20210809/")
+end
+
+# ╔═╡ 279594a5-3a21-4dd9-8bd5-908a2341d67c
+md"""This notebook is a non-official rendering of graphics provided in the following report, published in 2021 by  the _Intergovernmental Panel on Climate Change_. For additional informatin about the plots, please refer to the report.
+
+```
+Climate Change 2021
+The Physical Science Basis Summary for Policymakers
+
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
+"""
+
+# ╔═╡ 85eeb2ff-07dc-4494-8a3d-f72b574bcd1c
+md"""## Fig 3 : Synthesis of assessed observed and attributable regional changes"""
+
 # ╔═╡ 49993878-1814-448f-9d0b-58dc9546674d
 md"""## Region Definitions
 
@@ -149,8 +169,8 @@ begin
 	colors=Array{T}(undef,size(df,1))
 
 	colors.=:lightcoral
-	set_col!(df,"CNA",colors,Pattern("/"))
-	set_col!(df,"ENA",colors,Pattern("/"))
+	set_col!(df,"CNA",colors,:yellow)
+	set_col!(df,"ENA",colors,:yellow)
 	set_col!(df,"SSA",colors,:lightgray)
 	set_col!(df,"CAF",colors,:lightgray)
 
@@ -193,7 +213,8 @@ let
 	text!(a,"Increase (41)",position = Point2f(2,h*0.78),textsize = 10)
 	poly!(hexa(1,h*0.7,0.5), color = :lightblue, strokecolor = :black, strokewidth = 1)
 	text!(a,"Decrease (0)",position = Point2f(2,h*0.68),textsize = 10)
-	poly!(hexa(1,h*0.6,0.5), color = Pattern("/"), strokecolor = :black, strokewidth = 1)
+#	poly!(hexa(1,h*0.6,0.5), color = Pattern("/"), strokecolor = :black, strokewidth = 1)
+	poly!(hexa(1,h*0.6,0.5), color = :yellow, strokecolor = :black, strokewidth = 1)
 	text!(a,"Low agreement in the \n type of change (2)",position = Point2f(2,h*0.58),textsize = 10)
 	poly!(hexa(1,h*0.5,0.5), color = :lightgray, strokecolor = :black, strokewidth = 1)
 	text!(a,"Limited data and/or \n literature (2)",position = Point2f(2,h*0.48),textsize = 10)
@@ -1417,13 +1438,16 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─279594a5-3a21-4dd9-8bd5-908a2341d67c
 # ╠═fa75c3d8-1f9f-11ec-2825-8fb55355a16e
+# ╟─85eeb2ff-07dc-4494-8a3d-f72b574bcd1c
+# ╟─7e70284e-d982-4f8f-be1c-688499267928
+# ╟─5ef2a1ce-c1dc-44f3-bb09-287f6bc4f25c
 # ╟─49993878-1814-448f-9d0b-58dc9546674d
 # ╟─8b5834fd-850d-440d-b5fd-0227990ad4eb
-# ╟─5ef2a1ce-c1dc-44f3-bb09-287f6bc4f25c
-# ╟─7e70284e-d982-4f8f-be1c-688499267928
 # ╟─68dc5558-fbc3-4fa0-8f4b-c21e91879558
 # ╟─e1a76369-1bcc-4d14-8eb5-8d41f8e90d75
+# ╟─14e4b2e0-1111-4c0d-90e2-3a3a4ff06d45
 # ╟─e92154e8-f749-4e15-a15a-9acc68ca2db0
 # ╟─7c6d456f-cb13-45e6-adb8-66249178aed3
 # ╟─6cfa8597-69c5-40b4-95c4-e35d6cf5a154
