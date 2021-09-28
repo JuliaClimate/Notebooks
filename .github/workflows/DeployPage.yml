@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - gfdev10b
+      - gfdev11a
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -39,6 +39,10 @@ jobs:
             run(`$(npm_cmd()) install highlight.js purgecss`);
             import PkgPage;
             PkgPage.optimize(input="page", output="")'
+    - run: julia --project=./ -e '
+            using Pkg
+            Pkg.instantiate()
+            include("sysimage/run_notebooks.jl")'
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
