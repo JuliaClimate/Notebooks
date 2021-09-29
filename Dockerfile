@@ -18,8 +18,7 @@ RUN cp ./sysimage/runpluto.sh ./runpluto.sh
  
 COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
 COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
-COPY --chown=${NB_USER}:users ./inputs ./inputs
-COPY --chown=${NB_USER}:users ./outputs ./outputs
+COPY --chown=${NB_USER}:users ./IPCC ./IPCC
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
