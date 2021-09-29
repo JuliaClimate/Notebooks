@@ -30,10 +30,14 @@
 
 # +
 #import Pkg; Pkg.add("NCDatasets"); Pkg.add("NCTiles"); Pkg.test("NCTiles")
-# -
 
+# +
 using NCTiles
 include("helper_functions.jl");
+
+pth_notebooks=joinpath(tempdir(),"tmp_JuliaClimateNotebooks")
+!isdir(pth_notebooks) ? mkdir(pth_notebooks) : nothing
+# -
 
 # ### File Paths & I/O Back-End
 #
@@ -41,10 +45,10 @@ include("helper_functions.jl");
 
 # +
 # File Paths
-inputs = "../inputs/nctiles-testcases/"
+inputs = joinpath(pth_notebooks,"nctiles-testcases/")
 get_testcases_if_needed(inputs)
 
-outputs = "../outputs/nctiles-newfiles/"
+outputs = joinpath(pth_notebooks,"nctiles-newfiles/")
 if ~ispath(outputs); mkpath(outputs); end
 
 # I/O Back-End
