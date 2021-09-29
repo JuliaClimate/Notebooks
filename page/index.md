@@ -51,11 +51,11 @@ It also supports e.g. cloud computing workflows that start from previous model o
 `Examples / Replaying Outputs`
 
 - [CMIP6 model output](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ➭ [download / url](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.jl)
-- [2021 climate report, fig1](notebook_01.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_01.jl)
-- [2021 climate report, fig2](notebook_02.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_02.jl)
-- [2021 climate report, fig3](notebook_03.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_03.jl)
-- [2021 climate report, fig4](notebook_04.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_04.jl)
-- [2021 climate report, fig5](notebook_05.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_05.jl)
+- [2021 climate report, fig1](notebook_01.html) ➭ [download / url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/IPCC/notebook_01.jl)
+- [2021 climate report, fig2](notebook_02.html) ➭ [download / url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/IPCC/notebook_02.jl)
+- [2021 climate report, fig3](notebook_03.html) ➭ [download / url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/IPCC/notebook_03.jl)
+- [2021 climate report, fig4](notebook_04.html) ➭ [download / url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/IPCC/notebook_04.jl)
+- [2021 climate report, fig5](notebook_05.html) ➭ [download / url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/IPCC/notebook_05.jl)
 
 _IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press._
 
