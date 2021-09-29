@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - master
-      - gfdev11a
-
+      - gfdev11b
 jobs:
   binder:
     runs-on: ubuntu-latest

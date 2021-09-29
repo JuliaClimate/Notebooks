@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - gfdev11a
+      - gfdev11b
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -39,10 +39,15 @@ jobs:
             run(`$(npm_cmd()) install highlight.js purgecss`);
             import PkgPage;
             PkgPage.optimize(input="page", output="")'
-    - run: julia --project=./ -e '
+    - run: julia -e '
+            pth00=joinpath(homedir(),"work","GlobalOceanNotebooks","GlobalOceanNotebooks");
+            cd(pth00);
             using Pkg;
-            Pkg.instantiate();
-            include("sysimage/run_notebooks.jl");'
+            Pkg.activate(; temp=true);
+            Pkg.add.(["ClimateModels","CairoMakie","DataFrames", "CSV"]);
+            Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
+            Pkg.precompile();
+            include("IPCC/run_notebooks.jl");'
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
