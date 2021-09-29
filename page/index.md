@@ -10,10 +10,6 @@ The **ClimateModels.jl** package provides an interface to models often used in c
 
 A second series of notebooks rather replays model data provided by the **2021 IPCC report** (from the _Intergovernmental Panel on Climate Change_). For additional information about the plots, please refer to the report.
 
-```
-IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
-```
-
 An important requirement in climate science is to derive transports using native model grid output to allow for maximum precision e.g. in closing energy budgets. This is one of the applications of **MeshArrays.jl** -- the computation and analysis of global ocean transports derived accurately from gridded model output. 
 
 **IndividualDisplacements.jl** extends this approach by providing a [particle tracking](Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` (see **MeshArrays.jl**). In the examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded using functions provided by **MITgcmTools.jl**.
@@ -44,6 +40,10 @@ It also supports e.g. cloud computing workflows that start from previous model o
 - [2021 climate report, fig3](notebook_03.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_03.jl)
 - [2021 climate report, fig4](notebook_04.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_04.jl)
 - [2021 climate report, fig5](notebook_05.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_05.jl)
+
+```
+IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
+```
 
 \end{section}
 
