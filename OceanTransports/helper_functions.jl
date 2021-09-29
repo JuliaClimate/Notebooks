@@ -53,7 +53,7 @@ Function that generates small binary files (2D) from large netcdf ones (4D).
 using FortranFiles, MeshArrays
 !isdir("nctiles_climatology") ? error("missing files") : nothing
 include(joinpath(dirname(pathof(MeshArrays)),"gcmfaces_nctiles.jl"))
-(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(γ,Γ,"GRID_LLC90/");
+(TrspX, TrspY, TauX, TauY, SSH)=trsp_prep(γ,Γ,MeshArrays.GRID_LLC90);
 ```
 """
 function trsp_prep(γ::gcmgrid,Γ::NamedTuple,dirOut::String="")
@@ -168,7 +168,7 @@ end
     interp_uv(u,v)
 """
 function interp_uv(u,v)
-    mypath="../inputs/GRID_LLC90/"
+    mypath=MeshArrays.GRID_LLC90
     SPM,lon,lat=read_SPM(mypath) #interpolation matrix (sparse)
     uI=MatrixInterp(write(u),SPM,size(lon)) #interpolation itself
     vI=MatrixInterp(write(v),SPM,size(lon)); #interpolation itself

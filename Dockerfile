@@ -1,11 +1,11 @@
 FROM jupyter/base-notebook:latest
 
 USER root
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-rc1-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.7.0-rc1-linux-x86_64.tar.gz && \
-    mv julia-1.7.0-rc1 /opt/ && \
-    ln -s /opt/julia-1.7.0-rc1/bin/julia /usr/local/bin/julia && \
-    rm julia-1.7.0-rc1-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.3-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.6.3-linux-x86_64.tar.gz && \
+    mv julia-1.6.3 /opt/ && \
+    ln -s /opt/julia-1.6.3/bin/julia /usr/local/bin/julia && \
+    rm julia-1.6.3-linux-x86_64.tar.gz
 
 USER ${NB_USER}
 
@@ -18,8 +18,7 @@ RUN cp ./sysimage/runpluto.sh ./runpluto.sh
  
 COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
 COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
-COPY --chown=${NB_USER}:users ./inputs ./inputs
-COPY --chown=${NB_USER}:users ./outputs ./outputs
+COPY --chown=${NB_USER}:users ./IPCC ./IPCC
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}

@@ -22,6 +22,9 @@
 # **Note : This has not been tested since 2020, and may not currently work**
 
 # + {"slideshow": {"slide_type": "subslide"}}
+pth_notebooks=joinpath(tempdir(),"tmp_JuliaClimateNotebooks")
+!isdir(pth_notebooks) ? mkdir(pth_notebooks) : nothing
+
 if false #set to true if you have not yet installed packages listed below
     using Pkg
     Pkg.add(PackageSpec(name="ClimateTools", rev="master"))
@@ -31,7 +34,7 @@ if false #set to true if you have not yet installed packages listed below
     Pkg.add(PackageSpec(name="ClimatePlots", rev="master"))
 
     run(`wget http://esgf-data1.diasjp.net/thredds/fileServer/esg_dataroot/cmip5/output1/MIROC/MIROC5/piControl/day/atmos/day/r1i1p1/v20161012/tas/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc`)
-    run(`mv tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc ../inputs/`)
+    run(`mv tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc $pth_notebooks`)
 end
 
 # + [markdown] {"slideshow": {"slide_type": "-"}}
@@ -51,7 +54,7 @@ end
 # + {"slideshow": {"slide_type": "-"}}
 using ClimateTools, ClimatePlots
 
-p="../inputs"
+p=pth_notebooks
 fil="$p/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc"
 #fil="$p/clt_day_MIROC5_historical_r4i1p1_19500101-19591231.nc"
 d=Dataset(fil);
@@ -89,7 +92,7 @@ model2
 #
 # Here we read data **from a file you would create by running** `DataStructures/03_nctiles.ipynb` after veryfing that the file is indeed found on disk (i.e., it has already been created by a user via `03_nctiles`).
 
-p3="../outputs/nctiles-newfiles/interp"
+p3=joinpath(pth_notebooks,"/nctiles-newfiles/interp")
 tst=sum(occursin.("ETAN.nc",readdir(p3)))>0
 if tst
     #access data
