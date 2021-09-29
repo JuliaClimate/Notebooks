@@ -18,7 +18,23 @@ The **Data Structures** section provide examples for reading and writing files (
 
 \end{section}
 
-\begin{section}{title="ClimateModels.jl notebooks",name="ClimateModels"}
+\begin{section}{title="Sample Plots",name="Plots"}
+
+\begin{center}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/135203125-e663713e-48c9-42e0-bbd7-bd4ba222b70a.png", width="250", style="border-radius:5px;", caption="IPCC report fig 1b"} \figure{path="https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png", width="250", style="border-radius:5px;", caption="IPCC report fig 2"}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png", width="250", style="border-radius:5px;", caption="IPCC report fig 3"} \figure{path="https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png", width="250", style="border-radius:5px;", caption="IPCC report fig 5"}
+
+\figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png", width="250", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"}  \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png", width="250", style="border-radius:5px;", caption="Scalar Potential"} 
+  
+\figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png", width="250", style="border-radius:5px;", caption="Vector Potential"} \figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="250", style="border-radius:5px;", caption="Particle Tracking"} 
+
+\end{center}
+
+\end{section}
+
+\begin{section}{title="ClimateModels.jl notebooks",name="Models"}
 
 **ClimateModels.jl** provides a uniform interface to climate models of varying complexity and completeness. Models that range from low dimensional to whole Earth System models can be run and/or analyzed via this framework. 
 
@@ -41,13 +57,11 @@ It also supports e.g. cloud computing workflows that start from previous model o
 - [2021 climate report, fig4](notebook_04.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_04.jl)
 - [2021 climate report, fig5](notebook_05.html) ➭ [download / url](https://raw.githubusercontent.com/gaelforget/GlobalOceanNotebooks/gfdev11b/IPCC/notebook_05.jl)
 
-```
-IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press.
-```
+_IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Masson-Delmotte, V., P. Zhai, A. Pirani, S. L. Connors, C. Péan, S. Berger, N. Caud, Y. Chen, L. Goldfarb, M. I. Gomis, M. Huang, K. Leitzell, E. Lonnoy, J.B.R. Matthews, T. K. Maycock, T. Waterfield, O. Yelekçi, R. Yu and B. Zhou (eds.)]. Cambridge University Press. In Press._
 
 \end{section}
 
-\begin{section}{title="Examples / Ocean Transports",name="OceanTransports"}
+\begin{section}{title="Examples / Ocean Transports",name="Transports"}
 
 - [transports](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/04_transports.ipynb) computes total ocean currents over latitude bands. It plots interpolated results over the Global Ocean.
 - [streamfunction](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/OceanTransports/05_streamfunction.ipynb) provides a synthetic view of ocean currents from above. It computes a horizontal streamfunction along with the other, divergent, transport component.
@@ -56,7 +70,7 @@ IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Scie
 
 \end{section}
 
-\begin{section}{title="IndividualDisplacements.jl notebooks",name="IndividualDisplacements"}
+\begin{section}{title="IndividualDisplacements.jl notebooks",name="Particles"}
 
 **IndividualDisplacements.jl** computes point displacements over a gridded domain. It is geared towards the analysis of Climate, Ocean, etc models (`Arakawa C-grids` are natively supported) and the simulation of material transports within the Earth System (e.g. plastics or planktons in the Ocean; dusts or chemicals in the Atmosphere). 
 
@@ -69,7 +83,7 @@ IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Scie
 
 \end{section}
 
-\begin{section}{title="MITgcmTools.jl notebooks",name="MITgcmTools"}
+\begin{section}{title="MITgcmTools.jl notebooks",name="MITgcm"}
 
 **MITgcmTools.jl** is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and/or modifying its inputs. A set of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which e.g. run `MITgcm` interactively, can be found below or via in [the docs](https://gaelforget.github.io/MITgcmTools.jl/dev).
 
@@ -88,26 +102,12 @@ IPCC, 2021: Summary for Policymakers. In: Climate Change 2021: The Physical Scie
 
 \end{section}
 
-\begin{section}{title="Examples / Data Structures",name="DataStructures"}
+\begin{section}{title="Examples / Data Structures",name="Data Structures"}
 
 - [interpolation](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/04_interpolation.ipynb) illustrates how the geo-spatial interpolation method in `MeshArrays.jl` works and can be used to e.g. produce global maps.
 - [ZarrCloud](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/05_ZarrCloud.ipynb) accesses climate model output hosted in the cloud, from the [CMIP6](https://bit.ly/2WiWmoh) archive, using `AWS.jl` and `Zarr.jl` via [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/).
 - [MeshArrays](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/01_MeshArrays.ipynb)  illustrates the main data structures defined in [MeshArrays.jl](https://juliaclimate.github.io/MeshArrays.jl/stable/), data communication between neighboring subdomains, and application to transport modeling.
 - [NCTiles](https://nbviewer.jupyter.org/github/JuliaClimate/GlobalOceanNotebooks/blob/master/DataStructures/03_nctiles.ipynb) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files using [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
-
-\end{section}
-
-\begin{section}{title="Sample Plots",name="Plots"}
-
-\begin{center}
-
-  \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png", width="50%", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"} 
-  
-  \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png", width="50%", style="border-radius:5px;", caption="Scalar Potential"} \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png", width="50%", style="border-radius:5px;", caption="Vector Potential"}
-
-\figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="35%", style="border-radius:5px;", caption="Particle Tracking"} 
-
-\end{center}
 
 \end{section}
 
