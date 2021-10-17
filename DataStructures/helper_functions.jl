@@ -88,7 +88,7 @@ function dimensions_etc_native(pth::Dict)
 
     γ = GridSpec("LatLonCap",pth["grid"])
     γ = gcmgrid(pth["grid"],γ.class,γ.nFaces,γ.fSize, γ.ioSize, prec, γ.read, γ.write)
-    Γ = GridLoad(γ)
+    Γ = GridLoad(γ;option="full")
 
     tilesize = (90,90)
     (n1,n2) = (90,1170)

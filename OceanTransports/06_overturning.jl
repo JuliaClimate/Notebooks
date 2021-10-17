@@ -10,9 +10,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.7.0-beta3
+#     display_name: Julia 1.6.2
 #     language: julia
-#     name: julia-1.7
+#     name: julia-1.6
 # ---
 
 # + [markdown] {"slideshow": {"slide_type": "slide"}}
@@ -32,13 +32,24 @@ include("helper_functions.jl")
 
 pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
-Γ=GridLoad(γ)
+Γ=GridLoad(γ;option="full")
 LC=LatitudeCircles(-89.0:89.0,Γ);
-# -
 
-using IndividualDisplacements
-IndividualDisplacements.get_ecco_velocity_if_needed();
-#IndividualDisplacements.get_occa_velocity_if_needed();
+# +
+using OceanStateEstimation
+OceanStateEstimation.get_ecco_velocity_if_needed();
+#OceanStateEstimation.get_occa_velocity_if_needed();
+
+"""
+    read_velocities(γ::gcmgrid,t::Int,pth::String)
+
+Read velocity components `u,v` from files in `pth`for time `t`
+"""
+function read_velocities(γ::gcmgrid,t::Int,pth::String)
+    u=read_nctiles("$pth"*"UVELMASS/UVELMASS","UVELMASS",γ,I=(:,:,:,t))
+    v=read_nctiles("$pth"*"VVELMASS/VVELMASS","VVELMASS",γ,I=(:,:,:,t))
+    return u,v
+end
 
 # + [markdown] {"slideshow": {"slide_type": "slide"}}
 # ### Compute Overturning Streamfunction
