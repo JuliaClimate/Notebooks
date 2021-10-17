@@ -8,16 +8,6 @@ function fig1to5(x::ModelConfig)
     pth=joinpath(x.folder,string(x.ID))
     cd(pth)
 
-    #1.download
-
-    url="https://dap.ceda.ac.uk/badc/ar6_wg1/data/spm/"
-    #url="https://dap.ceda.ac.uk/badc/ar6_wg1/data/spm/spm_01/v20210809/"
-    pth=joinpath(x.folder,string(x.ID))
-    run(`wget -q -e robots=off --mirror --no-parent -r $url`)
-
-    #2. run loop over notebooks
-
-    cp(joinpath(pth0,"IPCC","pth_ipcc.jl"),"pth_ipcc.jl")
     for ii in x.inputs[:notebookIDs]
         fil_in="notebook_0$(ii).jl"
         cp(joinpath(pth0,"IPCC",fil_in),fil_in)
