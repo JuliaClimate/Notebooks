@@ -18,6 +18,7 @@ end
 
 ## Speedy
 
+if false
 fil=joinpath(pth,"..","examples","Speedy.jl")
 PlutoSliderServer.export_notebook(fil)
 
@@ -25,6 +26,7 @@ tmp1=readdir(tempdir())
 tst1=[isfile(joinpath(tempdir(),i,"bin","speedy")) for i in tmp1]
 ii=findall(tst1)[1]
 symlink(joinpath(tempdir(),tmp1[ii],"bin","speedy"),"speedy")
+end
 
 ## MITgcm
 
