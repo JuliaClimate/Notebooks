@@ -10,9 +10,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.7.0-beta3
+#     display_name: Julia 1.6.2
 #     language: julia
-#     name: julia-1.7
+#     name: julia-1.6
 # ---
 
 # + [markdown] {"slideshow": {"slide_type": "slide"}}
@@ -32,7 +32,30 @@ pth=dirname(pathof(IndividualDisplacements))
 include(joinpath(pth,"../examples/helper_functions.jl"));
 
 # +
-IndividualDisplacements.get_ecco_velocity_if_needed() #download data if needed
+using OceanStateEstimation
+OceanStateEstimation.get_ecco_velocity_if_needed() #download data if needed
+
+function global_ocean_circulation(;k=1,ny=2)
+  r_reset = 0.01 #fraction of the particles reset per month (0.05 for k<=10)
+
+  #read grid and set up connections between subdomains
+  γ=GridSpec("LatLonCap",MeshArrays.GRID_LLC90)
+  Γ=GridLoad(γ;option="full")
+  Γ=merge(Γ,NeighborTileIndices_cs(Γ))
+
+  func=(u -> update_location_llc!(u,𝐷))
+  Γ=merge(Γ,(; update_location! = func))
+
+  #initialize u0,u1 etc
+  𝑃,𝐷=set_up_FlowFields(k,Γ,ECCOclim_path);
+
+  #add parameters for use in reset!
+  tmp=(frac=r_reset, Γ=Γ)
+  𝐷=merge(𝐷,tmp)
+
+  return 𝑃,𝐷
+
+end
 
 𝑃,𝐷=global_ocean_circulation(k=20,ny=2); #grid etc
 

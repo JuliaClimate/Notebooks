@@ -1,4 +1,4 @@
 jupyter contrib nbextension install --user
 jupyter nbextension enable splitcell/splitcell
-julia --project -e 'using IndividualDisplacements; IndividualDisplacements.get_ecco_velocity_if_needed();'
-julia --project -e 'using IndividualDisplacements; IndividualDisplacements.get_occa_velocity_if_needed();'
+julia --project --sysimage ExampleSysimage.so -e 'using OceanStateEstimation; OceanStateEstimation.get_ecco_velocity_if_needed();'
+julia --project --sysimage ExampleSysimage.so -e 'using OceanStateEstimation; OceanStateEstimation.get_occa_velocity_if_needed();'

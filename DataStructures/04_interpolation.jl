@@ -10,9 +10,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.7.0-beta3
+#     display_name: Julia 1.6.2
 #     language: julia
-#     name: julia-1.7
+#     name: julia-1.6
 # ---
 
 # + [markdown] {"slideshow": {"slide_type": "slide"}}
@@ -40,7 +40,7 @@ using MeshArrays, MITgcmTools, Plots
 
 pth=MeshArrays.GRID_LLC90
 γ=GridSpec("LatLonCap",pth)
-Γ=GridLoad(γ);
+Γ=GridLoad(γ;option="full");
 # -
 
 # ## Choose Target Coordinates And Interpolate

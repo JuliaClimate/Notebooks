@@ -10,9 +10,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Julia 1.7.0-beta3
+#     display_name: Julia 1.6.2
 #     language: julia
-#     name: julia-1.7
+#     name: julia-1.6
 # ---
 
 # + [markdown] {"slideshow": {"slide_type": "slide"}}
@@ -118,7 +118,7 @@ plot(P,Pexch)
 # + {"slideshow": {"slide_type": "subslide"}}
 pth=dirname(pathof(MeshArrays))
 include(joinpath(pth,"../examples/Demos.jl"))
-γ,Γ=GridOfOnes("CubeSphere",6,16)
+γ,Γ=GridOfOnes("CubeSphere",6,16;option="full")
 Δ=demo2(Γ);
 
 # + [markdown] {"slideshow": {"slide_type": "subslide"}}
@@ -139,3 +139,5 @@ DXCsm=Δ[3]
 DYCsm=Δ[4]
 @time Rend=smooth(Rini,DXCsm,DYCsm,Γ);
 @time Rend=smooth(Rini,2DXCsm,2DYCsm,Γ);
+
+
