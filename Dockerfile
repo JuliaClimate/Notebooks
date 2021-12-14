@@ -1,11 +1,11 @@
 FROM jupyter/base-notebook:latest
 
 USER root
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.3-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.6.3-linux-x86_64.tar.gz && \
-    mv julia-1.6.3 /opt/ && \
-    ln -s /opt/julia-1.6.3/bin/julia /usr/local/bin/julia && \
-    rm julia-1.6.3-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.7.0-linux-x86_64.tar.gz && \
+    mv julia-1.7.0 /opt/ && \
+    ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia && \
+    rm julia-1.7.0-linux-x86_64.tar.gz
 
 USER ${NB_USER}
 
@@ -35,7 +35,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libnetcdf-dev && \
     apt-get install -y --no-install-recommends libnetcdff-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN julia sysimage/create_sysimage.jl
 
 USER ${NB_USER}
 
@@ -44,4 +43,6 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
+RUN julia --project=./ -e "import Pkg; Pkg.instantiate();"
+RUN julia sysimage/create_sysimage.jl
 RUN julia --sysimage ExampleSysimage.so sysimage/pre_build_models.jl
