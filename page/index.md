@@ -3,67 +3,48 @@
 
 \label{introduction}
 
-[Julia](https://julialang.org) notebooks (using [Jupyter](https://jupyter.org) or [Pluto](https://plutojl.org)) that illustrate some of the [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert and within the broader ecosystem. 
+Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demo [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert and within the broader software ecosystem. Users should be able to replay these notebooks either on a local computer or in the cloud 
+(see [these docs](https://github.com/fonsp/Pluto.jl/wiki) for directions).
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
-[![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
+**Included Notebooks**
 
-The **ClimateModels.jl** package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report).
+The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report).
 
-An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of **MeshArrays.jl** -- the computation and analysis of global ocean transports derived accurately from gridded model output. 
+An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the computation and analysis of global ocean transports derived accurately from gridded model output. 
 
-**IndividualDisplacements.jl** extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` (see **MeshArrays.jl**). In the examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded using functions provided by **MITgcmTools.jl**.
+`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. In the examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded using functions provided by `MITgcmTools.jl`.
 
-The final section further address the handling of files (incl. NetCDF and Zarr files), vizualization, and other common tasks in climate science.
+The final section goes a bit deeper with regard to files (incl. NetCDF and Zarr), vizualizations, cloud services, and more.
 
-- [Vizualization Examples](#sample-viz)
+- [Vizual Examples](#sample-viz)
 - [MeshArrays.jl](#mesh-arrays)
 - [IndividualDisplacements.jl](#individual-displacements)
 - [ClimateModels.jl](#climate-models)
 - [MITgcmTools.jl](#mitgcm-tools)
-- [Files, Viz, and More](#files-viz-more)
+- [Files and More](#files-viz-more)
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
+[![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 \end{section}
 
-\begin{section}{title="Vizualization Examples",name="Vizualizations"}
+\begin{section}{title="Vizual Examples",name="Vizuals"}
 
 \label{sample-viz}
 
-The plots below are examples generated using the Julia packages listed in the [introduction](#introduction).
+The plots below are examples generated using the Julia packages listed in the [introduction](#introduction) and notebooks indicated below.
 
 \begin{center}
 
 \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/MOC.png", width="250", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"} \figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="250", style="border-radius:5px;", caption="Particle Tracking"} 
 
-\figure{path="https://user-images.githubusercontent.com/20276764/135203125-e663713e-48c9-42e0-bbd7-bd4ba222b70a.png", width="250", style="border-radius:5px;", caption="IPCC report fig 1b"} \figure{path="https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png", width="250", style="border-radius:5px;", caption="IPCC report fig 2"}
+\figure{path="https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png", width="250", style="border-radius:5px;", caption="IPCC report fig 1b"} \figure{path="https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png", width="250", style="border-radius:5px;", caption="IPCC report fig 2"}
 
 \figure{path="https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png", width="250", style="border-radius:5px;", caption="IPCC report fig 3"} \figure{path="https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png", width="250", style="border-radius:5px;", caption="IPCC report fig 5"}
 
 \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/Streamfunction.png", width="250", style="border-radius:5px;", caption="Vector Potential"} \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/OceanTransports/ScalarPotential.png", width="250", style="border-radius:5px;", caption="Scalar Potential"} 
 
 \end{center}
-
-\end{section}
-
-\begin{section}{title="ClimateModels.jl",name="Models"}
-
-\label{climate-models}
-
-[ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) provides a uniform interface to climate models of varying complexity and completeness. Models that range from low dimensional to whole Earth System models can be run and/or analyzed via this framework. It also supports e.g. cloud computing workflows that start from previous model output available over the internet. Common file formats are supported. Version control, using _git_, is included to allow for workflow documentation and reproducibility.
-
-`Examples / Running Models`
-
-- [Random walk model (0D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.jl)
-- [ShallowWaters.jl model (2D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.jl)
-- [Hector climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.jl)
-- [FaIR	 climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.jl)
-- [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.jl)
-- [MITgcm general circulation model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.jl)
-
-`Examples / Replaying Outputs`
-
-- [CMIP6 model output](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.jl)
-- [2021 climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.jl)
 
 \end{section}
 
@@ -92,6 +73,28 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \end{section}
 
+\begin{section}{title="ClimateModels.jl",name="Models"}
+
+\label{climate-models}
+
+[ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) provides a uniform interface to climate models of varying complexity and completeness. Models that range from low dimensional to whole Earth System models can be run and/or analyzed via this framework. It also supports e.g. cloud computing workflows that start from previous model output available over the internet. Common file formats are supported. Version control, using _git_, is included to allow for workflow documentation and reproducibility.
+
+`Running Models`
+
+- [Random walk model (0D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.jl)
+- [ShallowWaters.jl model (2D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.jl)
+- [Hector climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.jl)
+- [FaIR	 climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.jl)
+- [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.jl)
+- [MITgcm general circulation model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.jl)
+
+`Replaying Outputs`
+
+- [CMIP6 model output](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.jl)
+- [2021 climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ➭ [code link](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.jl)
+
+\end{section}
+
 \begin{section}{title="MITgcmTools.jl",name="MITgcm"}
 
 \label{mitgcm-tools}
@@ -114,6 +117,7 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 - `examples/VizNc.jl` opens a netCDF file using `NCDatasets.jl` and plots one data set slice as a heatmap using `Makie.jl`.
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
+- [OceanStateEstimation.jl](https://gaelforget.github.io/OceanStateEstimation.jl/dev/) provides additional vizualization examples in [this notebook](https://gaelforget.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([code link](https://raw.githubusercontent.com/gaelforget/OceanStateEstimation.jl/master/examples/ECCO_standard_plots.jl)) using the [ECCO reanalysis](https://ecco-group.org).
 - To start an interactive version, e.g., [use this mybinder.org link](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master), open `Pluto.jl`, and paste a `code link` from above. This should work for most notebooks but we should note that `mybinder.org` does not offer enough memory to run all of the notebooks.
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/GlobalOceanNotebooks/issues)) for queries, bug reports, new contributions, etc.
 
