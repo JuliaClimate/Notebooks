@@ -1,4 +1,9 @@
-using Pkg; Pkg.add("PlutoSliderServer")
+import MeshArrays
+MeshArrays.GRID_LLC90_download()
+
+import OceanStateEstimation
+OceanStateEstimation.ECCOdiags_download() 
+
 
 using PlutoSliderServer, ClimateModels
 pth=dirname(pathof(ClimateModels))
