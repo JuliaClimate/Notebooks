@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p7b
+      - v0p3p7c
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.precompile();
-            include("DataStructures/run_notebooks.jl");'
+            include("tutorials/run_notebooks.jl");'
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
