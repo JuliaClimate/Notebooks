@@ -2,7 +2,7 @@
 import PlutoSliderServer
 
 function VizNc()
-    pth_in=joinpath(pwd(),"DataStructures")
+    pth_in=joinpath(pwd(),"tutorials")
     pth_out=joinpath(pwd(),"page","__site")
 
     fil_in="VizNc.jl"
