@@ -3,7 +3,7 @@ MeshArrays.GRID_LLC90_download()
 
 import OceanStateEstimation
 OceanStateEstimation.ECCOdiags_download() 
-
+OceanStateEstimation.ECCOdiags_add("interp_coeffs")
 
 using PlutoSliderServer, ClimateModels
 pth=dirname(pathof(ClimateModels))
@@ -37,3 +37,4 @@ end
 
 fil=joinpath(pth,"..","examples","MITgcm.jl")
 PlutoSliderServer.export_notebook(fil)
+
