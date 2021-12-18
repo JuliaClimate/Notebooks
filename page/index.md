@@ -3,7 +3,7 @@
 
 \label{introduction}
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demo [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. Users should be able to replay these notebooks either on a local computer or in the cloud (see [these docs](https://github.com/fonsp/Pluto.jl/wiki) for directions).
@@ -110,11 +110,20 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \label{files-viz-more}
 
-- To start an interactive version of a notebook, either locally or [using mybinder.org](https://mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/master), open `Pluto.jl`, and paste the notebook `code link`. This should work for on most computers although let's note that `mybinder.org` does not currently offer sufficient memory to run all of the notebooks.
+- To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, and paste the notebook `code link`. For cloud computing options, please scroll down to the [mybinder section](#mybinder-links).
 - The above examples provide a suite of recipes to draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) or [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
 - [OceanStateEstimation.jl](https://gaelforget.github.io/OceanStateEstimation.jl/dev/) provides additional vizualization examples in [this notebook](https://gaelforget.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([code link](https://raw.githubusercontent.com/gaelforget/OceanStateEstimation.jl/master/examples/ECCO_standard_plots.jl)) using the [ECCO v4 reanalysis](https://ecco-group.org).
-- [VizNc.jl](https://juliaclimate.github.io/GlobalOceanNotebooks/VizNc.html) ([code link](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/DataStructures/VizNc.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
+- [VizNc.jl](https://juliaclimate.github.io/GlobalOceanNotebooks/VizNc.html) ([code link](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/tutorials/VizNc.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/GlobalOceanNotebooks/issues)) for queries, bug reports, new contributions, etc.
+
+\label{mybinder-links}
+
+We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to anyone of the BinderHubs. The shorcuts below are configured for the `JuliaClimate` repository more specifically. They should be able to run the notebooks listed above with reduced latency (although memory limitations can be an issue).
+
+- [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
+- [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
+- [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
+- [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
 
 \end{section}
