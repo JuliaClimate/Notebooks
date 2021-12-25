@@ -117,6 +117,19 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \end{section}
 
+\begin{section}{title="Marine Ecosystem Modeling Workshop",name="Workshop"}
+
+\label{workshop}
+
+Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Using Julia`. More detail is available in the [workshop repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
+
+- [AIBECSExample](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([code link](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/blob/main/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
+- [PlanktonIndividualExample](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([code link](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
+- [MITgcm_tutorial_global_oce_biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([code link](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
+- [IndividualDisplacementsExample](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([code link](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
+
+\end{section}
+
 \begin{section}{title="Viz, Files, and More",name="More"}
 
 \label{files-viz-more}
@@ -133,7 +146,7 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. They should be able to run the notebooks listed above with reduced latency. Memory limitations can be an issue though. 
 
-\alert{For repeated use it is advised to run the notebooks on your local computer. Not only will this probably be faster than using mybinder but also it saves mybinder funds that allow them to provide precious free cloud services to the community.}
+\alert{For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.}
 
 - [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
 - [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
