@@ -14,7 +14,7 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 
 \label{contents}
 
-- [Vizual Examples](#sample-viz)
+- [Visual Examples](#sample-viz)
 - [ClimateModels.jl](#climate-models)
 - [MeshArrays.jl](#mesh-arrays)
 - [IndividualDisplacements.jl](#individual-displacements)
