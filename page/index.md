@@ -19,17 +19,16 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 - [MITgcmTools.jl](#mitgcm-tools)
 - [MeshArrays.jl](#mesh-arrays)
 - [IndividualDisplacements.jl](#individual-displacements)
-- [OceanStateEstimation.jl](#ocean-state-estimation)
 - [OceanRobots.jl](#ocean-robots)
+- [OceanStateEstimation.jl](#ocean-state-estimation)
 - [Miscellaneous](#misc)
 
 The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
 
 An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. Topics covered via `MeshArrays.jl` also include interpolation and geography.
 
-`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. `OceanStateEstimation.jl` and `OceanRobots.jl` provide examples that access ocean data products.
-
-The `miscellaneous` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
+`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
+Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. The `miscellaneous` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
 
 \end{section}
 
