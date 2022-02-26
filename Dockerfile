@@ -44,5 +44,6 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
 RUN julia --project=./ -e "import Pkg; Pkg.instantiate();"
+RUN julia sysimage/download_stuff.jl
 RUN julia sysimage/create_sysimage.jl
 RUN julia --sysimage ExampleSysimage.so sysimage/pre_build_models.jl
