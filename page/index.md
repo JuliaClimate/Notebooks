@@ -16,18 +16,20 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 
 - [Visual Examples](#sample-viz)
 - [ClimateModels.jl](#climate-models)
+- [MITgcmTools.jl](#mitgcm-tools)
 - [MeshArrays.jl](#mesh-arrays)
 - [IndividualDisplacements.jl](#individual-displacements)
-- [MITgcmTools.jl](#mitgcm-tools)
-- [Viz, Files, and More](#files-viz-more)
+- [OceanStateEstimation.jl](#ocean-state-estimation)
+- [OceanRobots.jl](#ocean-robots)
+- [Miscellaneous](#misc)
 
-The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report).
+The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
 
-An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. 
+An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. Topics covered via `MeshArrays.jl` also include interpolation and geography.
 
-`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. In some of the examples, model output from the [MITgcm](https://mitgcm.readthedocs.io/en/latest/) are loaded using functions provided by `MITgcmTools.jl`.
+`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. `OceanStateEstimation.jl` and `OceanRobots.jl` provide examples that access ocean data products.
 
-Final section touches on topics like reading files (incl. NetCDF and Zarr), visualizations, cloud services, and more.
+The `miscellaneous` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
 
 \end{section}
 
@@ -59,6 +61,7 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 - [Random walk model (0D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/RandomWalker.jl)
 - [ShallowWaters.jl model (2D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/ShallowWaters.jl)
+- [Oceananigans.jl model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Oceananigans.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Oceananigans.jl)
 - [Hector climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Hector.jl)
 - [FaIR	 climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/FaIR.jl)
 - [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Speedy.jl)
@@ -68,6 +71,20 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 - [CMIP6 model output](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/CMIP6.jl)
 - [2021 climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ➭ [code link](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl)
+
+`MIT general circulation model`
+
+\label{mitgcm-tools}
+
+[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and/or modifying its inputs. The package documentation provides a series of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which e.g. run `MITgcm` interactively via the `ClimateModels.jl` interface, rely on `MeshArrays.jl` for visualizing results, or use `IndividualDisplacements.jl` to derive material pathways.
+
+- [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_configurations.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
+- [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_scan_output.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 
+- [MITgcm_run.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_run.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_run.jl)) : a detailed look into compiling and running the model.
+- [MITgcm_worklow.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_worklow.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_worklow.jl)): build, setup, run, and plot for a chosen standard MITgcm configuration.
+- [HS94_animation.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_animation.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
+- [HS94_particles.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_particles.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
+- [HS94_Makie.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_Makie.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
 
 \end{section}
 
@@ -96,23 +113,19 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \end{section}
 
-\begin{section}{title="MITgcmTools.jl",name="MITgcm"}
+\begin{section}{title="Data Products",name="Data"}
 
-\label{mitgcm-tools}
+[OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl) : Simulation, processing, and analysis of data generated by scientific robots in the Ocean. These include profiling floats (Argo), drifters (GDP), and moorings for examples.
 
-[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and/or modifying its inputs. The package documentation provides a series of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which e.g. run `MITgcm` interactively via the `ClimateModels.jl` interface, rely on `MeshArrays.jl` for visualizing results, or use `IndividualDisplacements.jl` to derive material pathways.
+\label{ocean-robots}
 
-- [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_configurations.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
-- [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_scan_output.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 
-- [MITgcm_run.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_run.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_run.jl)) : a detailed look into compiling and running the model.
-- [MITgcm_worklow.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_worklow.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_worklow.jl)): build, setup, run, and plot for a chosen standard MITgcm configuration.
-- [HS94_animation.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_animation.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
-- [HS94_particles.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_particles.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
-- [HS94_Makie.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_Makie.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
+- [example\_NWP\_NOAA.jl](examples/example_NWP_NOAA.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/example_NWP_NOAA.jl)) displays [NOAA station](https://www.ndbc.noaa.gov/) data
+- [example\_WHOTS.jl](examples/example_WHOTS.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/example_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data
+- [example\_GDP.jl](examples/example_GDP.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/example_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series
+- [example\_Argo.jl](examples/example_Argo.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/example_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float
 
-\end{section}
 
-\begin{section}{title="OceanStateEstimation.jl",name="Estimates"}
+[OceanStateEstimation.jl](https://github.com/gaelforget/OceanStateEstimation.jl) : package currently focused on serving and deriving climatologies from ocean state estimates.
 
 \label{ocean-state-estimation}
 
@@ -121,7 +134,7 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \end{section}
 
-\begin{section}{title="Marine Ecosystem Modeling Workshop",name="Workshop"}
+\begin{section}{title="Marine Ecosystem Modeling Workshop",name="Workshops"}
 
 \label{workshop}
 
@@ -134,9 +147,9 @@ Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modelin
 
 \end{section}
 
-\begin{section}{title="Viz, Files, and More",name="More"}
+\begin{section}{title="Miscellaneous",name="More"}
 
-\label{files-viz-more}
+\label{misc}
 
 - To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, and paste the notebook `code link`. For cloud computing options, please scroll down to the [mybinder section](#mybinder-links).
 - The above examples provide a suite of recipes to draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) or [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
