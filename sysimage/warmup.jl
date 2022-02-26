@@ -10,8 +10,8 @@ import CairoMakie
 
 tmp=ModelConfig(model=ClimateModels.RandomWalker)
 setup(tmp)
-launch(tmp)
+launch(tmp) 
 
 notebook_url="https://raw.githubusercontent.com/gaelforget/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl"
 path_to_notebook = Downloads.download(notebook_url)
-PlutoSliderServer.export_notebook(path_to_notebook)
+include(path_to_notebook)
