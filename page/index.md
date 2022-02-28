@@ -14,7 +14,7 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 
 \label{contents}
 
-The notebooks listed in this page often come from the examples folder of a Julia packages. A few more are provided in this [examples](https://github.com/JuliaClimate/GlobalOceanNotebooks/tree/master/tutorials) folder. The [Miscellaneous](#misc) provides user directions for users interested in interactive notebooks.
+The notebooks listed here often are from the examples folder of a Julia package. A few more notebooks are provided in this [examples](https://github.com/JuliaClimate/GlobalOceanNotebooks/tree/master/tutorials) folder. The [Miscellaneous](#misc) section provides user directions for those interested in using notebooks interactively.
 
 - [ClimateModels.jl](#climate-models) examples
 - [MITgcmTools.jl](#mitgcm-tools) examples
@@ -24,6 +24,8 @@ The notebooks listed in this page often come from the examples folder of a Julia
 - [OceanStateEstimation.jl](#ocean-state-estimation) examples
 - [Workshops](#workshops)
 - [Miscellaneous](#misc)
+
+**Packages Overview**
 
 The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
 
@@ -36,7 +38,9 @@ Examples that let you access and explore ocean data products are provided in `Oc
 
 \label{sample-viz}
 
-The visuals below are examples generated using the Julia packages listed in the [contents](#contents) section and notebooks indicated below. The examples provide recipes to draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) and [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
+The visuals examples below are generated using these Julia packages and notebooks indicated below. The notebook examples draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) and [Plots.jl](http://docs.juliaplots.org/latest/). 
+
+Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
 
 
 \begin{center}
