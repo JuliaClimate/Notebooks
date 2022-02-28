@@ -75,7 +75,9 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \label{mitgcm-tools}
 
-[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and/or modifying its inputs. The package documentation provides a series of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which e.g. run `MITgcm` interactively via the `ClimateModels.jl` interface, rely on `MeshArrays.jl` for visualizing results, or use `IndividualDisplacements.jl` to derive material pathways.
+\\
+
+[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and so on. The `examples` folder provides a series of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which can be found in the package documentation. The examples run `MITgcm` interactively via the `ClimateModels.jl` interface, rely on `MeshArrays.jl` for visualizing results, use `IndividualDisplacements.jl` to derive material pathways, etc.
 
 - [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_configurations.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
 - [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_scan_output.html) ([code link](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 

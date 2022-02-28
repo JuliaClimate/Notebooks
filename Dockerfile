@@ -16,10 +16,7 @@ RUN cp ./sysimage/environment.yml ./environment.yml
 RUN cp ./sysimage/setup.py ./setup.py
 RUN cp ./sysimage/runpluto.sh ./runpluto.sh
  
-COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
-COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
-COPY --chown=${NB_USER}:users ./IPCC ./IPCC
-COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
+ßCOPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
