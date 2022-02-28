@@ -16,7 +16,7 @@ RUN cp ./sysimage/environment.yml ./environment.yml
 RUN cp ./sysimage/setup.py ./setup.py
 RUN cp ./sysimage/runpluto.sh ./runpluto.sh
  
-ßCOPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
+COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
