@@ -14,13 +14,15 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 
 \label{contents}
 
-- [Visual Examples](#sample-viz)
-- [ClimateModels.jl](#climate-models)
-- [MITgcmTools.jl](#mitgcm-tools)
-- [MeshArrays.jl](#mesh-arrays)
-- [IndividualDisplacements.jl](#individual-displacements)
-- [OceanRobots.jl](#ocean-robots)
-- [OceanStateEstimation.jl](#ocean-state-estimation)
+The notebooks listed in this page often come from the examples folder of a Julia packages. A few more are provided in this [examples](https://github.com/JuliaClimate/GlobalOceanNotebooks/tree/master/examples) folder. The [Miscellaneous](#misc) provides user directions for users interested in interactive notebooks.
+
+- [ClimateModels.jl](#climate-models) examples
+- [MITgcmTools.jl](#mitgcm-tools) examples
+- [MeshArrays.jl](#mesh-arrays) examples
+- [IndividualDisplacements.jl](#individual-displacements) examples
+- [OceanRobots.jl](#ocean-robots) examples
+- [OceanStateEstimation.jl](#ocean-state-estimation) examples
+- [Workshops](#workshops)
 - [Miscellaneous](#misc)
 
 The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
@@ -30,13 +32,12 @@ An important requirement in climate science is to derive transports using native
 `IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
 Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. The `miscellaneous` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
 
-\end{section}
-
-\begin{section}{title="Visual Examples",name="Visuals"}
+**Visual Examples**
 
 \label{sample-viz}
 
-The plots below are examples generated using the Julia packages listed in the [introduction](#introduction) and notebooks indicated below.
+The visuals below are examples generated using the Julia packages listed in the [contents](#contents) section and notebooks indicated below. The examples provide recipes to draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) and [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
+
 
 \begin{center}
 
@@ -135,9 +136,11 @@ The plots below are examples generated using the Julia packages listed in the [i
 
 \end{section}
 
-\begin{section}{title="Marine Ecosystem Modeling Workshop",name="Workshops"}
+\begin{section}{title="Workshops",name="Workshops"}
 
 \label{workshop}
+
+**Marine Ecosystem Modeling Workshop**
 
 Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Using Julia`. More detail is available in the [workshop repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
 
@@ -152,15 +155,14 @@ Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modelin
 
 \label{misc}
 
-**More examples:**
+**More examples**
 
 - [VizNc.jl](https://juliaclimate.github.io/GlobalOceanNotebooks/VizNc.html) ([code link](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/tutorials/VizNc.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
-**How-To:**
+**How-To**
 
 - To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, and paste the notebook `code link`. For cloud computing options, please scroll down to the [mybinder section](#mybinder-links).
-- Plotting: the listed examples provide recipes to draw maps, histograms, time series, and more using [Makie.jl](https://makie.juliaplots.org/stable/) and [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/GlobalOceanNotebooks/issues)) for queries, bug reports, new contributions, etc.
 
 \label{mybinder-links}
