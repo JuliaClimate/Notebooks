@@ -44,8 +44,8 @@ md"""## Downloading Files
 
 There are various ways to access files via the internet. Sometimes it is necessary to download files to access their content; sometimes it isn't. Here are a couple examples:
 
-1. data from the WHOTS program which is acessed via a thredds server
-2. data from the Argo program which is accessed via https or ftp
+1. data from the WHOTS program, acessed via a thredds server
+2. data from the Argo program, accessed via https or ftp
 
 These examples are from the [OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl) which provides additional information on these data sets. 
 """
@@ -68,9 +68,11 @@ end
 # ╔═╡ d6da99a1-423a-4c85-8f43-8811c09c4595
 md"""## Creating Files
 
-Below is the code that generates the file used in this demo, which we simply fill with 60-by-60 pattern. 
+Below is the code that generates the file used in this notebook.
 
-The pattern is represented as a `heatmap` in this notebook. It comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on visualizing data.
+The pattern represented as a `heatmap` earlier in this notebook is of the data found in the generated file.
+
+This pattern comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on visualizing data.
 
 """
 
