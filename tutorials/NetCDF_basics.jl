@@ -6,45 +6,89 @@ using InteractiveUtils
 
 # ╔═╡ 74ec70b2-52db-11ec-308e-0b507febe03e
 begin
-	using NCDatasets
-	import CairoMakie as Mkie
-	using Random
-	using PlutoUI
+	using NCDatasets, Downloads, PlutoUI, CairoMakie
+	"Done with packages."
 end
 
 # ╔═╡ edf5fb5f-cb8d-47d1-bd6f-be4605686a67
-md"""# Netcdf Files And Plotting Demo
+md"""# NetCDF : Basics Demo
 
-Here we open a netCDF file and plot one data set / slice as a heatmap.
+Here we first open a NetCDF file, extract a slice of data, and display it as a heatmap. We then look at simle recipes for downloading and creating files. To finish we provide a short list of other NetCDF related software.
 """
 
 # ╔═╡ b7cef3ea-da3d-496d-bd01-2cfb5d931777
 TableOfContents()
 
 # ╔═╡ 6e56775b-c730-4739-9964-0056b5d8260a
-md"""## Demo Outline
+md"""## Reading From File
 
-- open file using `NCDatasets.Dataset`; returns a lazy view of the file content (`ds`)
-- access a particular variable from the data set file; again returns a lazy view (`v`)
-- retrieve the data by indexing e.g., in our example, a slice of the data as an Array (`a`)
+The three commands in the code cells below accomplish this sequence :
+
+1. open file using `NCDatasets.Dataset`; returns a lazy view of the file content (`ds`)
+1. access a particular variable from the data set file; again returns a lazy view (`v`)
+1. retrieve the data by indexing e.g., in our example, a slice of the data as an Array (`a`)
 """
 
-# ╔═╡ d3f4b6bb-0e3d-4977-b901-586b0b3a6886
-md"""## Demo"""
+# ╔═╡ 213c15be-2e66-430f-b522-744ed4d55094
+md"""## Visualizing Content
+
+One of the common methods to visual the data now contained in `a` is a heatmap.
+"""
+
+# ╔═╡ 5afe78bb-fda0-48a0-bee6-9543d89819e8
+md"""## Downloading Files
+
+There are various ways to access files via the internet. Sometimes it is necessary to download files to access their content; sometimes it isn't. Here are a couple examples:
+
+1. data from the WHOTS program which is acessed via a thredds server
+2. data from the Argo program which is accessed via https or ftp
+
+These examples are from the [OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl) which provides additional information on these data sets. 
+"""
+
+# ╔═╡ 240851bb-6b44-4ffc-a7da-4c9640c79fb1
+let
+	fil="http://tds0.ifremer.fr/thredds/dodsC/CORIOLIS-OCEANSITES-GDAC-OBS/long_timeseries/WHOTS/OS_WHOTS_200408-201809_D_MLTS-1H.nc"
+	
+	NCDataset(fil)
+end
+
+# ╔═╡ baa6b7b8-e4bf-4a54-8341-0ccce0a65e9f
+let
+	url="https://data-argo.ifremer.fr/dac/coriolis/6900900/6900900_prof.nc"
+	fil=Downloads.download(url)
+	
+	NCDataset(fil)
+end
 
 # ╔═╡ d6da99a1-423a-4c85-8f43-8811c09c4595
-md"""## Generate Demo File
+md"""## Creating Files
 
-Below is the code that generates the file used in this demo.
+Below is the code that generates the file used in this demo, which we simply fill with 60-by-60 pattern. 
+
+The pattern is represented as a `heatmap` in this notebook. It comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on this plotting library.
+
 """
+
+# ╔═╡ ec6e1fad-602c-465b-b54c-eeb45f5d70fe
+begin
+	N = 60
+	
+	function xy_data(x, y)
+	           r = sqrt(x^2 + y^2)
+	           r == 0.0 ? 1f0 : (sin(r)/r)
+	end
+	
+	l = range(-10, stop = 10, length = N)
+	z = Float32[xy_data(x, y) for x in l, y in l]
+end
 
 # ╔═╡ e4f7d5fd-0f79-4f61-8b28-562e7c87f542
 begin
-	function create_file()
-	    sz = (123,145)
-	    data = randn(MersenneTwister(152), sz)
+	function create_file(data)
+	    sz = size(data)
 	
-	    filename = tempname()
+	    filename = tempname()*".nc"
 	    ds = NCDataset(filename,"c") do ds
 	        defDim(ds,"lon",sz[1])
 	        defDim(ds,"lat",sz[2])
@@ -54,7 +98,9 @@ begin
 		return filename
 	end
 
-	filename=create_file()
+	filename=create_file(z)
+
+	isfile(filename) ? "File created is found @ $(filename)" : "File is missing !!"
 end
 
 # ╔═╡ cf5ea7f7-35be-4756-bcfa-5fad09148e69
@@ -67,34 +113,38 @@ v=ds["var"]
 a=v[:,:,1,1]
 
 # ╔═╡ dd4c4491-203f-421f-8617-93f525fe377d
-Mkie.heatmap(a)
-
-# ╔═╡ 9b3afdc2-3263-4f92-a4de-b79ea0d1afcb
-isfile(filename)
+heatmap(a)
 
 # ╔═╡ a8524123-f78c-4c6d-b455-872c3fcf7f7f
-md"""## More 
+md"""## Software Links 
 
-In relation to this tutorial, useful software may include
+The [OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl), [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/), and [OceanStateEstimation.jl](https://github.com/gaelforget/OceanStateEstimation.jl) package documentations provide complementary examples that cover not only NetCDF but also formats like `CSV` and `Zarr`. One option to try these notebooks online is provided in the [JuliaClimate notebooks](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top) page.
 
-- Netcdf Viewer
-  - https://www.giss.nasa.gov/tools/panoply/
-- Nectdf packages
-  - https://github.com/Alexander-Barth/NCDatasets.jl
-  - https://github.com/JuliaGeo/NetCDF.jl
+In relation to this tutorial, useful software on Netcdf and Visualization may include:
+
+- NetCDF in Julia
+  - <https://github.com/Alexander-Barth/NCDatasets.jl>
+  - <https://github.com/JuliaGeo/NetCDF.jl>
+  - <https://github.com/JuliaClimate>
 - Visualization 
-  - https://makie.juliaplots.org/stable/
-  - https://github.com/JuliaPlots/
+  - <https://makie.juliaplots.org/stable/>
+  - <https://github.com/JuliaPlots/>
+- Other NetCDF interfaces, beyond Julia
+  - <https://www.giss.nasa.gov/tools/panoply/>
+  - <https://xarray.pydata.org/en/stable/index.html>
 """
 
+
+# ╔═╡ ed5bdc8d-d3e2-40fd-9924-b9dcc5dd7e6d
+md"""## Appendix"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 CairoMakie = "~0.7.4"
@@ -1287,17 +1337,21 @@ version = "3.5.0+0"
 
 # ╔═╡ Cell order:
 # ╟─edf5fb5f-cb8d-47d1-bd6f-be4605686a67
-# ╟─74ec70b2-52db-11ec-308e-0b507febe03e
 # ╟─b7cef3ea-da3d-496d-bd01-2cfb5d931777
 # ╟─6e56775b-c730-4739-9964-0056b5d8260a
-# ╟─d3f4b6bb-0e3d-4977-b901-586b0b3a6886
 # ╠═cf5ea7f7-35be-4756-bcfa-5fad09148e69
 # ╠═a8f1eae9-3c9f-4f0e-8b10-726127b7933f
 # ╠═ce1f0e37-2d41-4648-9bcd-2d21079fac39
+# ╟─213c15be-2e66-430f-b522-744ed4d55094
 # ╠═dd4c4491-203f-421f-8617-93f525fe377d
+# ╟─5afe78bb-fda0-48a0-bee6-9543d89819e8
+# ╠═240851bb-6b44-4ffc-a7da-4c9640c79fb1
+# ╠═baa6b7b8-e4bf-4a54-8341-0ccce0a65e9f
 # ╟─d6da99a1-423a-4c85-8f43-8811c09c4595
+# ╟─ec6e1fad-602c-465b-b54c-eeb45f5d70fe
 # ╠═e4f7d5fd-0f79-4f61-8b28-562e7c87f542
-# ╟─9b3afdc2-3263-4f92-a4de-b79ea0d1afcb
 # ╟─a8524123-f78c-4c6d-b455-872c3fcf7f7f
+# ╟─ed5bdc8d-d3e2-40fd-9924-b9dcc5dd7e6d
+# ╠═74ec70b2-52db-11ec-308e-0b507febe03e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
