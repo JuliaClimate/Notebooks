@@ -13,7 +13,7 @@ end
 # ╔═╡ edf5fb5f-cb8d-47d1-bd6f-be4605686a67
 md"""# NetCDF : Basics Demo
 
-Here we first open a NetCDF file, extract a slice of data, and display it as a heatmap. 
+Here we first open a NetCDF file, extract a slice of data, and visualize it as a heatmap. 
 
 We then look at commands for downloading and creating files. 
 	
@@ -28,15 +28,15 @@ md"""## Reading From File
 
 The three commands in the code cells below accomplish this sequence :
 
-1. open file using `NCDatasets.Dataset`; returns a lazy view of the file content (`ds`)
-1. access a particular variable from the data set file; again returns a lazy view (`v`)
-1. retrieve the data by indexing e.g., in our example, a slice of the data as an Array (`a`)
+1. open file using `NCDatasets.Dataset`; return lazy view of the file content (`ds`)
+1. access one variable from the data set file; return a lazy view (`v`)
+1. retrieve the data by indexing / slicing the data; return an Array (`A`)
 """
 
 # ╔═╡ 213c15be-2e66-430f-b522-744ed4d55094
 md"""## Visualizing Content
 
-One of the common methods to visual the data now contained in `a` is a heatmap.
+One of the common methods to visualize an array liek `A` is a heatmap.
 """
 
 # ╔═╡ 5afe78bb-fda0-48a0-bee6-9543d89819e8
@@ -44,8 +44,8 @@ md"""## Downloading Files
 
 There are various ways to access files via the internet. Sometimes it is necessary to download files to access their content; sometimes it isn't. Here are a couple examples:
 
-1. data from the WHOTS program which is acessed via a thredds server
-2. data from the Argo program which is accessed via https or ftp
+1. data from the WHOTS program, acessed via a thredds server
+2. data from the Argo program, accessed via https or ftp
 
 These examples are from the [OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl) which provides additional information on these data sets. 
 """
@@ -68,9 +68,11 @@ end
 # ╔═╡ d6da99a1-423a-4c85-8f43-8811c09c4595
 md"""## Creating Files
 
-Below is the code that generates the file used in this demo, which we simply fill with 60-by-60 pattern. 
+Below is the code that generates the file used in this notebook.
 
-The pattern is represented as a `heatmap` in this notebook. It comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on visualizing data.
+The pattern represented as a `heatmap` earlier in this notebook is of the data found in the generated file.
+
+This pattern comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on visualizing data.
 
 """
 
@@ -114,10 +116,10 @@ ds = Dataset(filename)
 v=ds["var"]
 
 # ╔═╡ ce1f0e37-2d41-4648-9bcd-2d21079fac39
-a=v[:,:,1,1]
+A=v[:,:,1,1]
 
 # ╔═╡ dd4c4491-203f-421f-8617-93f525fe377d
-heatmap(a)
+heatmap(A)
 
 # ╔═╡ a8524123-f78c-4c6d-b455-872c3fcf7f7f
 md"""## Software Links 
