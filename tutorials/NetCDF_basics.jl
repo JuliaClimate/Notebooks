@@ -6,8 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 74ec70b2-52db-11ec-308e-0b507febe03e
 begin
-	using NCDatasets, Downloads, PlutoUI
-	import CairoMakie as Mkie
+	using NCDatasets, Downloads, PlutoUI, CairoMakie
 	"Done with packages."
 end
 
@@ -114,7 +113,7 @@ v=ds["var"]
 a=v[:,:,1,1]
 
 # ╔═╡ dd4c4491-203f-421f-8617-93f525fe377d
-Mkie.heatmap(a)
+heatmap(a)
 
 # ╔═╡ a8524123-f78c-4c6d-b455-872c3fcf7f7f
 md"""## Software Links 
@@ -1353,6 +1352,6 @@ version = "3.5.0+0"
 # ╠═e4f7d5fd-0f79-4f61-8b28-562e7c87f542
 # ╟─a8524123-f78c-4c6d-b455-872c3fcf7f7f
 # ╟─ed5bdc8d-d3e2-40fd-9924-b9dcc5dd7e6d
-# ╟─74ec70b2-52db-11ec-308e-0b507febe03e
+# ╠═74ec70b2-52db-11ec-308e-0b507febe03e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
