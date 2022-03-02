@@ -13,7 +13,11 @@ end
 # ╔═╡ edf5fb5f-cb8d-47d1-bd6f-be4605686a67
 md"""# NetCDF : Basics Demo
 
-Here we first open a NetCDF file, extract a slice of data, and display it as a heatmap. We then look at simle recipes for downloading and creating files. To finish we provide a short list of other NetCDF related software.
+Here we first open a NetCDF file, extract a slice of data, and display it as a heatmap. 
+
+We then look at commands for downloading and creating files. 
+	
+To finish is a short list of NetCDF related software.
 """
 
 # ╔═╡ b7cef3ea-da3d-496d-bd01-2cfb5d931777
@@ -66,7 +70,7 @@ md"""## Creating Files
 
 Below is the code that generates the file used in this demo, which we simply fill with 60-by-60 pattern. 
 
-The pattern is represented as a `heatmap` in this notebook. It comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on this plotting library.
+The pattern is represented as a `heatmap` in this notebook. It comes from the [Makie.jl](https://makie.juliaplots.org/stable/) documentation, where you can learn more on visualizing data.
 
 """
 
@@ -118,9 +122,11 @@ heatmap(a)
 # ╔═╡ a8524123-f78c-4c6d-b455-872c3fcf7f7f
 md"""## Software Links 
 
-The [OceanRobots.jl](https://github.com/gaelforget/OceanRobots.jl), [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/), and [OceanStateEstimation.jl](https://github.com/gaelforget/OceanStateEstimation.jl) package documentations provide complementary examples that cover not only NetCDF but also formats like `CSV` and `Zarr`. One option to try these notebooks online is provided in the [JuliaClimate notebooks](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top) page.
+The [OceanStateEstimation.jl](https://gaelforget.github.io/OceanStateEstimation.jl/dev/), [OceanRobots.jl](https://gaelforget.github.io/OceanRobots.jl/dev), and [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) package documentations provide complementary examples that cover not only [NetCDF](https://www.unidata.ucar.edu/software/netcdf/) but also formats like `CSV` and `Zarr`. 
 
-In relation to this tutorial, useful software on Netcdf and Visualization may include:
+One option to try out these notebooks online is provided in the [JuliaClimate notebooks](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top) page ([here](https://juliaclimate.github.io/GlobalOceanNotebooks/#more)).
+
+In relation to this tutorial, useful software on NetCDF and Visualization may include:
 
 - NetCDF in Julia
   - <https://github.com/Alexander-Barth/NCDatasets.jl>
