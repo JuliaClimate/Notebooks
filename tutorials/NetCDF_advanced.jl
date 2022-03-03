@@ -72,7 +72,13 @@ begin
 	import NCDatasets as ncd
 	folder=joinpath(tempdir(),"NetcdfTestCase1")
 	ncfile=joinpath(folder,"speeds.nc")
-		
+
+	try
+		ds=ncd.Dataset(ncfile) #open file
+	catch
+		df=missing
+	end
+
 	max_speed(t::Int) = 
 		sqrt(maximum((ds["USFC"][:,:,t].^2 .+ ds["VSFC"][:,:,t].^2), dims = (1,2))[1])
 #		maximum(sqrt.(ds["USFC"][:,:,t].^2 .+ ds["VSFC"][:,:,t].^2), dims = (1,2))[1]
@@ -86,7 +92,6 @@ Completing the computation may take of the order of 10 seconds.
 
 # ╔═╡ b52101ba-483f-4b95-a1cf-44cc0154e8e9
 if isfile(ncfile)
-	ds=ncd.Dataset(ncfile) #open file
 	max_speed(1)
 	max_speed.(1:2400)
 else
