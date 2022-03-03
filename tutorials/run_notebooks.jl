@@ -9,5 +9,5 @@ function run_one_notebook(filename::String)
     PlutoSliderServer.export_notebook(joinpath(pth_out,filename))
 end 
 
-run_one_notebook("NetCDF_basics")
+run_one_notebook("NetCDF_basics.jl")
 run_one_notebook("NetCDF_advanced.jl")
