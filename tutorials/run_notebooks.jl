@@ -1,15 +1,13 @@
 
 import PlutoSliderServer
 
-function NetCDF_basics()
+function run_one_notebook(filename::String)
     pth_in=joinpath(pwd(),"tutorials")
     pth_out=joinpath(pwd(),"page","__site")
 
-    fil_in="NetCDF_basics.jl"
-    cp(joinpath(pth_in,fil_in),joinpath(pth_out,fil_in))
-    PlutoSliderServer.export_notebook(joinpath(pth_out,"NetCDF_basics.jl"))
-
-    return true
+    cp(joinpath(pth_in,filename),joinpath(pth_out,filename))
+    PlutoSliderServer.export_notebook(joinpath(pth_out,filename))
 end 
 
-NetCDF_basics()
+run_one_notebook("NetCDF_basics.jl")
+run_one_notebook("NetCDF_advanced.jl")
