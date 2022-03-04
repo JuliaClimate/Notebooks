@@ -173,9 +173,28 @@ Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modelin
 - To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, and paste the notebook `code link`. For cloud computing options, please scroll down to the [mybinder section](#mybinder-links).
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/GlobalOceanNotebooks/issues)) for queries, bug reports, new contributions, etc.
 
-\label{mybinder-links}
+To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `code link` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` using `Pluto.run()` and paste notebook url afterwards.
+
+```
+using Pluto, Downloads
+url="https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl"
+Pluto.run(notebook=Downloads.download(url))
+```
+
+Step by step summary :
+
+\begin{center}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png", width="150", style="border-radius:5px;", caption="Step 1"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png", width="150", style="border-radius:5px;", caption="Step 2"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png", width="150", style="border-radius:5px;", caption="Step 3"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png", width="150", style="border-radius:5px;", caption="Step 4"} 
+
+\end{center}
 
 **Open Cloud Services**
+
+\label{mybinder-links}
 
 We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. They should be able to run the notebooks listed above with reduced latency. Memory limitations can be an issue though. 
 
@@ -186,12 +205,14 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 - [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
 - [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
 
-To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `code link` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` and paste the url afterwards.
+Step by step summary :
 
-```
-using Pluto, Downloads
-url="https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl"
-Pluto.run(notebook=Downloads.download(url))
-```
+\begin{center}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png", width="150", style="border-radius:5px;", caption="Step 1"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png", width="150", style="border-radius:5px;", caption="Step 2"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png", width="150", style="border-radius:5px;", caption="Step 3"} 
+
+\end{center}
 
 \end{section}
