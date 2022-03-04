@@ -84,7 +84,9 @@ end
 # ╔═╡ b0ee8229-2e75-4146-ab59-003d82058065
 md"""Once you have downloaded the file to the adequate location, then the test should proceed. 
 
-Completing the computation may take of the order of 10 seconds. 
+Completing the computation may take of the order of 10 to 30 seconds. 
+
+Afterwards we look a parallel methods that speed up computation.
 """
 
 # ╔═╡ b52101ba-483f-4b95-a1cf-44cc0154e8e9
