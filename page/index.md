@@ -3,7 +3,7 @@
 
 \label{introduction}
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demo [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. Users should be able to replay these notebooks either on a local computer or in the cloud (see [these docs](https://github.com/fonsp/Pluto.jl/wiki) and the bottom of this page for directions).
@@ -14,7 +14,7 @@ Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.j
 
 \label{contents}
 
-The notebooks listed here often are from the examples folder of a Julia package. A few more notebooks are provided in this [examples](https://github.com/JuliaClimate/GlobalOceanNotebooks/tree/master/tutorials) folder. The [Miscellaneous](#misc) section provides user directions for those interested in using notebooks interactively.
+The notebooks listed here often are from the examples folder of a Julia package. A few more notebooks are provided in this [examples](https://github.com/JuliaClimate/Notebooks/tree/master/tutorials) folder. The [Miscellaneous](#misc) section provides user directions for those interested in using notebooks interactively.
 
 - [ClimateModels.jl](#climate-models) examples
 - [MITgcmTools.jl](#mitgcm-tools) examples
@@ -45,8 +45,8 @@ Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalder
 
 \begin{center}
 
-\figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/page/figures/MOC.png", width="150", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"} \figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="150", style="border-radius:5px;", caption="Particle Tracking"} 
-\figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/page/figures/Streamfunction.png", width="150", style="border-radius:5px;", caption="Vector Potential"} \figure{path="https://github.com/JuliaClimate/GlobalOceanNotebooks/raw/master/page/figures/ScalarPotential.png", width="150", style="border-radius:5px;", caption="Scalar Potential"} 
+\figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png", width="150", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"} \figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="150", style="border-radius:5px;", caption="Particle Tracking"} 
+\figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png", width="150", style="border-radius:5px;", caption="Vector Potential"} \figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png", width="150", style="border-radius:5px;", caption="Scalar Potential"} 
 
 \figure{path="https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png", width="150", style="border-radius:5px;", caption="IPCC report fig 1b"} \figure{path="https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png", width="150", style="border-radius:5px;", caption="IPCC report fig 2"}
 \figure{path="https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png", width="140", style="border-radius:5px;", caption="IPCC report fig 3"} \figure{path="https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png", width="160", style="border-radius:5px;", caption="IPCC report fig 5"}
@@ -165,13 +165,13 @@ Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modelin
 
 **More examples**
 
-- [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/GlobalOceanNotebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
+- [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 **How-To**
 
 - To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, paste a `notebook url`, wait for notebook to load, and then start interacting with live (steps shown below). 
-- Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/GlobalOceanNotebooks/issues)) for queries, bug reports, new contributions, etc.
+- Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for queries, bug reports, new contributions, etc.
 
 For cloud computing options, please scroll down to [next section](#mybinder-links). To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `notebook url` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` using `Pluto.run()` and paste notebook url afterwards.
 
@@ -200,10 +200,10 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 
 \alert{For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.}
 
-- [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
-- [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
-- [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
-- [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/GlobalOceanNotebooks/HEAD?urlpath=lab)
+- [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+- [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+- [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+- [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 
 Step by step summary :
 

@@ -144,7 +144,7 @@ end
 
 **Timings**
 
-Timings reported below are for an instance of the mybinder instance provided in [JuliaClimate Notebooks]](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top).
+Timings reported below are for an instance of the mybinder instance provided in [JuliaClimate Notebooks]](https://juliaclimate.github.io/Notebooks/#page-top).
 
 On a faster computer, with more CPUs, these numbers would be reduced. 
 
