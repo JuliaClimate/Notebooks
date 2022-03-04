@@ -1,11 +1,11 @@
 # JuliaClimate Notebooks
 
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/JuliaClimate.github.io/GlobalOceanNotebooks)](https://JuliaClimate.github.io/GlobalOceanNotebooks/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/JuliaClimate.github.io/Notebooks)](https://JuliaClimate.github.io/Notebooks/)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-These [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) illustrate some of the [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. See [repository website](https://JuliaClimate.github.io/GlobalOceanNotebooks/) for the notebook stack, guidelines, and additional explanations.
+These [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) illustrate some of the [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. See [repository website](https://JuliaClimate.github.io/Notebooks/) for the notebook stack, guidelines, and additional explanations.
 
-You can readily replay the notebooks either on a local computer or in the cloud. Please refer to [these docs](https://github.com/fonsp/Pluto.jl/wiki) for directions regarding `Pluto.jl` and the [repository website](https://JuliaClimate.github.io/GlobalOceanNotebooks/) for cloud computer links and notebook links.
+You can readily replay the notebooks either on a local computer or in the cloud. Please refer to [these docs](https://github.com/fonsp/Pluto.jl/wiki) for directions regarding `Pluto.jl` and the [repository website](https://JuliaClimate.github.io/Notebooks/) for cloud computer links and notebook links.
 
 Cheers,
 
