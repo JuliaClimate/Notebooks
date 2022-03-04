@@ -1,11 +1,11 @@
 FROM jupyter/base-notebook:latest
 
 USER root
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.7.0-linux-x86_64.tar.gz && \
-    mv julia-1.7.0 /opt/ && \
-    ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia && \
-    rm julia-1.7.0-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.2-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.7.2-linux-x86_64.tar.gz && \
+    mv julia-1.7.2 /opt/ && \
+    ln -s /opt/julia-1.7.2/bin/julia /usr/local/bin/julia && \
+    rm julia-1.7.2-linux-x86_64.tar.gz
 
 USER ${NB_USER}
 
@@ -16,9 +16,6 @@ RUN cp ./sysimage/environment.yml ./environment.yml
 RUN cp ./sysimage/setup.py ./setup.py
 RUN cp ./sysimage/runpluto.sh ./runpluto.sh
  
-COPY --chown=${NB_USER}:users ./OceanTransports ./OceanTransports
-COPY --chown=${NB_USER}:users ./DataStructures ./DataStructures
-COPY --chown=${NB_USER}:users ./IPCC ./IPCC
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
@@ -44,5 +41,6 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
 RUN julia --project=./ -e "import Pkg; Pkg.instantiate();"
+RUN julia sysimage/download_stuff.jl
 RUN julia sysimage/create_sysimage.jl
 RUN julia --sysimage ExampleSysimage.so sysimage/pre_build_models.jl
