@@ -42,7 +42,7 @@ jobs:
     - run: julia -e '
             pth00=joinpath(homedir(),"work","GlobalOceanNotebooks","GlobalOceanNotebooks");
             pth01=joinpath(homedir(),"work","Notebooks","Notebooks");
-            ifelse( isdir(pth01) , cd(pth01) , cd(pth00));
+            ifelse( isdir(pth00) , cd(pth00) , cd(pth01));
             using Pkg;
             Pkg.activate(; temp=true);
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
