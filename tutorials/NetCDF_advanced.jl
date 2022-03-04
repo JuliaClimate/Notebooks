@@ -146,7 +146,7 @@ end
 
 Timings reported below are for an instance of the mybinder instance provided in [JuliaClimate Notebooks]](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top).
 
-On a faster computer, with more CPUs, these number may be greatly reduced. 
+On a faster computer, with more CPUs, these numbers would be reduced. 
 
 ```
 using DistributedArrays
