@@ -54,7 +54,7 @@ folder=joinpath(tempdir(),"NetcdfTestCase1")
 ncfile=joinpath(folder,"speeds.nc")
 
 !isdir(folder) ? mkdir(folder) : nothing
-!isfile(ncfile) ? Downloads.download(url,ncfille) : nothing
+!isfile(ncfile) ? Downloads.download(url,ncfile) : nothing
 ```
 
 """
@@ -73,11 +73,8 @@ begin
 	folder=joinpath(tempdir(),"NetcdfTestCase1")
 	ncfile=joinpath(folder,"speeds.nc")
 
-	try
-		ds=ncd.Dataset(ncfile) #open file
-	catch
-		df=missing
-	end
+	#open file
+	isfile(ncfile) ? ds=ncd.Dataset(ncfile) : ds=missing
 
 	max_speed(t::Int) = 
 		sqrt(maximum((ds["USFC"][:,:,t].^2 .+ ds["VSFC"][:,:,t].^2), dims = (1,2))[1])
@@ -87,7 +84,9 @@ end
 # ╔═╡ b0ee8229-2e75-4146-ab59-003d82058065
 md"""Once you have downloaded the file to the adequate location, then the test should proceed. 
 
-Completing the computation may take of the order of 10 seconds. 
+Completing the computation may take of the order of 10 to 30 seconds. 
+
+Afterwards we look a parallel methods that speed up computation.
 """
 
 # ╔═╡ b52101ba-483f-4b95-a1cf-44cc0154e8e9
@@ -101,7 +100,7 @@ end
 # ╔═╡ 25dc539f-9001-4b32-b03c-c530354ec6b0
 md"""## Benchmarking on Multiple Workers
 
-Here we document the extension of this tutorial to benchmarking with multiple workers. This was initially tested on MacOS with 6 cores -- performances are reported below for future reference. 
+Here we document the extension of this tutorial to benchmarking with multiple workers. 
 
 See [this discourse thread](https://discourse.julialang.org/t/help-me-beat-my-pythonist-friends-code-speeding-up-data-reading-with-simple-reduction-from-netcdf-file/76457) for more documentation.
 
@@ -145,18 +144,24 @@ end
 
 **Timings**
 
+Timings reported below are for an instance of the mybinder instance provided in [JuliaClimate Notebooks]](https://juliaclimate.github.io/GlobalOceanNotebooks/#page-top).
+
+On a faster computer, with more CPUs, these numbers would be reduced. 
+
 ```
+using DistributedArrays
+
 @time max_speed_a.(1:2400)
-#10.612980 seconds (313.27 k allocations: 7.044 GiB, 15.27% gc time, 0.11% compilation time)
+#26.646342 seconds (297.45 k allocations: 7.043 GiB, 0.84% gc time)
 
 @time max_speed_a.(distribute(collect(1:2400)))
-#1.656204 seconds (2.62 k allocations: 191.734 KiB)
+#15.263616 seconds (2.70 M allocations: 148.746 MiB, 0.42% gc time, 11.41% compilation time)
 
 @time max_speed_b.(1:2400)
-9.627436 seconds (299.85 k allocations: 4.700 GiB, 11.53% gc time)
+#18.604244 seconds (299.85 k allocations: 4.700 GiB, 1.01% gc time)
 
 @time max_speed_b.(distribute(collect(1:2400)))
-#1.549542 seconds (2.62 k allocations: 191.656 KiB)
+#11.133690 seconds (703 allocations: 88.234 KiB)
 ```
 """
 
