@@ -19,7 +19,7 @@ The latter allows you to plug in values that you would have defined here.
              deployed page to be in a subfolder e.g.: `YourPackage.jl/web/`.
 -->
 @def title       = "JuliaClimate Notebooks"
-@def prepath     = "GlobalOceanNotebooks"
+@def prepath     = "Notebooks"
 @def description = """
                  Notebooks that show Julia packages related to climate working in concert.
                    """
@@ -35,7 +35,7 @@ The latter allows you to plug in values that you would have defined here.
   - nav_logo_path: where the logo is
 -->
 @def add_docs  = true
-@def docs_url  = "https://github.com/JuliaClimate/GlobalOceanNotebooks/"
+@def docs_url  = "https://github.com/JuliaClimate/Notebooks/"
 @def docs_name = "Docs"
 
 @def add_nav_logo   = true
@@ -86,7 +86,7 @@ The latter allows you to plug in values that you would have defined here.
 
 @def add_github_view  = true
 @def add_github_star  = true
-@def github_repo      = "JuliaClimate/GlobalOceanNotebooks"
+@def github_repo      = "JuliaClimate/Notebooks"
 
 <!-- SECTION LAYOUT
 NOTE:
