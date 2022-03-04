@@ -41,7 +41,7 @@ jobs:
             PkgPage.optimize(input="page", output="")'
     - run: julia -e '
             pth01=joinpath(homedir(),"work","Notebooks","Notebooks");
-            cd(pth01));
+            cd(pth01);
             using Pkg;
             Pkg.activate(; temp=true);
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
