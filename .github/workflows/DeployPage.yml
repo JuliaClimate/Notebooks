@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p9f
+      - v0p3p10a
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -41,7 +41,8 @@ jobs:
             PkgPage.optimize(input="page", output="")'
     - run: julia -e '
             pth00=joinpath(homedir(),"work","GlobalOceanNotebooks","GlobalOceanNotebooks");
-            cd(pth00);
+            pth01=joinpath(homedir(),"work","Notebooks","Notebooks");
+            isdir(pth01) ? cd(pth01) : cd(pth00);
             using Pkg;
             Pkg.activate(; temp=true);
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
