@@ -6,7 +6,9 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-Here we present series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demo [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. Users should be able to replay these notebooks either on a local computer or in the cloud (see [these docs](https://github.com/fonsp/Pluto.jl/wiki) and the bottom of this page for directions).
+This page presents a series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demonstrate [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader Julia package ecosystem. 
+
+Users should be able to replay these notebooks either on a local computer or in the cloud (see [this section](#Miscellaneous) at the bottom of the page for directions).
 
 \end{section}
 
