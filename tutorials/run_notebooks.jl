@@ -11,3 +11,4 @@ end
 
 run_one_notebook("NetCDF_basics.jl")
 run_one_notebook("NetCDF_advanced.jl")
+run_one_notebook("NetCDF_packages.jl")
