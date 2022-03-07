@@ -7,19 +7,19 @@ using InteractiveUtils
 # ╔═╡ 7306f20f-9da1-4419-9222-1704fd296ee8
 begin
 	using ClimateBase, Downloads, Dates, PlutoUI
-	"Done with loading pacakges"
+	"Done with loading packages"
 end
 
 # ╔═╡ 15f947af-0485-433c-a424-ba0c0a5f376a
 md"""# Alternative NetCDF Methods
 
-The examples below focus on read-access and visualization of CF-compliant netCDF datasets. 
+The examples below focus on reading CF-compliant NetCDF datasets. 
 
 - [NCDataSets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) : loading/writing NetCDF data, as well as doing basic numerics with them.
 - [ClimateBase.jl](https://juliaclimate.github.io/ClimateBase.jl/dev/) provides tools to analyze and manipulate climate (spatiotemporal) data.
 - [ClimateTools.jl](https://github.com/JuliaClimate/ClimateTools.jl) is a collection of commonly-used tools in Climate science. 
 
-_More packages to add : NetCDF.jl, DiskArrays.jl, ..._
+_More packages to add : NetCDF.jl, DiskArrays.jl, NCTiles.jl, ..._
 """
 
 # ╔═╡ e112e6e8-50b8-496e-b4ea-8c37a288e4a0
@@ -103,18 +103,15 @@ end
 
 # ╔═╡ 88714902-cf5f-4cd7-adb3-443dd6d48c35
 begin
-	#using ClimateBase, Dates
-	Time = ClimateBase.Ti # `Time` is more intuitive than `Ti`
+	#Tutorial example:
 	lats = -90:5:90
 	lons = 0:10:359
 	t = Date(2000, 3, 15):Month(1):Date(2020, 3, 15)
-	# Here we wrap all dimension data into proper dimensions:
-	dimensions = (Lon(lons), Lat(lats), Time(t))
-	# where `Lon, Lat, Time` are `Dimension`s exported by ClimateBase
-	# combining the array data with dimensions makes a `ClimArray`:
+	dimensions = (Lon(lons), Lat(lats), Ti(t))
 	data = rand(36, 37, 241) # same size as `dimensions`
 	A = ClimArray(data, dimensions)
 
+	#Reading from file:
 	tas_ClimateBase = ncread(fil,"tas")
 end
 
