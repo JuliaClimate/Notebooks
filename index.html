@@ -151,7 +151,7 @@ padding-right:  10px;
       <div class="col-lg-10 mx-auto">
         <h2>Contents</h2></p>
 <a id="contents" class="anchor"></a>
-<p>Listed notebooks mostly come from the <code>examples</code> section of a Julia package. A few more are provided in <a href="https://github.com/JuliaClimate/Notebooks/tree/master/tutorials">this folder</a>. </p>
+<p>The notebooks mostly come from the <code>examples</code> section of a Julia package. A few more are provided in <a href="https://github.com/JuliaClimate/Notebooks/tree/master/tutorials">this folder</a>. </p>
 <ul>
 <li><p>Data Products / <a href="#ocean-state-estimation">OceanStateEstimation.jl</a> examples</p>
 </li>
@@ -166,7 +166,7 @@ padding-right:  10px;
 <li><p><a href="#individual-displacements">IndividualDisplacements.jl</a> examples</p>
 </li>
 </ul>
-<p>The <a href="#misc">Miscellaneous</a> section provides user directions for those interested in using notebooks interactively.</p>
+<p>The <a href="#misc">Miscellaneous</a> section notably provides directions for users interested in running notebooks interactively.</p>
 <ul>
 <li><p><a href="#netcdf">NetCDF</a></p>
 </li>
@@ -178,44 +178,14 @@ padding-right:  10px;
 </li>
 </ul>
 <p><strong>Packages Overview</strong></p>
-<p>The <code>OceanStateEstimation.jl</code> package illustrate the case of gridded data sets. <code>OceanRobots.jl</code> in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. </p>
+<p>The <code>OceanStateEstimation.jl</code> notebooks read and manipulate gridded data sets. <code>OceanRobots.jl</code> in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. </p>
 <p>The <code>ClimateModels.jl</code> package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier &#40;e.g. from CMIP6 or the 2021 IPCC report&#41;. Additional examples for the <a href="https://mitgcm.readthedocs.io/en/latest/">MIT general circulation model</a> are provided in <code>MITgcmTools.jl</code>.</p>
 <p>An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of <code>MeshArrays.jl</code> – the analysis of global transports derived from gridded model output. Topics covered via <code>MeshArrays.jl</code> also include interpolation and geography.</p>
 <p><code>IndividualDisplacements.jl</code> extends this approach by providing a <a href="https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field">particle tracking</a> framework that readily operates on climate model <code>C-grids</code> using <code>MeshArrays.jl</code>.  Examples that let you access and explore ocean data products are provided in <code>OceanRobots.jl</code> and <code>OceanStateEstimation.jl</code>. The <code>miscellaneous</code> section touches on topics such as files &#40;incl. NetCDF and Zarr&#41;, visualization, cloud services, and user directions.</p>
 <p><strong>Visual Examples</strong></p>
 <a id="sample-viz" class="anchor"></a>
-<p>The visuals examples below are generated using these Julia packages and notebooks indicated below. The notebook examples draw maps, histograms, time series, and more using <a href="https://makie.juliaplots.org/stable/">Makie.jl</a> and <a href="http://docs.juliaplots.org/latest/">Plots.jl</a>. </p>
-<p>Other popular plotting libraries include <a href="https://github.com/gcalderone/Gnuplot.jl">Gnuplot.jl</a>, <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a>, <a href="http://juliaplots.org/PlotlyJS.jl/stable/">PlotlyJS.jl</a>, <a href="https://github.com/jheinen/GR.jl">GR.jl</a>, and <a href="https://github.com/JuliaPlots/UnicodePlots.jl">UnicodePlots.jl</a>.</p>
+<p>Here are images generated using the Julia packages and notebooks listed in this webpage. The maps, histograms, and other graphs are made with <a href="https://makie.juliaplots.org/stable/">Makie.jl</a> and <a href="http://docs.juliaplots.org/latest/">Plots.jl</a>. Other popular plotting libraries include <a href="https://github.com/gcalderone/Gnuplot.jl">Gnuplot.jl</a>, <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a>, <a href="http://juliaplots.org/PlotlyJS.jl/stable/">PlotlyJS.jl</a>, <a href="https://github.com/jheinen/GR.jl">GR.jl</a>, and <a href="https://github.com/JuliaPlots/UnicodePlots.jl">UnicodePlots.jl</a>.</p>
  <div style="text-align:center;"></p>
-<p><figure class="figure">
-  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png" alt="Meridional Overturning Streamfunction" class="figure-img img-fluid " width="150" style="border-radius:5px;">
-  <figcaption class="figure-caption ">
-Meridional Overturning Streamfunction
-</figcaption>
-
-</figure>
- <figure class="figure">
-  <img src="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png" alt="Particle Tracking" class="figure-img img-fluid " width="150" style="border-radius:5px;">
-  <figcaption class="figure-caption ">
-Particle Tracking
-</figcaption>
-
-</figure>
- <figure class="figure">
-  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png" alt="Vector Potential" class="figure-img img-fluid " width="150" style="border-radius:5px;">
-  <figcaption class="figure-caption ">
-Vector Potential
-</figcaption>
-
-</figure>
- <figure class="figure">
-  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png" alt="Scalar Potential" class="figure-img img-fluid " width="150" style="border-radius:5px;">
-  <figcaption class="figure-caption ">
-Scalar Potential
-</figcaption>
-
-</figure>
- </p>
 <p><figure class="figure">
   <img src="https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png" alt="IPCC report fig 1b" class="figure-img img-fluid " width="150" style="border-radius:5px;">
   <figcaption class="figure-caption ">
@@ -245,6 +215,35 @@ IPCC report fig 5
 
 </figure>
 </p>
+<p><figure class="figure">
+  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png" alt="Meridional Overturning Streamfunction" class="figure-img img-fluid " width="150" style="border-radius:5px;">
+  <figcaption class="figure-caption ">
+Meridional Overturning Streamfunction
+</figcaption>
+
+</figure>
+ <figure class="figure">
+  <img src="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png" alt="Particle Tracking" class="figure-img img-fluid " width="150" style="border-radius:5px;">
+  <figcaption class="figure-caption ">
+Particle Tracking
+</figcaption>
+
+</figure>
+ <figure class="figure">
+  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png" alt="Vector Potential" class="figure-img img-fluid " width="150" style="border-radius:5px;">
+  <figcaption class="figure-caption ">
+Vector Potential
+</figcaption>
+
+</figure>
+ <figure class="figure">
+  <img src="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png" alt="Scalar Potential" class="figure-img img-fluid " width="150" style="border-radius:5px;">
+  <figcaption class="figure-caption ">
+Scalar Potential
+</figcaption>
+
+</figure>
+ </p>
 <p> </div>
 <p>      </div>
     </div>
