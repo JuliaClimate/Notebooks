@@ -103,11 +103,7 @@ padding-right:  10px;
         </li>
         
         <li class="nav-item">
-          <a class="nav-link" href="#particles">Particles</a>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#workshops">Workshops</a>
+          <a class="nav-link" href="#points">Points</a>
         </li>
         
         <li class="nav-item">
@@ -144,7 +140,7 @@ padding-right:  10px;
 <a id="introduction" class="anchor"></a>
 <p><a href="https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab"><img src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a> <a href="https://zenodo.org/badge/latestdoi/147266407"><img src="https://zenodo.org/badge/147266407.svg" alt="DOI" /></a></p>
 <p>This page presents a series of <a href="https://julialang.org">Julia</a> notebooks &#40;see <a href="https://plutojl.org">Pluto.jl</a>&#41; that demonstrate <a href="https://github.com/JuliaClimate/">JuliaClimate</a> packages working in concert together and within the broader Julia package ecosystem. </p>
-<p>Users should be able to replay these notebooks either on a local computer or in the cloud &#40;see <a href="#Miscellaneous">this section</a> at the bottom of the page for directions&#41;.</p>
+<p>Users can replay and interact with the notebooks on a local computer or in the cloud. See the <a href="#howto">How-To</a> and <a href="#cloud">cloud</a> sections at the bottom of this page for directions if you are interested in these options.</p>
 <p>      </div>
     </div>
   </div>
@@ -155,27 +151,35 @@ padding-right:  10px;
       <div class="col-lg-10 mx-auto">
         <h2>Contents</h2></p>
 <a id="contents" class="anchor"></a>
-<p>The notebooks listed here often are from the examples folder of a Julia package. A few more notebooks are provided in this <a href="https://github.com/JuliaClimate/Notebooks/tree/master/tutorials">examples</a> folder. The <a href="#misc">Miscellaneous</a> section provides user directions for those interested in using notebooks interactively.</p>
+<p>Listed notebooks mostly come from the <code>examples</code> section of a Julia package. A few more are provided in <a href="https://github.com/JuliaClimate/Notebooks/tree/master/tutorials">this folder</a>. </p>
 <ul>
-<li><p><a href="#climate-models">ClimateModels.jl</a> examples</p>
+<li><p>Data Products / <a href="#ocean-state-estimation">OceanStateEstimation.jl</a> examples</p>
 </li>
-<li><p><a href="#mitgcm-tools">MITgcmTools.jl</a> examples</p>
+<li><p>Data Products / <a href="#ocean-robots">OceanRobots.jl</a> examples</p>
+</li>
+<li><p>Models / <a href="#climate-models">ClimateModels.jl</a> examples</p>
+</li>
+<li><p>Models / <a href="#mitgcm-tools">MITgcmTools.jl</a> examples</p>
 </li>
 <li><p><a href="#mesh-arrays">MeshArrays.jl</a> examples</p>
 </li>
 <li><p><a href="#individual-displacements">IndividualDisplacements.jl</a> examples</p>
 </li>
-<li><p><a href="#ocean-robots">OceanRobots.jl</a> examples</p>
+</ul>
+<p>The <a href="#misc">Miscellaneous</a> section provides user directions for those interested in using notebooks interactively.</p>
+<ul>
+<li><p><a href="#netcdf">NetCDF</a></p>
 </li>
-<li><p><a href="#ocean-state-estimation">OceanStateEstimation.jl</a> examples</p>
+<li><p><a href="#workshop">Workshops</a></p>
 </li>
-<li><p><a href="#workshops">Workshops</a></p>
+<li><p><a href="#howto">How-To</a></p>
 </li>
-<li><p><a href="#misc">Miscellaneous</a></p>
+<li><p><a href="#cloud">Cloud Services</a></p>
 </li>
 </ul>
 <p><strong>Packages Overview</strong></p>
-<p>The <code>ClimateModels.jl</code> package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier &#40;e.g. from CMIP6 or the 2021 IPCC report&#41;. Additional examples for the <a href="https://mitgcm.readthedocs.io/en/latest/">MIT general circulation model</a> are provided in <code>MITgcmTools.jl</code>.</p>
+<p>The <code>OceanStateEstimation.jl</code> package illustrate the case of gridded data sets. <code>OceanRobots.jl</code> in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. </p>
+<p>The <code>ClimateModels.jl</code> package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier &#40;e.g. from CMIP6 or the 2021 IPCC report&#41;. Additional examples for the <a href="https://mitgcm.readthedocs.io/en/latest/">MIT general circulation model</a> are provided in <code>MITgcmTools.jl</code>.</p>
 <p>An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of <code>MeshArrays.jl</code> – the analysis of global transports derived from gridded model output. Topics covered via <code>MeshArrays.jl</code> also include interpolation and geography.</p>
 <p><code>IndividualDisplacements.jl</code> extends this approach by providing a <a href="https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field">particle tracking</a> framework that readily operates on climate model <code>C-grids</code> using <code>MeshArrays.jl</code>.  Examples that let you access and explore ocean data products are provided in <code>OceanRobots.jl</code> and <code>OceanStateEstimation.jl</code>. The <code>miscellaneous</code> section touches on topics such as files &#40;incl. NetCDF and Zarr&#41;, visualization, cloud services, and user directions.</p>
 <p><strong>Visual Examples</strong></p>
@@ -351,7 +355,7 @@ IPCC report fig 5
     </div>
   </div>
 </section>
-<section id="particles" class="scrollspy section-bg-color">
+<section id="points" class="scrollspy section-bg-color">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto">
@@ -372,35 +376,13 @@ IPCC report fig 5
     </div>
   </div>
 </section>
-<section id="workshops" class="scrollspy">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto">
-        <h2>Workshops</h2></p>
-<a id="workshop" class="anchor"></a>
-<p><strong>Marine Ecosystem Modeling Workshop</strong></p>
-<p>Notebooks below were presented as part of the JuliaCon 2021 Workshop on <code>Modeling Marine Ecosystems At Multiple Scales Using Julia</code>. More detail is available in the <a href="https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl">workshop repository</a>.</p>
-<ul>
-<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html">AIBECS</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl">notebook url</a>&#41; : global steady-state biogeochemistry and gridded transport models that run fast for long time scales &#40;centuries or even millennia&#41;.</p>
-</li>
-<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html">PlanktonIndividuals</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl">notebook url</a>&#41;  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.</p>
-</li>
-<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html">MITgcm global biogeo</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl">notebook url</a>&#41; : interface to full-featured, Fortran-based, general circulation model and its output &#40;transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more&#41;.</p>
-</li>
-<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html">IndividualDisplacements</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl">notebook url</a>&#41; : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.</p>
-</li>
-</ul>
-<p>      </div>
-    </div>
-  </div>
-</section>
-<section id="miscellaneous" class="scrollspy section-bg-color">
+<section id="miscellaneous" class="scrollspy">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto">
         <h2>Miscellaneous</h2></p>
 <a id="misc" class="anchor"></a>
-<p><strong>More examples</strong></p>
+<p><strong>NetCDF</strong></p>
 <ul>
 <li><p><a href="NetCDF_basics.html">NetCDF&#95;basics.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl">notebook url</a>&#41; is a brief tutorial that opens a netCDF file using <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a> and plots a 2D slice as a heatmap using <a href="https://makie.juliaplots.org/stable/">Makie.jl</a>.</p>
 </li>
@@ -411,14 +393,28 @@ IPCC report fig 5
 <li><p><a href="https://gaelforget.github.io/NCTiles.jl/dev">NCTiles.jl</a> converts binary data into meta-data-rich <a href="https://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files for &#40;1&#41; a simple rectangular grid; &#40;2&#41; a tiled domain distributed over multiple files.</p>
 </li>
 </ul>
+<p><strong>Workshops</strong></p>
+<a id="workshop" class="anchor"></a>
+<p>The JuliaCon 2021 Workshop on <code>Modeling Marine Ecosystems At Multiple Scales Using Julia</code> was based on notebooks listed below. Additional detail is available in <a href="https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl">this repository</a>.</p>
+<ul>
+<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html">AIBECS</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl">notebook url</a>&#41; : global steady-state biogeochemistry and gridded transport models that run fast for long time scales &#40;centuries or even millennia&#41;.</p>
+</li>
+<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html">PlanktonIndividuals</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl">notebook url</a>&#41;  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.</p>
+</li>
+<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html">MITgcm global biogeo</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl">notebook url</a>&#41; : interface to full-featured, Fortran-based, general circulation model and its output &#40;transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more&#41;.</p>
+</li>
+<li><p><a href="https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html">IndividualDisplacements</a> &#40;<a href="https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl">notebook url</a>&#41; : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.</p>
+</li>
+</ul>
 <p><strong>How-To</strong></p>
+<a id="howto" class="anchor"></a>
 <ul>
 <li><p>To start an interactive version of a notebook, on your computer or in the cloud, open <code>Pluto.jl</code>, paste a <code>notebook url</code>, wait for notebook to load, and then start interacting with live &#40;steps shown below&#41;. </p>
 </li>
 <li><p>Please use the <a href="https://guides.github.com/features/issues/">repository issue tracker</a> &#40;<a href="https://github.com/JuliaClimate/Notebooks/issues">this one</a>&#41; for queries, bug reports, new contributions, etc.</p>
 </li>
 </ul>
-<p>For cloud computing options, please scroll down to <a href="#mybinder-links">next section</a>. To run a notebook locally, i.e. on your computer rather than in the cloud, open <code>julia</code>, copy the <code>notebook url</code> for the chosen notebook, and execute the following commands. Or start <a href="https://github.com/fonsp/Pluto.jl/wiki">Pluto.jl</a> from <code>julia</code> using <code>Pluto.run&#40;&#41;</code> and paste notebook url afterwards.</p>
+<p>For cloud computing options, please scroll down to <a href="#cloud">next section</a>. To run a notebook locally, i.e. on your computer rather than in the cloud, open <code>julia</code>, copy the <code>notebook url</code> for the chosen notebook, and execute the following commands. Or start <a href="https://github.com/fonsp/Pluto.jl/wiki">Pluto.jl</a> from <code>julia</code> using <code>Pluto.run&#40;&#41;</code> and paste notebook url afterwards.</p>
 <pre><code class="julia hljs"><span class="hljs-keyword">using</span> Pluto, Downloads
 url=<span class="hljs-string">&quot;https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl&quot;</span>
 Pluto.run(notebook=Downloads.download(url))</code></pre>
@@ -455,10 +451,8 @@ Step 4
  </p>
 <p> </div>
 <p><strong>Open Cloud Services</strong></p>
-<a id="mybinder-links" class="anchor"></a>
-<p>We are very grateful to the <a href="https://mybinder.readthedocs.io/en/latest/about/federation.html">BinderHub Federation</a> for deploying public BinderHubs to serve the community. Visiting <a href="https://mybinder.org">mybinder.org</a> will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the <code>JuliaClimate</code> repository more specifically. They should be able to run the notebooks listed above with reduced latency. Memory limitations can be an issue though. </p>
-<div class="alert alert-info" role="alert">
-For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.</div>
+<a id="cloud" class="anchor"></a>
+<p>We are very grateful to the <a href="https://mybinder.readthedocs.io/en/latest/about/federation.html">BinderHub Federation</a> for deploying public BinderHubs to serve the community. Visiting <a href="https://mybinder.org">mybinder.org</a> will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the <code>JuliaClimate</code> repository more specifically. </p>
 <ul>
 <li><p><a href="https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">gesis.mybinder.org</a></p>
 </li>
@@ -469,6 +463,12 @@ For repeated use it is suggested that you run the notebooks on your local comput
 <li><p><a href="https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">turing.mybinder.org</a></p>
 </li>
 </ul>
+<p>The notebooks have been downloaded into the <code>notebooks</code> folder to facilitate navigation within <code>Pluto</code>. A list can be obtained as follows.</p>
+<pre><code class="julia hljs">include(<span class="hljs-string">&quot;tutorials/list_notebooks.jl&quot;</span>)
+notebooks=list_notebooks()</code></pre>
+<p>Memory limitations can be an issue but the cloud computers provided by <code>mybinder</code> should be able to run the notebooks listed here with reduced latency. </p>
+<div class="alert alert-info" role="alert">
+For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.</div>
 <p>Step by step summary :</p>
  <div style="text-align:center;"></p>
 <p><figure class="figure">
