@@ -11,6 +11,7 @@ USER ${NB_USER}
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
 COPY --chown=${NB_USER}:users ./sysimage ./sysimage
+COPY --chown=${NB_USER}:users ./tutorials ./tutorials
 
 RUN cp ./sysimage/environment.yml ./environment.yml
 RUN cp ./sysimage/setup.py ./setup.py

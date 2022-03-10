@@ -11,4 +11,9 @@ OceanStateEstimation.Downloads.download(
   joinpath(OceanStateEstimation.ECCOdiags_path,"interp_coeffs_halfdeg.jld2");
   timeout=60000.0)
 
+include("../tutorials/list_notebooks.jl")
+notebooks=list_notebooks()
+download_notebooks("notebooks",notebooks)
+
+
 
