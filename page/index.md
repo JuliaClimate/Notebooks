@@ -8,7 +8,7 @@
 
 This page presents a series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demonstrate [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader Julia package ecosystem. 
 
-Users should be able to replay these notebooks either on a local computer or in the cloud (see [this section](#Miscellaneous) at the bottom of the page for directions).
+Users can replay and interact with the notebooks on a local computer or in the cloud. See the [How-To](#howto) and [cloud](#cloud) sections at the bottom of this page for directions if you are interested in these options.
 
 \end{section}
 
@@ -16,20 +16,27 @@ Users should be able to replay these notebooks either on a local computer or in 
 
 \label{contents}
 
-The notebooks listed here often are from the examples folder of a Julia package. A few more notebooks are provided in this [examples](https://github.com/JuliaClimate/Notebooks/tree/master/tutorials) folder. The [Miscellaneous](#misc) section provides user directions for those interested in using notebooks interactively.
+Listed notebooks mostly come from the `examples` section of a Julia package. A few more are provided in [this folder](https://github.com/JuliaClimate/Notebooks/tree/master/tutorials). 
 
-- [ClimateModels.jl](#climate-models) examples
-- [MITgcmTools.jl](#mitgcm-tools) examples
+- Data Products / [OceanStateEstimation.jl](#ocean-state-estimation) examples
+- Data Products / [OceanRobots.jl](#ocean-robots) examples
+- Models / [ClimateModels.jl](#climate-models) examples
+- Models / [MITgcmTools.jl](#mitgcm-tools) examples
 - [MeshArrays.jl](#mesh-arrays) examples
 - [IndividualDisplacements.jl](#individual-displacements) examples
-- [OceanRobots.jl](#ocean-robots) examples
-- [OceanStateEstimation.jl](#ocean-state-estimation) examples
-- [Workshops](#workshops)
-- [Miscellaneous](#misc)
+
+The [Miscellaneous](#misc) section provides user directions for those interested in using notebooks interactively.
+
+- [NetCDF](#netcdf)
+- [Workshops](#workshop)
+- [How-To](#howto)
+- [Cloud Services](#cloud)
 
 **Packages Overview**
 
-The `ClimateModels.jl` package provides an interface to models often used in climate science. Included notebooks provide examples that either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
+The `OceanStateEstimation.jl` package illustrate the case of gridded data sets. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
+
+The `ClimateModels.jl` package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
 
 An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. Topics covered via `MeshArrays.jl` also include interpolation and geography.
 
@@ -133,7 +140,7 @@ In this section, we provide additional representative examples that cover common
 
 \end{section}
 
-\begin{section}{title="IndividualDisplacements.jl",name="Particles"}
+\begin{section}{title="IndividualDisplacements.jl",name="Points"}
 
 \label{individual-displacements}
 
@@ -146,38 +153,36 @@ In this section, we provide additional representative examples that cover common
 
 \end{section}
 
-\begin{section}{title="Workshops",name="Workshops"}
-
-\label{workshop}
-
-**Marine Ecosystem Modeling Workshop**
-
-Notebooks below were presented as part of the JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Using Julia`. More detail is available in the [workshop repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
-
-- [AIBECS](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
-- [PlanktonIndividuals](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
-- [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
-- [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
-
-\end{section}
-
 \begin{section}{title="Miscellaneous",name="Miscellaneous"}
 
 \label{misc}
 
-**More examples**
+**NetCDF**
 
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures.
 - [NetCDF\_advanced.jl](NetCDF_advanced.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl)) uses a large file to look at performance.
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
+**Workshops**
+
+\label{workshop}
+
+The JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Using Julia` was based on notebooks listed below. Additional detail is available in [this repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
+
+- [AIBECS](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
+- [PlanktonIndividuals](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
+- [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
+- [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
+
 **How-To**
+
+\label{howto}
 
 - To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, paste a `notebook url`, wait for notebook to load, and then start interacting with live (steps shown below). 
 - Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for queries, bug reports, new contributions, etc.
 
-For cloud computing options, please scroll down to [next section](#mybinder-links). To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `notebook url` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` using `Pluto.run()` and paste notebook url afterwards.
+For cloud computing options, please scroll down to [next section](#cloud). To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `notebook url` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` using `Pluto.run()` and paste notebook url afterwards.
 
 ```
 using Pluto, Downloads
@@ -198,16 +203,26 @@ Step by step summary :
 
 **Open Cloud Services**
 
-\label{mybinder-links}
+\label{cloud}
 
-We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. They should be able to run the notebooks listed above with reduced latency. Memory limitations can be an issue though. 
-
-\alert{For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.}
+We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. 
 
 - [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+
+The notebooks have been downloaded into the `notebooks` folder to facilitate navigation within `Pluto`. A list can be obtained as follows.
+
+```
+include("tutorials/list_notebooks.jl")
+notebooks=list_notebooks()
+```
+
+
+Memory limitations can be an issue but the cloud computers provided by `mybinder` should be able to run the notebooks listed here with reduced latency. 
+
+\alert{For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.}
 
 Step by step summary :
 
