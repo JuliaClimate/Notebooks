@@ -156,6 +156,8 @@ In this section, we provide additional representative examples that cover common
 
 **NetCDF**
 
+\label{netcdf}
+
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures.
 - [NetCDF\_advanced.jl](NetCDF_advanced.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl)) uses a large file to look at performance.
