@@ -231,7 +231,7 @@ Please use the [repository issue tracker](https://guides.github.com/features/iss
 
 \label{cloud}
 
-We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. 
+We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate/Notebooks` repository more specifically. 
 
 - [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
@@ -239,7 +239,7 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 - [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 
 A couple notes :
-- For repeated use it is suggested that users run the notebooks on a local computer instead if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
+- For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
 - Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `jl` folder to facilitate navigation within `Pluto`. 
 
 Step by step summary :
