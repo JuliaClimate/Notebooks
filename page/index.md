@@ -7,8 +7,7 @@
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 This page presents a series of [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) that demonstrate [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader Julia package ecosystem. 
-
-Users can replay and interact with the notebooks on a local computer or in the cloud. See the [How-To](#howto) and [cloud](#cloud) sections at the bottom of this page for directions if you are interested in these options.
+Users can replay the notebooks on a local computer or in the cloud (see [How-To](#howto) and [cloud](#cloud) for directions).
 
 \end{section}
 
@@ -16,7 +15,7 @@ Users can replay and interact with the notebooks on a local computer or in the c
 
 \label{contents}
 
-The notebooks mostly come from the `examples` section of a Julia package. A few more are provided in [this folder](https://github.com/JuliaClimate/Notebooks/tree/master/tutorials). 
+The notebooks mostly come from the `examples` section of a Julia package.
 
 - Data Products / [OceanStateEstimation.jl](#ocean-state-estimation) examples
 - Data Products / [OceanRobots.jl](#ocean-robots) examples
@@ -24,17 +23,17 @@ The notebooks mostly come from the `examples` section of a Julia package. A few 
 - Models / [MITgcmTools.jl](#mitgcm-tools) examples
 - [MeshArrays.jl](#mesh-arrays) examples
 - [IndividualDisplacements.jl](#individual-displacements) examples
-
-The [Miscellaneous](#misc) section notably provides directions for users interested in running notebooks interactively.
-
 - [NetCDF](#netcdf)
 - [Workshops](#workshop)
+
+The [User Directions](#directions) section is for those interested in running notebooks themselves.
+
 - [How-To](#howto)
 - [Cloud Services](#cloud)
 
 **Packages Overview**
 
-The `OceanStateEstimation.jl` notebooks read and manipulate gridded data sets. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
+Usage of gridded data sets is demonstrated in the `OceanStateEstimation.jl` notebooks. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
 
 The `ClimateModels.jl` package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
 
@@ -151,11 +150,13 @@ In this section, we provide additional representative examples that cover common
 
 \end{section}
 
-\begin{section}{title="Miscellaneous",name="Miscellaneous"}
+\begin{section}{title="More",name="More"}
 
-\label{misc}
+\label{more}
 
 **NetCDF**
+
+\label{netcdf}
 
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures.
@@ -173,14 +174,36 @@ The JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Usi
 - [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
 - [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
 
+\end{section}
+
+\begin{section}{title="User Directions",name="Directions"}
+
+\label{directions}
+
 **How-To**
 
 \label{howto}
 
-- To start an interactive version of a notebook, on your computer or in the cloud, open `Pluto.jl`, paste a `notebook url`, wait for notebook to load, and then start interacting with live (steps shown below). 
-- Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for queries, bug reports, new contributions, etc.
+To start an interactive version of a notebook, on a local computer or in the cloud, start `Pluto.jl` and then : 
 
-For cloud computing options, please scroll down to [next section](#cloud). To run a notebook locally, i.e. on your computer rather than in the cloud, open `julia`, copy the `notebook url` for the chosen notebook, and execute the following commands. Or start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` using `Pluto.run()` and paste notebook url afterwards.
+- copy `notebook url` from webpage
+- paste `notebook url` into Pluto
+- `open` and wait for notebook to boot up
+- interact with the reactive notebook
+
+Step by step summary :
+
+\begin{center}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png", width="360", style="border-radius:5px;", caption="Step 1"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png", width="360", style="border-radius:5px;", caption="Step 2"} 
+
+\figure{path="https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png", width="360", style="border-radius:5px;", caption="Step 3"} 
+\figure{path="https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png", width="360", style="border-radius:5px;", caption="Step 4"} 
+
+\end{center}
+
+To start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` one calls `Pluto.run()`. Alternatively, one can specify the notebook via the `Pluto.run` command. 
 
 ```
 using Pluto, Downloads
@@ -188,48 +211,54 @@ url="https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/exampl
 Pluto.run(notebook=Downloads.download(url))
 ```
 
-Step by step summary :
+To download all notebooks listed on the webpage, and use the local copy (`Notebooks/NetCDF_basics.jl`)instead of URLs, proceed as follows. 
 
-\begin{center}
+```
+git clone https://github.com/JuliaClimate/Notebooks
+include("Notebooks/tutorials/list_notebooks.jl")
+notebooks=list_notebooks()
 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png", width="180", style="border-radius:5px;", caption="Step 1"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png", width="170", style="border-radius:5px;", caption="Step 2"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png", width="180", style="border-radius:5px;", caption="Step 3"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png", width="180", style="border-radius:5px;", caption="Step 4"} 
+download_notebooks("Notebooks/jl",notebooks)
+cd("Notebooks/jl")
 
-\end{center}
+using Pluto; 
+Pluto.run(notebook="Notebooks/NetCDF_basics.jl")
+```
+
+Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for queries, bug reports, new contributions, etc.
 
 **Open Cloud Services**
 
 \label{cloud}
 
-We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate` repository more specifically. 
+We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate/Notebooks` repository more specifically. 
 
 - [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 
-The notebooks have been downloaded into the `notebooks` folder to facilitate navigation within `Pluto`. A list can be obtained as follows.
+A couple notes :
+- For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
+- Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `jl` folder to facilitate navigation within `Pluto`. 
+
+Step by step summary :
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+
+\begin{center}
+
+\figure{path="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png", width="480", style="border-radius:5px;", caption="Step 1"} \\
+\figure{path="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png", width="480", style="border-radius:5px;", caption="Step 2"} \\
+\figure{path="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png", width="480", style="border-radius:5px;", caption="Step 3"} 
+
+\end{center}
+
+A list of the notebooks can be obtained as follows.
 
 ```
 include("tutorials/list_notebooks.jl")
 notebooks=list_notebooks()
 ```
-
-
-Memory limitations can be an issue but the cloud computers provided by `mybinder` should be able to run the notebooks listed here with reduced latency. 
-
-\alert{For repeated use it is suggested that you run the notebooks on your local computer instead if possible. Not only will this probably be faster than using mybinder but it will also save mybinder some of the funds that allow them to provide these precious, shared, cloud services to the community free of charge.}
-
-Step by step summary :
-
-\begin{center}
-
-\figure{path="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png", width="240", style="border-radius:5px;", caption="Step 1"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png", width="250", style="border-radius:5px;", caption="Step 2"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png", width="230", style="border-radius:5px;", caption="Step 3"} 
-
-\end{center}
 
 \end{section}

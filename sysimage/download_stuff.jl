@@ -13,7 +13,7 @@ OceanStateEstimation.Downloads.download(
 
 include("../tutorials/list_notebooks.jl")
 notebooks=list_notebooks()
-download_notebooks("notebooks",notebooks)
-
+download_notebooks("jl",notebooks)
+#find . -name "*.jl" |grep notebooks
 
 
