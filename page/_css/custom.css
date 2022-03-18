@@ -52,3 +52,16 @@ pre code.hljs.plaintext {
 }
 
 /* ADD ANY SPECIFIC TWEAKS YOU MIGHT WANT HERE */
+
+.im-50 {text-align: center;}
+.im-50 img {
+    padding: 0;
+    width: 50%;
+}
+
+.im-20 img {
+    padding: 0;
+    width: 20%;
+}
+
+
