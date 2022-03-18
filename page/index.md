@@ -191,17 +191,29 @@ To start an interactive version of a notebook, on a local computer or in the clo
 - `open` and wait for notebook to boot up
 - interact with the reactive notebook
 
+~~~
+<br/>
+~~~
+
+Video demonstration (3.5 min) :
+
+@@im-50
+[![Video Tutorial](https://user-images.githubusercontent.com/20276764/158916468-3f58fd83-e0a7-4650-b4b6-3612e4a4e429.png)](https://youtu.be/mZevMagHatc)
+@@
+
 Step by step summary :
 
 \begin{center}
 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png", width="360", style="border-radius:5px;", caption="Step 1"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png", width="360", style="border-radius:5px;", caption="Step 2"} 
-
-\figure{path="https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png", width="360", style="border-radius:5px;", caption="Step 3"} 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png", width="360", style="border-radius:5px;", caption="Step 4"} 
+@@im-20
+[![Step 1](https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png)](https://user-images.githubusercontent.com/20276764/156822528-fece5ce5-ae94-4d93-a2fe-7ff007a0fb13.png) [![Step 2](https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png)](https://user-images.githubusercontent.com/20276764/156822529-6a58db73-c25e-4ffc-b768-5d4e9ee5e342.png) [![Step 3](https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png)](https://user-images.githubusercontent.com/20276764/156822530-f4e28e5f-0622-4f28-9906-3291dce99662.png) [![Step 4](https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png)](https://user-images.githubusercontent.com/20276764/156822531-b3556afb-75f5-43cb-80b2-43e401966140.png)
+@@
 
 \end{center}
+
+~~~
+<br/>
+~~~
 
 To start [Pluto.jl](https://github.com/fonsp/Pluto.jl/wiki) from `julia` one calls `Pluto.run()`. Alternatively, one can specify the notebook via the `Pluto.run` command. 
 
@@ -225,36 +237,54 @@ using Pluto;
 Pluto.run(notebook="Notebooks/NetCDF_basics.jl")
 ```
 
+~~~
+<br/>
+~~~
+
 Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for queries, bug reports, new contributions, etc.
+
+~~~
+<br/>
+~~~
 
 **Open Cloud Services**
 
 \label{cloud}
 
-We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. The shorcuts below are configured for the `JuliaClimate/Notebooks` repository more specifically. 
+We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community. Visiting [mybinder.org](https://mybinder.org) will randomly redirect you to one of the BinderHubs selected at random. 
+
+The shorcuts provided below are configured for the `JuliaClimate/Notebooks` repository more specifically. 
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 
 - [gesis.mybinder.org](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [gke.mybinder.org](https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [ovh.mybinder.org](https://ovh.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 - [turing.mybinder.org](https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 
-A couple notes :
-- For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
-- Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `jl` folder to facilitate navigation within `Pluto`. 
+~~~
+<br/>
+~~~
 
 Step by step summary :
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
-
 \begin{center}
 
-\figure{path="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png", width="480", style="border-radius:5px;", caption="Step 1"} \\
-\figure{path="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png", width="480", style="border-radius:5px;", caption="Step 2"} \\
-\figure{path="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png", width="480", style="border-radius:5px;", caption="Step 3"} 
+@@im-20
+[![Step 1](https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png)](https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png) [![Step 2](https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png)](https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png) [![Step 3](https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png)](https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png)
+@@
 
 \end{center}
 
-A list of the notebooks can be obtained as follows.
+~~~
+<br/>
+~~~
+
+A few notes :
+
+- For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
+- Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `jl` folder to facilitate navigation within `Pluto`. 
+- In our `mybinder` configuration, a list of the notebooks can be obtained as follows.
 
 ```
 include("tutorials/list_notebooks.jl")
@@ -262,3 +292,4 @@ notebooks=list_notebooks()
 ```
 
 \end{section}
+
