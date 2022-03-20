@@ -21,8 +21,8 @@ The notebooks mostly come from the `examples` section of a Julia package.
 - Data Products / [OceanRobots.jl](#ocean-robots) examples
 - Models / [ClimateModels.jl](#climate-models) examples
 - Models / [MITgcmTools.jl](#mitgcm-tools) examples
-- [MeshArrays.jl](#mesh-arrays) examples
-- [IndividualDisplacements.jl](#individual-displacements) examples
+- Arrays / [MeshArrays.jl](#mesh-arrays) examples
+- Points / [IndividualDisplacements.jl](#individual-displacements) examples
 - [Files & NetCDF](#files)
 - [Workshops](#workshop)
 
