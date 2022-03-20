@@ -168,7 +168,7 @@ padding-right:  10px;
 </li>
 <li><p><a href="#individual-displacements">IndividualDisplacements.jl</a> examples</p>
 </li>
-<li><p><a href="#netcdf">NetCDF</a></p>
+<li><p><a href="#files">Files &amp; NetCDF</a></p>
 </li>
 <li><p><a href="#workshop">Workshops</a></p>
 </li>
@@ -184,7 +184,7 @@ padding-right:  10px;
 <p>Usage of gridded data sets is demonstrated in the <code>OceanStateEstimation.jl</code> notebooks. <code>OceanRobots.jl</code> in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. </p>
 <p>The <code>ClimateModels.jl</code> package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier &#40;e.g. from CMIP6 or the 2021 IPCC report&#41;. Additional examples for the <a href="https://mitgcm.readthedocs.io/en/latest/">MIT general circulation model</a> are provided in <code>MITgcmTools.jl</code>.</p>
 <p>An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of <code>MeshArrays.jl</code> – the analysis of global transports derived from gridded model output. Topics covered via <code>MeshArrays.jl</code> also include interpolation and geography.</p>
-<p><code>IndividualDisplacements.jl</code> extends this approach by providing a <a href="https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field">particle tracking</a> framework that readily operates on climate model <code>C-grids</code> using <code>MeshArrays.jl</code>.  Examples that let you access and explore ocean data products are provided in <code>OceanRobots.jl</code> and <code>OceanStateEstimation.jl</code>. The <code>miscellaneous</code> section touches on topics such as files &#40;incl. NetCDF and Zarr&#41;, visualization, cloud services, and user directions.</p>
+<p><code>IndividualDisplacements.jl</code> extends this approach by providing a <a href="https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field">particle tracking</a> framework that readily operates on climate model <code>C-grids</code> using <code>MeshArrays.jl</code>.  Examples that let you access and explore ocean data products are provided in <code>OceanRobots.jl</code> and <code>OceanStateEstimation.jl</code>. The <code>More</code> section touches on topics such as files &#40;incl. NetCDF and Zarr&#41;, visualization, cloud services, and user directions.</p>
 <p><strong>Visual Examples</strong></p>
 <a id="sample-viz" class="anchor"></a>
 <p>Here are images generated using the Julia packages and notebooks listed in this webpage. The maps, histograms, and other graphs are made with <a href="https://makie.juliaplots.org/stable/">Makie.jl</a> and <a href="http://docs.juliaplots.org/latest/">Plots.jl</a>. Other popular plotting libraries include <a href="https://github.com/gcalderone/Gnuplot.jl">Gnuplot.jl</a>, <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a>, <a href="http://juliaplots.org/PlotlyJS.jl/stable/">PlotlyJS.jl</a>, <a href="https://github.com/jheinen/GR.jl">GR.jl</a>, and <a href="https://github.com/JuliaPlots/UnicodePlots.jl">UnicodePlots.jl</a>.</p>
@@ -384,18 +384,17 @@ Scalar Potential
       <div class="col-lg-10 mx-auto">
         <h2>More</h2></p>
 <a id="more" class="anchor"></a>
-<p><strong>NetCDF</strong></p>
-<a id="netcdf" class="anchor"></a>
+<p><strong>Files &amp; NetCDF</strong></p>
+<a id="files" class="anchor"></a>
 <ul>
 <li><p><a href="NetCDF_basics.html">NetCDF&#95;basics.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl">notebook url</a>&#41; is a brief tutorial that opens a netCDF file using <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a> and plots a 2D slice as a heatmap using <a href="https://makie.juliaplots.org/stable/">Makie.jl</a>.</p>
 </li>
-<li><p><a href="NetCDF_packages.html">NetCDF&#95;packages.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl">notebook url</a>&#41; reviews packages for ingesting NetCDF into various data structures.</p>
+<li><p><a href="NetCDF_packages.html">NetCDF&#95;packages.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl">notebook url</a>&#41; reviews packages for ingesting NetCDF into various data structures; including <a href="https://juliaclimate.github.io/ClimateBase.jl/dev/">ClimateBase.jl</a> and <a href="https://juliaclimate.github.io/ClimateTools.jl/dev/">ClimateTools.jl</a>.</p>
 </li>
 <li><p><a href="NetCDF_advanced.html">NetCDF&#95;advanced.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl">notebook url</a>&#41; uses a large file to look at performance.</p>
 </li>
-<li><p><a href="https://gaelforget.github.io/NCTiles.jl/dev">NCTiles.jl</a> converts binary data into meta-data-rich <a href="https://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files for &#40;1&#41; a simple rectangular grid; &#40;2&#41; a tiled domain distributed over multiple files.</p>
-</li>
 </ul>
+<p>Other packages : <a href="https://juliageo.github.io/NetCDF.jl/dev">NetCDF.jl</a> provides high-level and medium-level interfaces for writing and reading netcdf files. <a href="https://juliaio.github.io/Zarr.jl/latest/">Zarr.jl</a> supports reading and Writing Zarr Datasets from Julia. <a href="https://gaelforget.github.io/NCTiles.jl/dev">NCTiles.jl</a> converts binary data into meta-data-rich <a href="https://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files for &#40;1&#41; a simple rectangular grid; &#40;2&#41; a tiled domain distributed over multiple files.</p>
 <p><strong>Workshops</strong></p>
 <a id="workshop" class="anchor"></a>
 <p>The JuliaCon 2021 Workshop on <code>Modeling Marine Ecosystems At Multiple Scales Using Julia</code> was based on notebooks listed below. Additional detail is available in <a href="https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl">this repository</a>.</p>

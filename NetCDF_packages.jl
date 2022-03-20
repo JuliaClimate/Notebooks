@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 7306f20f-9da1-4419-9222-1704fd296ee8
 begin
-	using ClimateBase, Downloads, Dates, PlutoUI
+	using ClimateBase, NCDatasets, Downloads, Dates, PlutoUI
 	"Done with loading packages"
 end
 
@@ -125,10 +125,12 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 ClimateBase = "35604d93-0fb8-4872-9436-495b01d137e2"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 ClimateBase = "~0.15.1"
+NCDatasets = "~0.11.9"
 PlutoUI = "~0.7.36"
 """
 
