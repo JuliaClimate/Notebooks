@@ -159,7 +159,7 @@ In this section, we provide additional representative examples that cover common
 \label{netcdf}
 
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
-- [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures; including [ClimateBase.jl](https://github.com/JuliaClimate/ClimateBase.jl) and [ClimateTools.jl](https://github.com/JuliaClimate/ClimateTools.jl).
+- [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures; including [ClimateBase.jl](https://juliaclimate.github.io/ClimateBase.jl/dev/) and [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/).
 - [NetCDF\_advanced.jl](NetCDF_advanced.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl)) uses a large file to look at performance.
 - [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
