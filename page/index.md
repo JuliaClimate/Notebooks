@@ -23,7 +23,7 @@ The notebooks mostly come from the `examples` section of a Julia package.
 - Models / [MITgcmTools.jl](#mitgcm-tools) examples
 - [MeshArrays.jl](#mesh-arrays) examples
 - [IndividualDisplacements.jl](#individual-displacements) examples
-- [NetCDF](#netcdf)
+- [Files & NetCDF](#files)
 - [Workshops](#workshop)
 
 The [User Directions](#directions) section is for those interested in running notebooks themselves.
@@ -40,7 +40,7 @@ The `ClimateModels.jl` package provides an interface to models often used in cli
 An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. Topics covered via `MeshArrays.jl` also include interpolation and geography.
 
 `IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
-Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. The `miscellaneous` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
+Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. The `More` section touches on topics such as files (incl. NetCDF and Zarr), visualization, cloud services, and user directions.
 
 **Visual Examples**
 
@@ -154,14 +154,15 @@ In this section, we provide additional representative examples that cover common
 
 \label{more}
 
-**NetCDF**
+**Files & NetCDF**
 
-\label{netcdf}
+\label{files}
 
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
-- [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures.
+- [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures; including [ClimateBase.jl](https://juliaclimate.github.io/ClimateBase.jl/dev/) and [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/).
 - [NetCDF\_advanced.jl](NetCDF_advanced.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl)) uses a large file to look at performance.
-- [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
+
+Other packages : [NetCDF.jl](https://juliageo.github.io/NetCDF.jl/dev) provides high-level and medium-level interfaces for writing and reading netcdf files. [Zarr.jl](https://juliaio.github.io/Zarr.jl/latest/) supports reading and Writing Zarr Datasets from Julia. [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 **Workshops**
 
