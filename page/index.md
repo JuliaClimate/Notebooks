@@ -48,14 +48,15 @@ Examples that let you access and explore ocean data products are provided in `Oc
 
 Here are images generated using the Julia packages and notebooks listed in this webpage. The maps, histograms, and other graphs are made with [Makie.jl](https://makie.juliaplots.org/stable/) and [Plots.jl](http://docs.juliaplots.org/latest/). Other popular plotting libraries include [Gnuplot.jl](https://github.com/gcalderone/Gnuplot.jl), [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl), [PlotlyJS.jl](http://juliaplots.org/PlotlyJS.jl/stable/), [GR.jl](https://github.com/jheinen/GR.jl), and [UnicodePlots.jl](https://github.com/JuliaPlots/UnicodePlots.jl).
 
-
 \begin{center}
 
-\figure{path="https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png", width="150", style="border-radius:5px;", caption="IPCC report fig 1b"} \figure{path="https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png", width="150", style="border-radius:5px;", caption="IPCC report fig 2"}
-\figure{path="https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png", width="140", style="border-radius:5px;", caption="IPCC report fig 3"} \figure{path="https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png", width="160", style="border-radius:5px;", caption="IPCC report fig 5"}
+@@im-20
+[![IPCC report figure 1b](https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png)](https://user-images.githubusercontent.com/20276764/143275888-ff02f149-225f-45ac-ae5e-1049e15ab215.png) [![IPCC report figure 2](https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png)](https://user-images.githubusercontent.com/20276764/135203143-ae838319-1a63-4ffe-8f08-1055174b79aa.png) [![IPCC report figure 3](https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png)](https://user-images.githubusercontent.com/20276764/135203198-a5e2dc49-baee-4d13-a113-5433c074bbff.png) [![IPCC report figure 5](https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png)](https://user-images.githubusercontent.com/20276764/135203214-ce6caece-13d1-49f3-9a70-7fa63d810e9c.png)
+@@
 
-\figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png", width="150", style="border-radius:5px;", caption="Meridional Overturning Streamfunction"} \figure{path="https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png", width="150", style="border-radius:5px;", caption="Particle Tracking"} 
-\figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png", width="150", style="border-radius:5px;", caption="Vector Potential"} \figure{path="https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png", width="150", style="border-radius:5px;", caption="Scalar Potential"} 
+@@im-20
+[![Meridional Overturning](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png)](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/MOC.png) [![Particle Tracking](https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png)](https://user-images.githubusercontent.com/20276764/119210600-0dc9ba00-ba7b-11eb-96c1-e0f5dc75c838.png) [![Vector Potential](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png)](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/Streamfunction.png) [![Scalar Potential](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png)](https://github.com/JuliaClimate/Notebooks/raw/master/page/figures/ScalarPotential.png)
+@@
 
 \end{center}
 
@@ -199,7 +200,7 @@ To start an interactive version of a notebook, on a local computer or in the clo
 Video demonstration (3.5 min) :
 
 @@im-50
-[![Video Tutorial](https://user-images.githubusercontent.com/20276764/158916468-3f58fd83-e0a7-4650-b4b6-3612e4a4e429.png)](https://youtu.be/mZevMagHatc)
+[![Video Tutorial](https://user-images.githubusercontent.com/20276764/158916468-3f58fd83-e0a7-4650-b4b6-3612e4a4e429.png)](https://www.youtube.com/watch?v=mZevMagHatc&list=PLXO7Tdh24uhPFZ5bph6Y_Q3-CRSfk5cDU)
 @@
 
 Step by step summary :
