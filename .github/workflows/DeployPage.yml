@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p11f
+      - v0p3p12a
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
