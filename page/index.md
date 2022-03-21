@@ -197,10 +197,10 @@ To start an interactive version of a notebook, on a local computer or in the clo
 <br/>
 ~~~
 
-Video demonstration (3.5 min) :
+Video demonstration (3 min) :
 
 @@im-50
-[![Video Tutorial](https://user-images.githubusercontent.com/20276764/158916468-3f58fd83-e0a7-4650-b4b6-3612e4a4e429.png)](https://www.youtube.com/watch?v=mZevMagHatc&list=PLXO7Tdh24uhPFZ5bph6Y_Q3-CRSfk5cDU)
+[![Video Tutorial](https://user-images.githubusercontent.com/20276764/159295950-d37fd926-209f-4b66-b5bf-6d003da66007.png)](https://www.youtube.com/watch?v=mZevMagHatc&list=PLXO7Tdh24uhPFZ5bph6Y_Q3-CRSfk5cDU)
 @@
 
 Step by step summary :
