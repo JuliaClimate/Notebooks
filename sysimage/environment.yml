@@ -3,6 +3,8 @@ channels:
 dependencies:
   - python
   - numpy
+  - xarray
+  - dask
   - pandas
   - rise
   - jupyter-server-proxy=1.5.0=py_0
