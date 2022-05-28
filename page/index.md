@@ -85,11 +85,11 @@ The data include profiling floats (Argo), drifters (GDP), and moorings for examp
 
 \label{ocean-robots}
 
-- [Buoy\_NWP\_NOAA.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Buoy_NWP_NOAA.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
-- [Mooring\_WHOTS.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Mooring_WHOTS.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
-- [Drifter\_GDP.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Drifter_GDP.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
-- [Float\_Argo.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Float_Argo.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
-- [Glider\_Spray.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Glider_Spray.html) (➭ [code link](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Glider_Spray.jl)) : underwater [glider](http://spraydata.ucsd.edu/projects/) data.
+- [Buoy\_NWP\_NOAA.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Buoy_NWP_NOAA.html) (➭ [notebook url](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
+- [Mooring\_WHOTS.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Mooring_WHOTS.html) (➭ [notebook url](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
+- [Drifter\_GDP.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Drifter_GDP.html) (➭ [notebook url](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
+- [Float\_Argo.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Float_Argo.html) (➭ [notebook url](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
+- [Glider\_Spray.jl](https://gaelforget.github.io/OceanRobots.jl/dev/Glider_Spray.html) (➭ [notebook url](https://raw.githubusercontent.com/gaelforget/OceanRobots.jl/master/examples/Glider_Spray.jl)) : underwater [glider](http://spraydata.ucsd.edu/projects/) data.
 
 
 \end{section}
