@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p12d
+      - Dataverse_etc
 jobs:
   binder:
     runs-on: ubuntu-latest
