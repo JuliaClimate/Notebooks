@@ -1,6 +1,7 @@
 using PackageCompiler
 create_sysimage([:CSV, :DataFrames, :IJulia, :Pluto, :PlutoUI, 
                 :MeshArrays, :ClimateModels, :MITgcmTools,
+                :PyCall, :Conda, :Dataverse, :OceanRobots,
                 :UnicodePlots, :CairoMakie, :Plots];
                 precompile_execution_file = "sysimage/warmup.jl",
                 sysimage_path="ExampleSysimage.so",
