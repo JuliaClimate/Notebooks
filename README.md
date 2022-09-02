@@ -4,16 +4,11 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
-These [Julia](https://julialang.org) notebooks (see [Pluto.jl](https://plutojl.org)) illustrate some of the [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader package ecosystem. See [repository website](https://JuliaClimate.github.io/Notebooks/) for the notebook stack, guidelines, and additional explanations.
+A set of [Pluto](https://github.com/fonsp/Pluto.jl/wiki) notebooks and cloud computer configuration to demonstrate some of the [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader [Julia](https://julialang.org) package ecosystem. 
 
-You can readily replay the notebooks either on a local computer or in the cloud. Please refer to [these docs](https://github.com/fonsp/Pluto.jl/wiki) for directions regarding `Pluto.jl` and the [repository website](https://JuliaClimate.github.io/Notebooks/) for cloud computer links and notebook links.
+The notebook stack is available via [our website](https://JuliaClimate.github.io/Notebooks/) along with guidelines and additional explanations -- e.g., on how you can readily replay the notebooks on a local computer or in the cloud via [this mybinder](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab).
 
-Please use the [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for feedback, bug reports, queries, new contribution ideas, etc.
-
-Enjoy!
-
-[@gaelforget](https://github.com/gaelforget)
-
+Please use our [repository issue tracker](https://guides.github.com/features/issues/) ([this one](https://github.com/JuliaClimate/Notebooks/issues)) for feedback, bug reports, queries, new contribution ideas, etc.
 
 | | History | +1C | +2C | +4C | |
 |:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|
