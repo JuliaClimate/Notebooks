@@ -3,8 +3,7 @@ MeshArrays.GRID_LLC90_download()
 
 import OceanStateEstimation
 OceanStateEstimation.ECCOdiags_download()
-#OceanStateEstimation.ECCOdiags_add("release4")
-#OceanStateEstimation.ECCOdiags_add("interp_coeffs")
+OceanStateEstimation.ECCOdiags_add("release4")
 
 import Downloads
 Downloads.download(
@@ -12,9 +11,14 @@ Downloads.download(
   joinpath(OceanStateEstimation.ECCOdiags_path,"interp_coeffs_halfdeg.jld2");
   timeout=60000.0)
 
-include("../tutorials/list_notebooks.jl")
-notebooks=list_notebooks()
-download_notebooks("jl",notebooks)
-#find . -name "*.jl" |grep notebooks
+using ClimateModels
+path0="notebooks"
+nbs=notebooks.list()
+notebooks.download(path0,nbs)
 
+url0="https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/worldwide/"
+nbs2=DataFrame( "folder" => ["IndividualDisplacements.jl","IndividualDisplacements.jl"], 
+                "file" => ["ECCO_FlowFields.jl","OCCA_FlowFields.jl"], 
+                "url" => [url0*"ECCO_FlowFields.jl",url0*"OCCA_FlowFields.jl"])
+notebooks.download(path0,nbs2)
 
