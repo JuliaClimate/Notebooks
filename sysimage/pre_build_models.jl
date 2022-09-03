@@ -8,39 +8,40 @@ Pkg.build("PyCall")
 
 Conda.pip_interop(true)
 Conda.pip("install", "pyDataverse")
+Conda.pip("install", "fair")
 
 ##
 
-using PlutoSliderServer, ClimateModels
+using ClimateModels
 pth=dirname(pathof(ClimateModels))
 
 ## Hector
 
-if false
-fil=joinpath(pth,"..","examples","Hector.jl")
-PlutoSliderServer.export_notebook(fil)
+Pkg.add("IniFile")
+Pkg.add("Suppressor")
+fil=joinpath(pth,"..","examples","Hector_module.jl")
+include(fil)
+H=demo.Hector_config()
+run(H)
 
-tmp1=readdir(tempdir())
-tst1=[isfile(joinpath(tempdir(),i,"hector","src","hector")) for i in tmp1]
-tst2=[!islink(joinpath(tempdir(),i,"hector","src","hector")) for i in tmp1]
-ii=findall(tst1.*tst2)[1]
-symlink(joinpath(tempdir(),tmp1[ii],"hector","src","hector"),"hector")
-end
+f1=joinpath(pathof(H),"hector","src","hector")
+f2=joinpath(homedir(),"hector")
+mv(f1,f2)
 
 ## Speedy
 
-if false
-fil=joinpath(pth,"..","examples","Speedy.jl")
-PlutoSliderServer.export_notebook(fil)
+fil=joinpath(pth,"..","examples","Speedy_module.jl")
+include(fil)
+H=demo.SPEEDY_config()
+run(H)
 
-tmp1=readdir(tempdir())
-tst1=[isfile(joinpath(tempdir(),i,"bin","speedy")) for i in tmp1]
-ii=findall(tst1)[1]
-symlink(joinpath(tempdir(),tmp1[ii],"bin","speedy"),"speedy")
-end
+f1=joinpath(pathof(H),"bin","speedy")
+f2=joinpath(homedir(),"speedy")
+mv(f1,f2)
 
 ## MITgcm
 
-fil=joinpath(pth,"..","examples","MITgcm.jl")
-PlutoSliderServer.export_notebook(fil)
+using MITgcmTools
+MC=MITgcm_config(configuration="tutorial_global_oce_biogeo")
+run(MC)
 
