@@ -266,7 +266,8 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 \lead{Some Notes}
 
 - For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on `mybinder` but it will also save funds that allow `mybinder` to provide these shared cloud services to the community without charge.
-- Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `jl` folder to facilitate navigation within `Pluto`. 
+- Memory limitations can occur but the resources provided by `mybinder` generally suffice to run the notebooks without excessive latency. For the `mybinder` case, notebooks have been downloaded into the `notebooks` subfolder to facilitate navigation within `Pluto`. 
+- You can [use Pluto directly](https://github.com/fonsp/Pluto.jl/wiki/🔎-Basic-Commands-in-Pluto). You can also run our cloud computer configuration on your laptop or cluster from this [Docker image](https://hub.docker.com/repository/docker/gaelforget/notebooks), with `docker run -p 8888:8888 gaelforget/notebooks:latest`.
 
 \end{section}
 

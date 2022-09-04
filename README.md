@@ -8,7 +8,7 @@ This set of  [Julia](https://julialang.org) / [Pluto](https://github.com/fonsp/P
 
 The notebook stack is explained in [our website](https://JuliaClimate.github.io/Notebooks/) where you will find the notebook links (html and code). The site also provides additional guidelines and explanations. 
 
-The included cloud computer configuration let's you try the notebooks interactively, for example on [this Binder](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab). You can run the same computer configuration on a laptop or cluster from this [Docker image](gaelforget/notebooks:latest).
+The included cloud computer configuration let's you try the notebooks interactively, for example on [this Binder](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab). 
 
 Please use our [issue tracker](https://github.com/JuliaClimate/Notebooks/issues) for feedback, bug reports, queries, new contribution ideas, etc when appropriate.
 
