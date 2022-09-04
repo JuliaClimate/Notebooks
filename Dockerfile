@@ -60,5 +60,4 @@ RUN echo alias jl='julia --project="/home/jovyan" --sysimage="/home/jovyan/Examp
 
 RUN mkdir dev
 RUN mv build work tutorials sysimage plutoserver plutoserver.egg-info dev
-RUN mv jl notebooks
 
