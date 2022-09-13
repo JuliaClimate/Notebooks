@@ -12,5 +12,5 @@ end
 run_one_notebook("NetCDF_basics.jl")
 run_one_notebook("NetCDF_advanced.jl")
 run_one_notebook("NetCDF_packages.jl")
-run_one_notebook("YAXArrays_demo.jl")
-run_one_notebook("xarray_climarray_etc.jl")
+#run_one_notebook("YAXArrays_demo.jl")
+#run_one_notebook("xarray_climarray_etc.jl")
