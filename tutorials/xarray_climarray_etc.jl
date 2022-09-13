@@ -14,6 +14,16 @@ begin
 	"Done with packages"
 end
 
+# ╔═╡ 6120a9eb-eede-420d-b526-0d7accff8063
+begin
+	using Downloads
+	url="http://esgf-data1.diasjp.net/thredds/fileServer/esg_dataroot/cmip5/output1/MIROC/MIROC5/"*
+		"piControl/day/atmos/day/r1i1p1/v20161012/tas/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc"
+	fil=joinpath(tempdir(),"tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc")
+	!isfile(fil) ? Downloads.download(url,fil) : nothing
+	"Done with demo file"
+end
+
 # ╔═╡ 1efb3af3-141d-4585-ac52-81d8de729d87
 md"""## Using xarray from via pyCall
 
@@ -66,6 +76,11 @@ TableOfContents()
 # ╔═╡ dfdf8fb4-06f5-47d5-a00b-5ce70c2788d0
 md"""## Access and Read Data"""
 
+# ╔═╡ 814763ca-bb56-4fdf-b968-4580084725e5
+	time = NCDataset(fil,"r") do ds
+    	ds["time"][:]
+	end # ds is closed
+
 # ╔═╡ 98985861-7173-44d5-bd64-3d3f1ebe3bfb
 md"""## Visualize Data"""
 
@@ -80,12 +95,32 @@ md"""## Appendix"""
 
 # ╔═╡ 2dba3c1a-daa8-4445-8024-12880bd9b53f
 begin
-	Conda.add("xarray")
-	Conda.add("dask")
-	Conda.add("cftime")
+#	Conda.add("xarray")
+#	Conda.add("dask")
+#	Conda.add("cftime")
 	np = pyimport("numpy")
 	xr = pyimport("xarray")
+	"Done with Python packages"
 end
+
+# ╔═╡ a0377670-f6c1-4514-a0c3-3af25628b892
+xa = xr.open_mfdataset(fil,decode_times=false)
+
+# ╔═╡ a2fdde3d-8566-40d0-92e9-aeefe59798c9
+xa["tas"]["long_name"]
+
+# ╔═╡ a1818e18-fab9-4640-8d23-bf1e64a7961e
+begin
+	w = getproperty(xa, Symbol("tas"))
+	raw_data = Array(w.values)
+	size(raw_data)
+end
+
+# ╔═╡ f9febc08-369b-4543-9555-0d42de52caa7
+xa.tas
+
+# ╔═╡ bd47d77f-11b7-48c2-a618-75b301dc0594
+heatmap(xa.tas.values[:,:,1])
 
 # ╔═╡ f10df069-3bbd-4b43-8217-d2bd577f2075
 function extract_dimension_values_xarray(xa, dnames = collect(xa.dims))
@@ -105,6 +140,9 @@ function extract_dimension_values_xarray(xa, dnames = collect(xa.dims))
     end
     return dim_values, dim_attrs
 end
+
+# ╔═╡ 85437096-707b-49bf-b83e-9db7a7e4cdf7
+extract_dimension_values_xarray(xa, ["lon","lat"])
 
 # ╔═╡ 0d43f6da-4785-4d8b-be1d-4e2199d2d2d0
 function create_dims_xarray(dnames, dim_values, dim_attrs)
@@ -132,47 +170,11 @@ function climarray_from_xarray(xa, fieldname, name = fieldname)
     ca = ClimArray(raw_data, actual_dims, name; attrib = w.attrs)
 end
 
-# ╔═╡ 6120a9eb-eede-420d-b526-0d7accff8063
-begin
-	url="http://esgf-data1.diasjp.net/thredds/fileServer/esg_dataroot/cmip5/output1/MIROC/MIROC5/"*
-		"piControl/day/atmos/day/r1i1p1/v20161012/tas/tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc"
-	fil=joinpath(tempdir(),"tas_day_MIROC5_piControl_r1i1p1_20000101-20091231.nc")
-	!isfile(fil) ? Downloads.download(url,fil) : nothing
-	"Done with demo file"
-end
-
-# ╔═╡ a0377670-f6c1-4514-a0c3-3af25628b892
-xa = xr.open_mfdataset(fil,decode_times=false)
-
 # ╔═╡ e66fd4ec-0129-48c0-a2a3-d0d924c829f1
 lon = climarray_from_xarray(xa, "lon")
 
-# ╔═╡ 85437096-707b-49bf-b83e-9db7a7e4cdf7
-extract_dimension_values_xarray(xa, ["lon","lat"])
-
-# ╔═╡ a2fdde3d-8566-40d0-92e9-aeefe59798c9
-xa["tas"]["long_name"]
-
-# ╔═╡ a1818e18-fab9-4640-8d23-bf1e64a7961e
-begin
-	w = getproperty(xa, Symbol("tas"))
-	raw_data = Array(w.values)
-	size(raw_data)
-end
-
-# ╔═╡ f9febc08-369b-4543-9555-0d42de52caa7
-xa.tas
-
-# ╔═╡ bd47d77f-11b7-48c2-a618-75b301dc0594
-heatmap(xa.tas.values[:,:,1])
-
 # ╔═╡ 96e8ecf3-ca23-4334-bd4b-5f31fcfc3d72
 climarray_from_xarray(xa, "tas")
-
-# ╔═╡ 814763ca-bb56-4fdf-b968-4580084725e5
-	time = NCDataset(fil,"r") do ds
-    	ds["time"][:]
-	end # ds is closed
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -181,6 +183,7 @@ CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 ClimateBase = "35604d93-0fb8-4872-9436-495b01d137e2"
 Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 

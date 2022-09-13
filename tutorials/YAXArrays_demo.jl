@@ -38,7 +38,7 @@ end
 md"""### 2. examples with Netcdf files (CF compliant)""" 
 
 # ╔═╡ ceb4dfee-9bd0-48fd-8ab0-e1efbc50bd8d
-let
+begin
 	file1=joinpath(OceanStateEstimation.ECCOclim_path,"ETAN","ETAN.0007.nc")
 	ds=open_dataset(file1,driver=:netcdf)
 
@@ -47,7 +47,7 @@ let
 end
 
 # ╔═╡ e6b2c7fd-b9f5-4405-ba12-e9366232739b
-let
+begin
 	file2=joinpath(OceanStateEstimation.OCCAclim_path,"DDetan.0406clim.nc")
 	OCCA=Cube(open_dataset(file2,driver=:netcdf))
 	
@@ -964,7 +964,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─bc2cd246-4592-484d-8cf3-7385024ff495
-# ╟─e758152c-b53b-402a-843c-ce2b6c4e33a7
+# ╠═e758152c-b53b-402a-843c-ce2b6c4e33a7
 # ╟─b5db84bd-ed81-45dc-a073-e959dc6ca66d
 # ╠═398e9ec4-32d4-11ed-3808-5d5ea10d29a6
 # ╟─a1d8d423-b9a7-4805-b79f-f8a454a5b6de
