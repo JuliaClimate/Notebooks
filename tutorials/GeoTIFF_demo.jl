@@ -17,7 +17,7 @@ end
 # ╔═╡ 9837f09b-b0d1-42e0-b9e2-d3ebd9bfb2e7
 begin
 	using ArchGDAL, Colors
-	using DiskArrays: eachchunk
+	using ArchGDAL.DiskArrays: eachchunk
 	using PlutoUI
 end
 
@@ -75,13 +75,11 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
-DiskArrays = "3c3547ce-8d99-4f5e-a174-61eb10b00ae3"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 ArchGDAL = "~0.9.2"
 Colors = "~0.12.8"
-DiskArrays = "~0.3.7"
 PlutoUI = "~0.7.48"
 """
 
@@ -91,7 +89,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.1"
 manifest_format = "2.0"
-project_hash = "d20c43790fb826dab819e3ebff29f044c7707f53"
+project_hash = "2254d1571daefbf2fa3d03d28ac03a7a10005317"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]

@@ -47,6 +47,7 @@ jobs:
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.add.(["YAXArrays", "Zarr", "NetCDF", "EarthDataLab"]);
+            Pkg.add.(["ArchGDAL","Colors","DiskArrays"]);
             Pkg.add.(["OceanStateEstimation"]);
             Pkg.precompile();
             include("tutorials/run_notebooks.jl");'
