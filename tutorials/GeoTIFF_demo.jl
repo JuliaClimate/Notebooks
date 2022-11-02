@@ -19,26 +19,34 @@ begin
 	using ArchGDAL, Colors
 	using ArchGDAL.DiskArrays: eachchunk
 	using PlutoUI
+	using Glob
+	pth0=joinpath("worldcover2021","ESA_WorldCover_10m_2021_v200_60deg_macrotile_N30E120")
+	list0=glob("*.tif",pth0)
+	list1=basename.(list0)
 end
 
 # ╔═╡ f5e13837-9335-489f-a275-dbc1b5c5b7c3
 begin
-	filename=joinpath("worldcover2021","ESA_WorldCover_10m_2021_v200_60deg_macrotile_N30E120",
-	    				"ESA_WorldCover_10m_2021_V200_N30E132_Map.tif")
 
-	ii_select=@bind ii Select(0:6,default=3)
-		
+	ii_select=@bind ii Select(0:6,default=5)
+	ff_select=@bind ff Select(list1,default="ESA_WorldCover_10m_2021_V200_N30E132_Map.tif")
+
 	md"""## GeoTIFF Basics Demo
 	
 	Demonstration of basic handling of GeoTIFF files using [ArchGDAL.jl](https://github.com/yeesian/ArchGDAL.jl).
 	
 	The dataset used is from [worldcover2021.esa.int](https://worldcover2021.esa.int).
 	
-	- filename = $(basename(filename))
-	- isfile(filename) = $(isfile(filename))
+	- filename = $(ff_select)
 	- level = $(ii_select)
 	
 	"""
+end
+
+# ╔═╡ 33d86f38-d406-49b7-8935-40901ba44dc9
+begin
+	filename=joinpath(pth0,ff)
+	isfile(filename)
 end
 
 # ╔═╡ 5a3c438e-afc7-4ba9-9236-bec0a42f5d04
@@ -75,11 +83,13 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 ArchGDAL = "~0.9.2"
 Colors = "~0.12.8"
+Glob = "~1.3.0"
 PlutoUI = "~0.7.48"
 """
 
@@ -89,7 +99,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.1"
 manifest_format = "2.0"
-project_hash = "2254d1571daefbf2fa3d03d28ac03a7a10005317"
+project_hash = "ed5ca2ecf161eb2c1f70750539bcb3296eae7a71"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -256,6 +266,11 @@ deps = ["GeoInterface", "RecipesBase"]
 git-tree-sha1 = "29e1ec25cfb6762f503a19495aec347acf867a9e"
 uuid = "0329782f-3d07-4b52-b9f6-d3137cf03c7a"
 version = "1.0.0"
+
+[[deps.Glob]]
+git-tree-sha1 = "4df9f7e06108728ebf00a0a11edee4b29a482bb2"
+uuid = "c27321d9-0574-5035-807b-f59d2c89b15c"
+version = "1.3.0"
 
 [[deps.Graphics]]
 deps = ["Colors", "LinearAlgebra", "NaNMath"]
@@ -684,7 +699,8 @@ version = "17.4.0+0"
 
 # ╔═╡ Cell order:
 # ╟─f5e13837-9335-489f-a275-dbc1b5c5b7c3
-# ╟─307e1580-43d8-4594-880a-2c7c945f946e
+# ╠═307e1580-43d8-4594-880a-2c7c945f946e
+# ╟─33d86f38-d406-49b7-8935-40901ba44dc9
 # ╠═5a3c438e-afc7-4ba9-9236-bec0a42f5d04
 # ╠═bfe77156-41ce-4c9c-84dd-245301bab3af
 # ╠═51b09683-d514-4345-b59b-c08aad9d1655
@@ -692,6 +708,6 @@ version = "17.4.0+0"
 # ╠═e49078e2-9303-4399-9e12-d5eba18c4b73
 # ╠═a10060c0-c0ef-4ec2-a74f-b02c4754efc3
 # ╠═cfb1c4b6-9abf-4641-ba5f-426c93a30a41
-# ╠═9837f09b-b0d1-42e0-b9e2-d3ebd9bfb2e7
+# ╟─9837f09b-b0d1-42e0-b9e2-d3ebd9bfb2e7
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
