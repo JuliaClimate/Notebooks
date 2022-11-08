@@ -157,8 +157,8 @@ The examples below use [NCDatasets.jl](https://alexander-barth.github.io/NCDatas
 Alternatively, [NetCDF.jl](https://juliageo.github.io/NetCDF.jl/dev) also provides interfaces for writing and reading netcdf files. In addition, [Zarr.jl](https://juliaio.github.io/Zarr.jl/latest/) supports reading and writing `Zarr` Datasets from Julia. [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 - [YAXArrays\_demo.jl](YAXArrays_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/YAXArrays_demo.jl)) uses a data cube approach.
-- [GeoTIFF\_demo.jl](http://gaelforget.net/GeoTIFF_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoTIFF_demo.jl)) reads and plots a GeoTIFF file content using uses [ArchGDAL.jl](https://github.com/yeesian/ArchGDAL.jl).
-- [xarray\_climarray\_etc.jl](http://gaelforget.net/xarray_climarray_etc.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/xarray_climarray_etc.jl)) uses Python's xarray and related Julia packages.
+- [GeoTIFF\_demo.jl](http://gaelforget.net/notebooks/GeoTIFF_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoTIFF_demo.jl)) reads and plots a GeoTIFF file content using uses [ArchGDAL.jl](https://github.com/yeesian/ArchGDAL.jl).
+- [xarray\_climarray\_etc.jl](http://gaelforget.net/notebooks/xarray_climarray_etc.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/xarray_climarray_etc.jl)) uses Python's xarray and related Julia packages.
 
 **Workshops**
 
