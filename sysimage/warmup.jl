@@ -1,6 +1,5 @@
 using Pkg; 
 Pkg.test("ClimateModels")
-Pkg.test("IndividualDisplacements")
 Pkg.test("MITgcmTools")
 Pkg.test("MeshArrays")
 
