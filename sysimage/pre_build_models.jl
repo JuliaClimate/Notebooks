@@ -42,6 +42,7 @@ mv(f1,f2)
 ## MITgcm
 
 using MITgcmTools
+MITgcm_download()
 MC=MITgcm_config(configuration="tutorial_global_oce_biogeo")
 run(MC)
 
