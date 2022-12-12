@@ -52,12 +52,4 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     rm -rf ~/.cache
 
 RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate();"
-RUN julia ${mainpath}/sysimage/download_stuff.jl
-RUN julia ${mainpath}/sysimage/create_sysimage.jl
-RUN julia --sysimage ExampleSysimage.so ${mainpath}/sysimage/pre_build_models.jl
-
-RUN echo alias jl='julia --project="/home/jovyan" --sysimage="/home/jovyan/ExampleSysimage.so"' >> ~/.bashrc
-
-RUN mkdir dev
-RUN mv build work tutorials sysimage plutoserver plutoserver.egg-info dev
 
