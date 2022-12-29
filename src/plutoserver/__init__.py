@@ -6,6 +6,6 @@ def setup_plutoserver():
     iconpath = os.path.join(mydir, "icons", "pluto-logo.svg")
     return {
         "command": ["/bin/bash", "/home/jovyan/runpluto.sh", "{port}"],
-        "timeout": 60,
+        "timeout": 120,
         "launcher_entry": {"title": "Pluto.jl", "icon_path": iconpath},
     }
