@@ -31,6 +31,7 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential && \
     apt-get install -y --no-install-recommends vim && \
+    apt-get install -y --no-install-recommends git-all && \
     apt-get install -y --no-install-recommends unzip && \
     apt-get install -y --no-install-recommends gfortran && \
     apt-get install -y --no-install-recommends openmpi-bin && \
@@ -50,4 +51,8 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     rm -rf ~/.cache
 
 RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate();"
+
+RUN julia ${mainpath}/src/download_stuff.jl
+
+RUN julia ${mainpath}/src/warmup.jl
 
