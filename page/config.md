@@ -21,7 +21,7 @@ The latter allows you to plug in values that you would have defined here.
 @def title       = "JuliaClimate Notebooks"
 @def prepath     = "Notebooks"
 @def description = """
-                 Notebooks that show Julia packages related to climate working in concert.
+                 Showcase for climate related notebooks written in Julia.
                    """
 @def authors     = "Gaël Forget"
 
@@ -36,7 +36,7 @@ The latter allows you to plug in values that you would have defined here.
 -->
 @def add_docs  = true
 @def docs_url  = "https://github.com/JuliaClimate/Notebooks/"
-@def docs_name = "Docs"
+@def docs_name = "Github"
 
 @def add_nav_logo   = true
 @def nav_logo_path  = "/assets/logo.svg"
