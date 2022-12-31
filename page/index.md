@@ -275,10 +275,6 @@ An important requirement in climate science is to derive transports using native
 `IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
 Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. 
 
-\end{section}
-
-\begin{section}{}
-
 \lead{Visualization}
 
 The maps, histograms, and other graphs found in the notebooks are generally created with [Makie.jl](https://makie.juliaplots.org/stable/). 
