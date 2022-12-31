@@ -48,9 +48,10 @@ jobs:
             Pkg.add.(["NCDatasets","CairoMakie","Random"]);
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.add.(["YAXArrays", "Zarr", "NetCDF", "EarthDataLab"]);
-            Pkg.add.(["ArchGDAL","Colors","DiskArrays"]);
+            Pkg.add.(["ArchGDAL","Colors","DiskArrays","Dataverse"]);
             Pkg.add.(["OceanStateEstimation"]);
             Pkg.precompile();
+            include("src/download_data_sample1.jl");
             include("tutorials/run_notebooks.jl");'
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3

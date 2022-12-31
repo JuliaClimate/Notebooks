@@ -50,9 +50,8 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate();"
-
-RUN julia ${mainpath}/src/download_stuff.jl
-
+RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate(); Pkg.precompile();"
+RUN julia ${mainpath}/src/download_data_sample1.jl
+RUN julia ${mainpath}/src/download_notebooks.jl
 RUN julia ${mainpath}/src/warmup.jl
 
