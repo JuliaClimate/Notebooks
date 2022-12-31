@@ -42,6 +42,7 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \label{ocean-robots}
 
+- [OceanOPS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/OceanOPS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/OceanOPS.jl)) : explore global ocean observing systems.
 - [Buoy\_NWP\_NOAA.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Buoy_NWP_NOAA.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
 - [Mooring\_WHOTS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Mooring_WHOTS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
 - [Drifter\_GDP.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Drifter_GDP.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
