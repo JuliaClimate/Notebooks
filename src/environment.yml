@@ -8,5 +8,6 @@ dependencies:
   - pandas
   - rise
   - jupyter-server-proxy
+  - jupyterlab-git
   - pip:
     - jupyter-contrib-nbextensions
