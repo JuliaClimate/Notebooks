@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p15e_03
+      - v0p3p15g
   pull_request:
 jobs:
   build-and-deploy:
