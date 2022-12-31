@@ -55,3 +55,6 @@ RUN julia ${mainpath}/src/download_data_sample1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
 RUN julia ${mainpath}/src/warmup.jl
 
+RUN mkdir .dev
+RUN mv build plutoserver.egg-info .dev
+
