@@ -1,4 +1,8 @@
 
+using Pkg
+ENV["PYTHON"]=""
+Pkg.build("PyCall")
+
 using Dataverse
 (DataAccessApi,NativeApi)=pyDataverse.APIs()
 
