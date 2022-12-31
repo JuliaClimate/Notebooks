@@ -1,31 +1,28 @@
 FROM jupyter/base-notebook:latest
 
 USER root
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.2-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.8.2-linux-x86_64.tar.gz && \
-    mv julia-1.8.2 /opt/ && \
-    ln -s /opt/julia-1.8.2/bin/julia /usr/local/bin/julia && \
-    rm julia-1.8.2-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.8.3-linux-x86_64.tar.gz && \
+    mv julia-1.8.3 /opt/ && \
+    ln -s /opt/julia-1.8.3/bin/julia /usr/local/bin/julia && \
+    rm julia-1.8.3-linux-x86_64.tar.gz
 
 ENV mainpath ./
 RUN mkdir -p ${mainpath}
 
 USER ${NB_USER}
 
-COPY --chown=${NB_USER}:users ./plutoserver ${mainpath}/plutoserver
-COPY --chown=${NB_USER}:users ./sysimage ${mainpath}/sysimage
-COPY --chown=${NB_USER}:users ./tutorials ${mainpath}/tutorials
+COPY --chown=${NB_USER}:users ./src ${mainpath}/src
+COPY --chown=${NB_USER}:users ./src/plutoserver ${mainpath}/plutoserver
 
-RUN cp ${mainpath}/sysimage/environment.yml ${mainpath}/environment.yml
-RUN cp ${mainpath}/sysimage/setup.py ${mainpath}/setup.py
-RUN cp ${mainpath}/sysimage/runpluto.sh ${mainpath}/runpluto.sh
- 
-COPY --chown=${NB_USER}:users ./Project.toml ${mainpath}/Project.toml
+RUN cp ${mainpath}/src/setup.py ${mainpath}/setup.py
+RUN cp ${mainpath}/src/runpluto.sh ${mainpath}/runpluto.sh
+RUN cp ${mainpath}/src/environment.yml ${mainpath}/environment.yml
+RUN cp ${mainpath}/src/Project.toml ${mainpath}/Project.toml
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
-WORKDIR ${USER_HOME_DIR}
 
 RUN julia -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate();"
 
@@ -34,6 +31,8 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential && \
     apt-get install -y --no-install-recommends vim && \
+    apt-get install -y --no-install-recommends git-all && \
+    apt-get install -y --no-install-recommends unzip && \
     apt-get install -y --no-install-recommends gfortran && \
     apt-get install -y --no-install-recommends openmpi-bin && \
     apt-get install -y --no-install-recommends openmpi-doc && \
@@ -52,12 +51,8 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     rm -rf ~/.cache
 
 RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate();"
-RUN julia ${mainpath}/sysimage/download_stuff.jl
-RUN julia ${mainpath}/sysimage/create_sysimage.jl
-RUN julia --sysimage ExampleSysimage.so ${mainpath}/sysimage/pre_build_models.jl
 
-RUN echo alias jl='julia --project="/home/jovyan" --sysimage="/home/jovyan/ExampleSysimage.so"' >> ~/.bashrc
+RUN julia ${mainpath}/src/download_stuff.jl
 
-RUN mkdir dev
-RUN mv build work tutorials sysimage plutoserver plutoserver.egg-info dev
+RUN julia ${mainpath}/src/warmup.jl
 
