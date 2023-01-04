@@ -35,9 +35,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends unzip && \
     apt-get install -y --no-install-recommends gfortran && \
     apt-get install -y --no-install-recommends openmpi-bin && \
-    apt-get install -y --no-install-recommends openmpi-doc && \
     apt-get install -y --no-install-recommends libopenmpi-dev && \
-    apt-get install -y --no-install-recommends mpich && \
     apt-get install -y --no-install-recommends libnetcdf-dev && \
     apt-get install -y --no-install-recommends libnetcdff-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -50,10 +48,10 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN julia --project=${mainpath} -e "import Pkg; Pkg.instantiate(); Pkg.precompile();"
-RUN julia ${mainpath}/src/download_data_sample1.jl
+RUN julia --project=${mainpath} -e "import Pkg; Pkg.precompile();"
+RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
-RUN julia ${mainpath}/src/warmup.jl
+RUN julia ${mainpath}/src/warmup2.jl
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
