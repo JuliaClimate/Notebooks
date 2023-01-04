@@ -6,8 +6,8 @@ Pkg.build("PyCall")
 using Dataverse
 (DataAccessApi,NativeApi)=pyDataverse.APIs()
 
-filenames=["exportImage_60arc.tiff","sla_podaac.nc",
-           "polygons_EEZ.geojson","polygons_MBON_seascapes.geojson"]
+filenames=["exportImage_60arc.tiff"]
+#filenames=[filenames...,"sla_podaac.nc","polygons_EEZ.geojson","polygons_MBON_seascapes.geojson"]
 pth0=joinpath(tempdir(),"azores_region_data")
 
 DOI="doi:10.7910/DVN/OYBLGK"
