@@ -49,9 +49,9 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     rm -rf ~/.cache
 
 RUN julia --project=${mainpath} -e "import Pkg; Pkg.precompile();"
-RUN julia ${mainpath}/src/download_data_sample1.jl
+RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
-RUN julia ${mainpath}/src/warmup.jl
+RUN julia ${mainpath}/src/warmup2.jl
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
