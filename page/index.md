@@ -33,7 +33,7 @@ Gridded data can be read from files and written to files in [various formats](#f
 
 - [ECCO\_standard\_plots.jl](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare NASA ocean state estimates ([ECCO reanalysis](https://ecco-group.org))
 - [CBIOMES\_climatology\_plot.jll](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
-- [SatelliteAltimetry.html](http://www.gaelforget.net/notebooks/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
+- [SatelliteAltimetry.html](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
 
 \lead{Local Data}
 
@@ -42,12 +42,12 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \label{ocean-robots}
 
-- [OceanOPS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/OceanOPS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/OceanOPS.jl)) : explore global ocean observing systems.
-- [Buoy\_NWP\_NOAA.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Buoy_NWP_NOAA.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
-- [Mooring\_WHOTS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Mooring_WHOTS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
-- [Drifter\_GDP.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Drifter_GDP.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
-- [Float\_Argo.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Float_Argo.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
-- [Glider\_Spray.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/Glider_Spray.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Glider_Spray.jl)) : underwater [glider](http://spraydata.ucsd.edu/projects/) data.
+- [OceanOPS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/OceanOPS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/OceanOPS.jl)) : explore global ocean observing systems.
+- [Buoy\_NWP\_NOAA.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Buoy_NWP_NOAA.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
+- [Mooring\_WHOTS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Mooring_WHOTS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
+- [Drifter\_GDP.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Drifter_GDP.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
+- [Float\_Argo.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Float_Argo.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
+- [Glider\_Spray.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Glider_Spray.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Glider_Spray.jl)) : underwater [glider](http://spraydata.ucsd.edu/projects/) data.
 
 
 \end{section}
