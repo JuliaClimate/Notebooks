@@ -48,10 +48,11 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN julia --project=${mainpath} -e "import Pkg; Pkg.precompile();"
 RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
-RUN julia ${mainpath}/src/warmup2.jl
+
+RUN julia ${mainpath}/src/sysimage1.jl
+RUN julia "using IJulia; installkernel("CairoMakie", "--sysimage=/home/user/CairoMakie.so")"
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
