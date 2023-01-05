@@ -6,6 +6,10 @@ Pkg.build("PyCall")
 using Dataverse
 (DataAccessApi,NativeApi)=pyDataverse.APIs()
 
+##
+
+if false
+
 filenames=["exportImage_60arc.tiff"]
 #filenames=[filenames...,"sla_podaac.nc","polygons_EEZ.geojson","polygons_MBON_seascapes.geojson"]
 pth0=joinpath(tempdir(),"azores_region_data")
@@ -18,5 +22,7 @@ for filename in filenames
  file0=joinpath(pth0,filename)
  !ispath(pth0) ? mkdir(pth0) : nothing
  !isfile(file0) ? DataverseDownloads.download_files(lst,filename,pth0) : nothing
+end
+
 end
 
