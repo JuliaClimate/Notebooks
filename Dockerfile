@@ -52,7 +52,6 @@ RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
 
 RUN julia ${mainpath}/src/sysimage1.jl
-RUN julia "using IJulia; installkernel("CairoMakie", "--sysimage=/home/user/CairoMakie.so")"
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
