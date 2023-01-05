@@ -52,6 +52,8 @@ RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
 
 RUN julia ${mainpath}/src/sysimage1.jl
+RUN julia ${mainpath}/src/sysimage2.jl
+RUN julia ${mainpath}/src/sysimage3.jl
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
