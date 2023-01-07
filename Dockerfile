@@ -50,10 +50,9 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
 
 RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
+RUN julia ${mainpath}/src/sysimage.jl
 
-RUN julia ${mainpath}/src/sysimage1.jl
-RUN julia ${mainpath}/src/sysimage2.jl
-RUN julia ${mainpath}/src/sysimage3.jl
+RUN julia --sysimage /home/jovyan/viz.so -e "import Pkg; Pkg.precompile();"
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
