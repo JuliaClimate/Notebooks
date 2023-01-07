@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p16c
+      - v0p3p16d
   pull_request:
 jobs:
   binder:

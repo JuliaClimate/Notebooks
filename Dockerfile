@@ -50,6 +50,5 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
