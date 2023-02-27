@@ -211,7 +211,7 @@ notebooks.open(pluto_url,notebook_url=nbs.url[1])
 
 \label{cloud}
 
-Anyone should be able to run the provided computer configuration on a commercial cloud, a laptop, or a cluster from the [Docker image](https://hub.docker.com/repository/docker/gaelforget/notebooks) using this command for example:
+Anyone should be able to run the provided computer configuration on a commercial cloud, a laptop, or a cluster from the [Docker image](https://hub.docker.com/r/gaelforget/notebooks) using this command for example:
 
 ```
 docker run -p 8888:8888 gaelforget/notebooks:latest
