@@ -95,11 +95,11 @@ padding-right:  10px;
         </li>
         
         <li class="nav-item">
-          <a class="nav-link" href="#files">Files</a>
+          <a class="nav-link" href="#grids">Grids</a>
         </li>
         
         <li class="nav-item">
-          <a class="nav-link" href="#grids">Grids</a>
+          <a class="nav-link" href="#files">Files</a>
         </li>
         
         <li class="nav-item">
@@ -152,6 +152,7 @@ padding-right:  10px;
     <div class="row">
       <div class="col-lg-10 mx-auto">
         <h2>Data Sets</h2></p>
+<a id="datasets" class="anchor"></a>
 <div class="lead">Climate Change</div>
 <p>Let&#39;s start by plotting important aspects of climate change like global warming and sea level rise. The notebooks use model projections and data stored in <a href="#files">various file formats</a>.</p>
 <ul>
@@ -255,41 +256,11 @@ padding-right:  10px;
     </div>
   </div>
 </section>
-<section id="files" class="scrollspy section-bg-color">
+<section id="grids" class="scrollspy section-bg-color">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto">
-        <h2>Files and Formats</h2></p>
-<a id="files" class="anchor"></a>
-<p>The examples below use <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a>.</p>
-<ul>
-<li><p><a href="NetCDF_basics.html">NetCDF&#95;basics.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl">notebook url</a>&#41; is a brief tutorial that opens a netCDF file using <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a> and plots a 2D slice as a heatmap using <a href="https://makie.juliaplots.org/stable/">Makie.jl</a>.</p>
-</li>
-<li><p><a href="NetCDF_packages.html">NetCDF&#95;packages.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl">notebook url</a>&#41; reviews packages for ingesting NetCDF into various data structures; including <a href="https://juliaclimate.github.io/ClimateBase.jl/dev/">ClimateBase.jl</a> and <a href="https://juliaclimate.github.io/ClimateTools.jl/dev/">ClimateTools.jl</a>.</p>
-</li>
-<li><p><a href="NetCDF_advanced.html">NetCDF&#95;advanced.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl">notebook url</a>&#41; uses a large file to look at performance.</p>
-</li>
-</ul>
-<p>Alternatively, <a href="https://juliageo.github.io/NetCDF.jl/dev">NetCDF.jl</a> also provides interfaces for writing and reading netcdf files. In addition, <a href="https://juliaio.github.io/Zarr.jl/latest/">Zarr.jl</a> supports reading and writing <code>Zarr</code> Datasets from Julia. <a href="https://gaelforget.github.io/NCTiles.jl/dev">NCTiles.jl</a> converts binary data into meta-data-rich <a href="https://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files for &#40;1&#41; a simple rectangular grid; &#40;2&#41; a tiled domain distributed over multiple files.</p>
-<ul>
-<li><p><a href="YAXArrays_demo.html">YAXArrays&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/YAXArrays_demo.jl">notebook url</a>&#41; uses a data cube approach.</p>
-</li>
-<li><p><a href="GeoTIFF_demo.html">GeoTIFF&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoTIFF_demo.jl">notebook url</a>&#41; reads and plots a GeoTIFF file content using <a href="https://github.com/yeesian/ArchGDAL.jl">ArchGDAL.jl</a>.</p>
-</li>
-<li><p><a href="GeoJSON_demo.html">GeoJSON&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoJSON_demo.jl">notebook url</a>&#41; reads and plots a GeoJSON file content using <a href="https://github.com/JuliaGeo/GeoJSON.jl">GeoJSON.jl</a>.</p>
-</li>
-<li><p><a href="http://gaelforget.net/notebooks/xarray_climarray_etc.html">xarray&#95;climarray&#95;etc.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/xarray_climarray_etc.jl">notebook url</a>&#41; uses Python&#39;s xarray and related Julia packages.</p>
-</li>
-</ul>
-<p>      </div>
-    </div>
-  </div>
-</section>
-<section id="grids" class="scrollspy">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto">
-        <h2>Grids and Geography</h2></p>
+        <h2>Model Grids and Geography</h2></p>
 <div class="lead">MeshArrays.jl</div>
 <a id="mesh-arrays" class="anchor"></a>
 <p><a href="https://juliaclimate.github.io/MeshArrays.jl/dev">MeshArrays.jl</a> defines an array type that can contain / organize / distribute collections of inter-connected arrays as generally done in climate models. These data structures can be used to simulate variables of the climate system such as <a href="https://doi.org/10.21105/joss.02813">particles</a> and <a href="https://doi.org/10.1038/s41561-019-0333-7">transports</a>.</p>
@@ -301,6 +272,45 @@ padding-right:  10px;
 <li><p><a href="https://juliaclimate.github.io/MeshArrays.jl/dev/tutorials/basics.html">Basics</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/MeshArrays.jl/master/examples/basics.jl">notebook url</a>&#41; tutorial : illustrates how the MeshArrays.jl data structures let us write generic code readily applicable to whole families of grids.</p>
 </li>
 </ul>
+<p>      </div>
+    </div>
+  </div>
+</section>
+<section id="files" class="scrollspy">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <h2>Files and Formats</h2></p>
+<a id="files" class="anchor"></a>
+<div class="lead">NetCDF</div>
+<p>The examples below use <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a>. Alternatively, <a href="https://juliageo.github.io/NetCDF.jl/dev">NetCDF.jl</a> provides a more direct interface for writing and reading netcdf files. </p>
+<ul>
+<li><p><a href="NetCDF_basics.html">NetCDF&#95;basics.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl">notebook url</a>&#41; is a brief tutorial that opens a netCDF file using <a href="https://alexander-barth.github.io/NCDatasets.jl/latest/">NCDatasets.jl</a> and plots a 2D slice as a heatmap using <a href="https://makie.juliaplots.org/stable/">Makie.jl</a>.</p>
+</li>
+<li><p><a href="NetCDF_packages.html">NetCDF&#95;packages.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl">notebook url</a>&#41; reviews packages for ingesting NetCDF into various data structures; including <a href="https://juliaclimate.github.io/ClimateBase.jl/dev/">ClimateBase.jl</a> and <a href="https://juliaclimate.github.io/ClimateTools.jl/dev/">ClimateTools.jl</a>.</p>
+</li>
+<li><p><a href="NetCDF_advanced.html">NetCDF&#95;advanced.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl">notebook url</a>&#41; uses a large file to look at performance.</p>
+</li>
+</ul>
+<p>In addition, <a href="https://juliaio.github.io/Zarr.jl/latest/">Zarr.jl</a> supports reading and writing <code>Zarr</code> Datasets from Julia. <a href="https://gaelforget.github.io/NCTiles.jl/dev">NCTiles.jl</a> converts binary data into meta-data-rich <a href="https://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files for &#40;1&#41; a simple rectangular grid; &#40;2&#41; a tiled domain distributed over multiple files.</p>
+<p>Finally, packages like <a href="https://github.com/JuliaDataCubes/YAXArrays.jl#readme">YAXArrays.jl</a> and <a href="https://github.com/rafaqz/Rasters.jl#readme">Rasters.jl</a> also focus on data structures that support netcdf. </p>
+<ul>
+<li><p><a href="YAXArrays_demo.html">YAXArrays&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/YAXArrays_demo.jl">notebook url</a>&#41; uses a data cube approach.</p>
+</li>
+<li><p><a href="http://gaelforget.net/notebooks/xarray_climarray_etc.html">xarray&#95;climarray&#95;etc.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/xarray_climarray_etc.jl">notebook url</a>&#41; uses Python&#39;s xarray and related Julia packages.</p>
+</li>
+</ul>
+<div class="lead">Other Files</div>
+<p>Here we look at vector and raster data. These notebooks illustrate several packages from the <a href="https://juliageo.org">JuliaGeo</a> organization.</p>
+<ul>
+<li><p><a href="GeoTIFF_demo.html">GeoTIFF&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoTIFF_demo.jl">notebook url</a>&#41; reads and plots a GeoTIFF file content using <a href="https://github.com/yeesian/ArchGDAL.jl#readme">ArchGDAL.jl</a>.</p>
+</li>
+<li><p><a href="GeoJSON_demo.html">GeoJSON&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoJSON_demo.jl">notebook url</a>&#41; reads and plots a GeoJSON file content using <a href="https://github.com/JuliaGeo/GeoJSON.jl#readme">GeoJSON.jl</a>.</p>
+</li>
+<li><p><a href="Shapefile_demo.html">Shapefile&#95;demo.jl</a> &#40;<a href="https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/Shapefile_demo.jl">notebook url</a>&#41; reads and plots a Shapefile file content using <a href="https://github.com/JuliaGeo/Shapefile.jl#readme">Shapefile.jl</a>.</p>
+</li>
+</ul>
+<p>The <a href="#mesh-arrays">Grids and Geography</a> section looks at gridded output from a climate model more closely. Finally, the <a href="#datasets">Data Sets</a> section provides examples also for file formats like <code>CSV</code>, <code>JLD2</code>, and binary files.</p>
 <p>      </div>
     </div>
   </div>
@@ -318,15 +328,18 @@ padding-right:  10px;
 
 <p><strong>Run Notebooks</strong></p>
 <a id="howto" class="anchor"></a>
-<p>To start an interactive version of a notebook, on a local computer or in the cloud, start <code>Pluto.jl</code> and then : </p>
+<p>The <a href="https://github.com/fonsp/Pluto.jl/wiki/🔎-Basic-Commands-in-Pluto">Pluto</a> notebook server can be used directly from your familiar Julia environment. Alternatively, you should be able use the computer configuration that we provide on any platform &#40;cloud, laptop, or cluster&#41; as explained below.</p>
+<p>To start an interactive version of a notebook, you then launch <code>Pluto</code> and proceed as follows : </p>
 <ul>
 <li><p>copy <code>notebook url</code> from webpage</p>
 </li>
 <li><p>paste <code>notebook url</code> into Pluto</p>
 </li>
-<li><p><code>open</code> and wait for notebook to boot up</p>
+<li><p>click <code>open</code> and wait for notebook to boot up</p>
 </li>
 <li><p>interact with the reactive notebook</p>
+</li>
+<li><p>shut down or restart notebooks as needed</p>
 </li>
 </ul>
 
@@ -357,32 +370,21 @@ notebooks.open(pluto_url,notebook_url=nbs.url[<span class="hljs-number">1</span>
 
 <br/>
 
-<p><strong>Free Cloud Services</strong></p>
+<p><strong>Computer Configuration</strong></p>
 <a id="cloud" class="anchor"></a>
-<p>We are very grateful to the <a href="https://mybinder.readthedocs.io/en/latest/about/federation.html">BinderHub Federation</a> for deploying public BinderHubs to serve the community at no cost to the user. By default <a href="https://mybinder.org">mybinder.org</a> redirects you to one of the BinderHubs selected at random. Below we provide shorcuts and configurations customized for <code>JuliaClimate/Notebooks</code>. </p>
-<ul>
-<li><p><a href="https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">gesis.mybinder.org</a></p>
-</li>
-<li><p><a href="https://gke.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">gke.mybinder.org</a></p>
-</li>
-<li><p><a href="https://ovh.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">ovh.mybinder.org</a></p>
-</li>
-<li><p><a href="https://turing.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath&#61;lab">turing.mybinder.org</a></p>
-</li>
-</ul>
-<div class="lead">Step by step summary</div>
+<p>Anyone should be able to run the provided computer configuration on a commercial cloud, a laptop, or a cluster from the <a href="https://hub.docker.com/r/gaelforget/notebooks">Docker image</a> using this command for example:</p>
+<pre><code class="julia hljs">docker run -p <span class="hljs-number">8888</span>:<span class="hljs-number">8888</span> gaelforget/notebooks:latest</code></pre>
+<p>A bit more explanation is provided <a href="https://github.com/AIRCentre/JuliaEO/blob/main/docs/README-Docker-Intro.md">here in text</a> and <a href="https://youtu.be/daNrJhPPgWg">here in video</a>.</p>
+
+<br/>
+
+<div class="lead">Free Binder Service</div>
+<p>We are very grateful to the <a href="https://mybinder.readthedocs.io/en/latest/about/federation.html">BinderHub Federation</a> for deploying public BinderHubs to serve the community at no cost to the user. </p>
+<div class="alert alert-info" role="alert">
+Binder no longer works for this repository, for unclear reasons, as of Jan 2023. Instead it is recommended that you use the provided Docker image directly.</div>
  <div style="text-align:center;"></p>
 <div class="im-20"><a href="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png"><img src="https://user-images.githubusercontent.com/20276764/156822594-9dcb6899-e3f5-45d3-a595-dc89d97aafa8.png" alt="Step 1" /></a> <a href="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png"><img src="https://user-images.githubusercontent.com/20276764/156822596-b84d806f-f6cb-4d13-af81-2f8b52f42237.png" alt="Step 2" /></a> <a href="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png"><img src="https://user-images.githubusercontent.com/20276764/156822597-2bf1c0f7-aafe-49bd-863a-ff5be7658ca3.png" alt="Step 3" /></a></div>
 <p> </div>
-<div class="lead">Some Notes</div>
-<ul>
-<li><p>For repeated use it is suggested that you run the notebooks on a local computer rather than in the free cloud if possible. Not only will this probably be faster than on <code>mybinder</code> but it will also save funds that allow <code>mybinder</code> to provide these shared cloud services to the community without charge.</p>
-</li>
-<li><p>Memory limitations can occur but the resources provided by <code>mybinder</code> generally suffice to run the notebooks without excessive latency. For the <code>mybinder</code> case, notebooks have been downloaded into the <code>notebooks</code> subfolder to facilitate navigation within <code>Pluto</code>. </p>
-</li>
-<li><p>You can <a href="https://github.com/fonsp/Pluto.jl/wiki/🔎-Basic-Commands-in-Pluto">use Pluto directly</a>. You can also run our cloud computer configuration on your laptop or cluster from this <a href="https://hub.docker.com/repository/docker/gaelforget/notebooks">Docker image</a>, with <code>docker run -p 8888:8888 gaelforget/notebooks:latest</code>.</p>
-</li>
-</ul>
 <p>      </div>
     </div>
   </div>
