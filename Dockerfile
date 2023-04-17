@@ -43,7 +43,4 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
 
 RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
-RUN julia ${mainpath}/src/sysimage.jl
-
-RUN julia --sysimage ${mainpath}/viz.so -e "import Pkg; Pkg.precompile();"
 
