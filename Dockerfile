@@ -47,6 +47,3 @@ RUN julia ${mainpath}/src/sysimage.jl
 
 RUN julia --sysimage ${mainpath}/viz.so -e "import Pkg; Pkg.precompile();"
 
-RUN mkdir .dev
-RUN mv build plutoserver.egg-info .dev
-
