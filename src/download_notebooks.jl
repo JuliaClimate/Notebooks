@@ -1,6 +1,6 @@
 
 using ClimateModels
-path0="notebooks"
+path0="/usr/local/etc/gf/notebooks"
 nbs=notebooks.list()
 notebooks.download(path0,nbs)
 
