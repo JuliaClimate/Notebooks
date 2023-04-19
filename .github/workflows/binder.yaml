@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p17c
+      - updates_202304
   pull_request:
 jobs:
   binder:
