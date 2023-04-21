@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p17c
+      - updates_202304b
   pull_request:
 jobs:
   build-and-deploy:
