@@ -10,7 +10,7 @@ The listed notebooks highlight [JuliaClimate](https://github.com/JuliaClimate/) 
 ~~~
 
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/JuliaClimate.github.io/Notebooks)](https://JuliaClimate.github.io/Notebooks/)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 \end{section}
@@ -238,9 +238,11 @@ A bit more explanation is provided [here in text](https://github.com/AIRCentre/J
 
 \lead{Free Binder Service}
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+
 We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.io/en/latest/about/federation.html) for deploying public BinderHubs to serve the community at no cost to the user. 
 
-\alert{Binder no longer works for this repository, for unclear reasons, as of Jan 2023. Instead it is recommended that you use the provided Docker image directly.}
+\alert{If Binder no longer works for this repository (which seems to happen, for unclear reasons) then you can also use the provided Docker image directly as explained above.}
 
 \begin{center}
 

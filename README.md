@@ -1,16 +1,16 @@
 # JuliaClimate Notebooks
 
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/JuliaClimate.github.io/Notebooks)](https://JuliaClimate.github.io/Notebooks/)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab)
 [![DOI](https://zenodo.org/badge/147266407.svg)](https://zenodo.org/badge/latestdoi/147266407)
 
 This set of  [Julia](https://julialang.org) / [Pluto](https://github.com/fonsp/Pluto.jl/wiki) notebooks is a demo of [JuliaClimate](https://github.com/JuliaClimate/) packages working in concert together and within the broader `Julia` package ecosystem. 
 
-The notebook stack is explained in [our website](https://JuliaClimate.github.io/Notebooks/) which provides the notebook links (html and code). The website provides further guidelines and explanations. 
+The notebook stack is explained in [the website](https://JuliaClimate.github.io/Notebooks/) which provides the notebook links (html and code). The website provides further guidelines and explanations. 
 
-The cloud computer configuration, also provided here, let's you try the notebooks interactively. For example, see [this platform](https://gesis.mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab).
+The cloud computer configuration, also provided here, let's you use the notebooks interactively. For example, see [this mybinder platform](https://mybinder.org/v2/gh/JuliaClimate/Notebooks/HEAD?urlpath=lab).
 
-Please use our [issue tracker](https://github.com/JuliaClimate/Notebooks/issues) for feedback, bug reports, queries, new contribution ideas, etc when appropriate.
+Please rely on [the issue tracker](https://github.com/JuliaClimate/Notebooks/issues) for feedback, bug reports, queries, contribution ideas, etc when appropriate.
 
 | | History | +1C | +2C | +4C | |
 |:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|:-------------------------------------:|
