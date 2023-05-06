@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - updates_202304b
+      - webpage_202304
   pull_request:
 jobs:
   build-and-deploy:
