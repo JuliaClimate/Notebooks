@@ -17,12 +17,12 @@ notebooks.download(path0,nbs2)
 
 ## Notebooks from JuliaEO23
 
+using Git, Pkg
+
 path_ho="JuliaEO/notebooks/hands_on_sessions/"
 path_pl="JuliaEO/notebooks/plenary_sessions/"
 path_mv="notebooks/JuliaEO23/"
 mkdir(path_mv)
-
-using Git, Pkg
 
 run(`$(git()) clone -b gf05 https://github.com/gaelforget/JuliaEO`)
 Pkg.activate(path_ho*"Julia_for_beginners/"); Pkg.update(); Pkg.add("IJulia")
