@@ -24,7 +24,8 @@ ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 
-RUN julia -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate();"
+RUN julia -e "import Pkg; Pkg.Registry.update();"
+RUN julia -e "import Pkg; Pkg.instantiate();"
 
 USER root
 
