@@ -6,6 +6,8 @@ Pkg.build("PyCall")
 using Dataverse
 (DataAccessApi,NativeApi)=pyDataverse.APIs()
 
+using IJulia
+
 ##
 
 if false

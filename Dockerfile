@@ -1,11 +1,11 @@
 FROM jupyter/base-notebook:latest
 
 USER root
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.0-rc2-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.9.0-rc2-linux-x86_64.tar.gz && \
-    mv julia-1.9.0-rc2 /opt/ && \
-    ln -s /opt/julia-1.9.0-rc2/bin/julia /usr/local/bin/julia && \
-    rm julia-1.9.0-rc2-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.1-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.9.1-linux-x86_64.tar.gz && \
+    mv julia-1.9.1 /opt/ && \
+    ln -s /opt/julia-1.9.1/bin/julia /usr/local/bin/julia && \
+    rm julia-1.9.1-linux-x86_64.tar.gz
 
 ENV mainpath ./
 RUN mkdir -p ${mainpath}
@@ -24,7 +24,8 @@ ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 
-RUN julia -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate();"
+RUN julia -e "import Pkg; Pkg.Registry.update();"
+RUN julia -e "import Pkg; Pkg.instantiate();"
 
 USER root
 
@@ -42,17 +43,13 @@ RUN apt-get update && \
 
 USER ${NB_USER}
 
-RUN jupyter labextension install @jupyterlab/server-proxy && \
-    jupyter lab build && \
+RUN jupyter lab build && \
     jupyter lab clean && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
 RUN julia ${mainpath}/src/warmup1.jl
 RUN julia ${mainpath}/src/download_notebooks.jl
-RUN julia ${mainpath}/src/sysimage.jl
-
-RUN julia --sysimage /home/jovyan/viz.so -e "import Pkg; Pkg.precompile();"
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
