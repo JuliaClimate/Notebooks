@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - webpage_202304
+      - webpage_update_202307
   pull_request:
 jobs:
   build-and-deploy:
@@ -22,7 +22,7 @@ jobs:
     - name: Install Julia
       uses: julia-actions/setup-julia@v1
       with:
-        version: 1.8
+        version: 1.9
     # NOTE
     # Adjust the `input=""` on the last line to indicate where
     # the source of the package page is (`page/` by default).
@@ -49,8 +49,7 @@ jobs:
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.add.(["YAXArrays", "Zarr", "NetCDF", "EarthDataLab"]);
             Pkg.add.(["ArchGDAL","Colors","DiskArrays","Dataverse"]);
-            Pkg.add.(["OceanStateEstimation"]);
-            Pkg.precompile();
+            Pkg.add.(["OceanStateEstimation","IJulia"]);
             include("src/warmup1.jl");
             include("tutorials/run_notebooks.jl");'
     - name: Build and Deploy
