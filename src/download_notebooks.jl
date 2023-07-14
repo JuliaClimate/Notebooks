@@ -6,6 +6,8 @@ path0="notebooks"
 nbs=notebooks.list()
 notebooks.download(path0,nbs)
 
+mv(joinpath(path0,"Notebooks"),joinpath(path0,"FileFormats"))
+
 ## Notebooks from IndividualDisplacements.jl
 
 using DataFrames
@@ -24,14 +26,9 @@ path_pl="JuliaEO/notebooks/plenary_sessions/"
 path_mv="notebooks/JuliaEO23/"
 mkdir(path_mv)
 
-run(`$(git()) clone -b gf05 https://github.com/gaelforget/JuliaEO`)
-Pkg.activate(path_ho*"Julia_for_beginners/"); Pkg.update(); Pkg.add("IJulia")
+run(`$(git()) clone https://github.com/AIRCentre/JuliaEO`)
 mv(path_ho*"Julia_for_beginners",path_mv*"Julia_for_beginners")
 mv(path_pl*"Raster_data_Reading_Manipulating_and_Visualising",path_mv*"Raster_data_demo")
-Pkg.activate()
-rm("JuliaEO", recursive=true)
-
-run(`$(git()) clone -b gf04 https://github.com/gaelforget/JuliaEO`)
 mv(path_ho*"RF_classification_using_marida",path_mv*"Classification_MARIDA")
 rm("JuliaEO", recursive=true)
 
