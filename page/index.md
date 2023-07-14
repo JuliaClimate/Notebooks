@@ -33,9 +33,10 @@ Gridded data can be read from files and written to files in [various formats](#f
 
 \label{ocean-state-estimation}
 
+- [JuliaEO](https://github.com/AIRCentre/JuliaEO/tree/main/notebooks) (multiple notebooks) : notebooks that cover a range of data sources and use cases 
+- [OceanColor](https://github.com/JuliaOcean/MarineEcosystemNotebooks/tree/master/OceanColor) (multiple notebooks) : notebooks focused on satellite data that characterize marine ecosystems
 - [SatelliteAltimetry.jl](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
-- [OceanColourAlgorithms.ipynb](https://nbviewer.org/github/JuliaOcean/MarineEcosystemNotebooks/blob/master/OceanColor/01-OceanColourAlgorithms.ipynb) ([notebook url](https://github.com/JuliaOcean/MarineEcosystemNotebooks/blob/master/OceanColor/01-OceanColourAlgorithms.jl)) : use remotely sensed variables to derive Chlorophyll and classify ocean color
-- [ECCO\_standard\_plots.jl](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare NASA ocean state estimates ([ECCO reanalysis](https://ecco-group.org))
+- [ECCO\_standard\_plots.jl](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
 - [CBIOMES\_climatology\_plot.jll](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
 
 \lead{Local Data}
