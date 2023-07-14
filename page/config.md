@@ -18,7 +18,7 @@ The latter allows you to plug in values that you would have defined here.
              `prepath` to an empty string. Finally, adjust this if you want the
              deployed page to be in a subfolder e.g.: `YourPackage.jl/web/`.
 -->
-@def title       = "JuliaClimate Notebooks"
+@def title       = "JuliaClimate/Notebooks"
 @def prepath     = "Notebooks"
 @def description = """
                  Showcase for climate related notebooks written in Julia.
@@ -39,7 +39,7 @@ The latter allows you to plug in values that you would have defined here.
 @def docs_name = "Github"
 
 @def add_nav_logo   = true
-@def nav_logo_path  = "/assets/logo.svg"
+@def nav_logo_path  = "https://github.com/gaelforget/meta/raw/gfdev01/docs/juliaclimatelogo.png"
 @def nav_logo_alt   = "Logo"
 @def nav_logo_style = """
                       height:         25px;
