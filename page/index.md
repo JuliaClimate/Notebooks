@@ -3,7 +3,9 @@
 
 \label{introduction}
 
-The listed notebooks highlight [JuliaClimate](https://github.com/JuliaClimate/) packages used within the broader [Julia](https://julialang.org) package ecosystem. To replay the [Pluto notebooks](https://plutojl.org) on your computer or in the cloud, see [User Directions](#directions). For visualization examples from the notebooks, see [visualization](#sample-viz).
+The listed notebooks highlight [JuliaClimate](https://github.com/JuliaClimate/) packages used within the broader [Julia](https://julialang.org) package ecosystem. 
+
+\alert{To replay the [Pluto notebooks](https://plutojl.org) on your computer or in the cloud, see [User Directions](#directions). For visualization examples from the notebooks, see [visualization](#sample-viz).}
 
 ~~~
 <br/>
@@ -23,22 +25,26 @@ The listed notebooks highlight [JuliaClimate](https://github.com/JuliaClimate/) 
 
 Let's start by plotting important aspects of climate change like global warming and sea level rise. The notebooks use model projections and data stored in [various file formats](#files).
 
-- [CMIP climate models](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/CMIP6.jl)) : access climate model output from CMIP6 to compute temperature time series and maps.
-- [IPCC climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl)) : reproduce figures from _Climate Change 2021, The Physical Science Basis, Summary for Policymakers_.
-- [NASA Sea Level](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
+- [climate models](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/CMIP6.jl)) : access climate model output from CMIP6 to compute temperature time series and maps.
+- [climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl)) : reproduce figures from _Climate Change 2021, The Physical Science Basis, Summary for Policymakers_ (IPCC).
+- [sea level](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
 
 \lead{Gridded Data}
 
-Gridded data can be read from files and written to files in [various formats](#files). NetCDF and GeoTIFF are two common examples. Gridded data may include climatologies, reanalyses, or gridded satellite data products. The [OceanStateEstimation.jl](https://github.com/JuliaOcean/OceanStateEstimation.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages deal with gridded variables. 
+Gridded data can be read from files and written to files in [various file formats](#files). NetCDF and GeoTIFF are two common examples. Gridded data may include climatologies, reanalyses, or gridded satellite data products. 
+
+- [Earth observation](https://github.com/AIRCentre/JuliaEO/tree/main/notebooks) (multiple notebooks) : popular data sources and use cases covered in JuliaEO23
+- [Ocean color](https://github.com/JuliaOcean/MarineEcosystemNotebooks/tree/master/OceanColor) (multiple notebooks) : notebooks focused on satellite data that characterize marine ecosystems
 
 \label{ocean-state-estimation}
 
-- [SatelliteAltimetry.jl](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
-- [OceanColourAlgorithms.ipynb](https://nbviewer.org/github/JuliaOcean/MarineEcosystemNotebooks/blob/master/OceanColor/01-OceanColourAlgorithms.ipynb) ([notebook url](https://github.com/JuliaOcean/MarineEcosystemNotebooks/blob/master/OceanColor/01-OceanColourAlgorithms.jl)) : use remotely sensed variables to derive Chlorophyll and classify ocean color
-- [ECCO\_standard\_plots.jl](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare NASA ocean state estimates ([ECCO reanalysis](https://ecco-group.org))
-- [CBIOMES\_climatology\_plot.jll](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
+The [OceanStateEstimation.jl](https://github.com/JuliaOcean/OceanStateEstimation.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages deal with gridded variables. 
 
-\lead{Local Data}
+- [sea level altimetry](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
+- [physical oceanography](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
+- [marine ecosystems](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
+
+\lead{Sparse Data}
 
 For both land and ocean areas, data collected locally in the field is often sparse. The examples below cover common file formats and various access protocols (http, ftp, opendap, thredds). 
 [OceanRobots.jl](https://github.com/JuliaOcean/OceanRobots.jl) and [ArgoData.jl](https://github.com/JuliaOcean/ArgoData.jl) deal with such data collected in the Ocean. 
@@ -59,7 +65,7 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \label{climate-models}
 
-\lead{Running Models}
+\lead{ClimateModels.jl}
 
 [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) provides a uniform interface to climate models of varying complexity and completeness (up to whole Earth System models). The examples also illustrate cloud computing workflows that `replay` model output accessed from the web. Common file formats are supported. Version control, using _git_, is included to allow for workflow documentation and reproducibility.
 
@@ -71,7 +77,7 @@ For both land and ocean areas, data collected locally in the field is often spar
 - [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Speedy.jl) : fast, simplified, atmospheric model
 - [MITgcm general circulation model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/MITgcm.jl) : general circulation model
 
-\lead{Local Models}
+\lead{Particle Tracking Models}
 
 \label{individual-displacements}
 
@@ -88,21 +94,31 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \label{mitgcm-tools}
 
-[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), analyzing its output, and so on. The `examples` folder provides a series of [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks, which can be found in the package documentation. The examples run `MITgcm` interactively via the `ClimateModels.jl` interface, rely on `MeshArrays.jl` for visualizing results, use `IndividualDisplacements.jl` to derive material pathways, etc.
+[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), and analyzing its output. 
 
 - [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_configurations.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
 - [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_scan_output.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 
 - [MITgcm_run.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_run.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_run.jl)) : a detailed look into compiling and running the model.
 - [MITgcm_worklow.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_worklow.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_worklow.jl)): build, setup, run, and plot for a chosen standard MITgcm configuration.
+
+The examples run `MITgcm` interactively via `ClimateModels.jl`, use `MeshArrays.jl` for visualizing outputs, and exploit `IndividualDisplacements.jl` to derive material pathways.
+
 - [HS94_animation.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_animation.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
 - [HS94_particles.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_particles.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
 - [HS94_Makie.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_Makie.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
 
-\end{section}
+\lead{Marine Ecosystem Models}
 
-\begin{section}{title="Model Grids and Geography",name="Grids"}
+\label{marine-ecosystem}
 
-\lead{MeshArrays.jl}
+The [JuliaCon 2021 Workshop on Modeling Marine Ecosystems](https://www.youtube.com/watch?v=UCIRrXz2ZS0) was based on notebooks listed below. Additional detail is available in [this repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
+
+- [AIBECS](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
+- [PlanktonIndividuals](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
+- [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
+- [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
+
+\lead{Model Grids and Geography}
 
 \label{mesh-arrays}
 
@@ -120,20 +136,18 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \lead{NetCDF}
 
-The examples below use [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/). Alternatively, [NetCDF.jl](https://juliageo.github.io/NetCDF.jl/dev) provides a more direct interface for writing and reading netcdf files. 
+The examples below use [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and [NetCDF.jl](https://juliageo.github.io/NetCDF.jl/dev). 
 
 - [NetCDF\_basics.jl](NetCDF_basics.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_basics.jl)) is a brief tutorial that opens a netCDF file using [NCDatasets.jl](https://alexander-barth.github.io/NCDatasets.jl/latest/) and plots a 2D slice as a heatmap using [Makie.jl](https://makie.juliaplots.org/stable/).
 - [NetCDF\_packages.jl](NetCDF_packages.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_packages.jl)) reviews packages for ingesting NetCDF into various data structures; including [ClimateBase.jl](https://juliaclimate.github.io/ClimateBase.jl/dev/) and [ClimateTools.jl](https://juliaclimate.github.io/ClimateTools.jl/dev/).
 - [NetCDF\_advanced.jl](NetCDF_advanced.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/NetCDF_advanced.jl)) uses a large file to look at performance.
 
-In addition, [Zarr.jl](https://juliaio.github.io/Zarr.jl/latest/) supports reading and writing `Zarr` Datasets from Julia. [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
-
-Finally, packages like [YAXArrays.jl](https://github.com/JuliaDataCubes/YAXArrays.jl#readme) and [Rasters.jl](https://github.com/rafaqz/Rasters.jl#readme) also focus on data structures that support netcdf. 
+Data structures from [YAXArrays.jl](https://github.com/JuliaDataCubes/YAXArrays.jl#readme), [Rasters.jl](https://github.com/rafaqz/Rasters.jl#readme), [ClimateTools.jl](https://github.com/JuliaClimate/ClimateTools.jl), and [ClimateBase.jl](https://juliaclimate.github.io/ClimateBase.jl/dev/) also support NetCDF. 
 
 - [YAXArrays\_demo.jl](YAXArrays_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/YAXArrays_demo.jl)) uses a data cube approach.
 - [xarray\_climarray\_etc.jl](http://gaelforget.net/notebooks/xarray_climarray_etc.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/xarray_climarray_etc.jl)) uses Python's xarray and related Julia packages.
 
-\lead{Other Files}
+\lead{TIFF, JSON, etc}
 
 Here we look at vector and raster data. These notebooks illustrate several packages from the [JuliaGeo](https://juliageo.org) organization.
 
@@ -141,11 +155,16 @@ Here we look at vector and raster data. These notebooks illustrate several packa
 - [GeoJSON\_demo.jl](GeoJSON_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/GeoJSON_demo.jl)) reads and plots a GeoJSON file content using [GeoJSON.jl](https://github.com/JuliaGeo/GeoJSON.jl#readme).
 - [Shapefile\_demo.jl](Shapefile_demo.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Notebooks/master/tutorials/Shapefile_demo.jl)) reads and plots a Shapefile file content using [Shapefile.jl](https://github.com/JuliaGeo/Shapefile.jl#readme).
 
-The [Grids and Geography](#mesh-arrays) section looks at gridded output from a climate model more closely. Finally, the [Data Sets](#datasets) section provides examples also for file formats like `CSV`, `JLD2`, and binary files.
+\lead{Other Files}
+
+- The [Data Sets](#datasets) section provides examples also for file formats like `CSV`, `JLD2`, and binary files.
+- The [Grids and Geography](#mesh-arrays) section looks at gridded output from a climate model more closely. 
+- [Zarr.jl](https://juliaio.github.io/Zarr.jl/latest/) supports reading and writing `Zarr` Datasets from Julia. 
+- [NCTiles.jl](https://gaelforget.github.io/NCTiles.jl/dev) converts binary data into meta-data-rich [NetCDF](https://en.wikipedia.org/wiki/NetCDF) files for (1) a simple rectangular grid; (2) a tiled domain distributed over multiple files.
 
 \end{section}
 
-\begin{section}{title="User Directions",name="Directions"}
+\begin{section}{title="How To",name="How To"}
 
 \label{directions}
 
@@ -259,23 +278,7 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 
 \label{about}
 
-The [User Directions](#directions) section is for those interested in running notebooks themselves.
-
-- [How-To](#howto)
-- [Cloud Services](#cloud)
-
-\lead{Workshops}
-
-\label{workshop}
-
-The JuliaCon 2021 Workshop on `Modeling Marine Ecosystems At Multiple Scales Using Julia` was based on notebooks listed below. Additional detail is available in [this repository](https://github.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl).
-
-- [AIBECS](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
-- [PlanktonIndividuals](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
-- [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
-- [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
-
-\lead{References}
+\lead{Packages}
 
 The notebooks mostly come from the `examples` section of various Julia packages.
 
@@ -286,8 +289,6 @@ The notebooks mostly come from the `examples` section of various Julia packages.
 - Models / [MITgcmTools.jl](#mitgcm-tools) examples
 - Arrays / [MeshArrays.jl](#mesh-arrays) examples
 - Points / [IndividualDisplacements.jl](#individual-displacements) examples
-
-\lead{Packages}
 
 Examples that use gridded data sets include the `OceanStateEstimation.jl` notebooks. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
 
