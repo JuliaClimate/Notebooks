@@ -71,9 +71,9 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 - [Random walk model (0D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/RandomWalker.jl) : two-dimensional random walk
 - [ShallowWaters.jl model (2D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/ShallowWaters.jl) : shallow water equations
-- [Oceananigans.jl model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Oceananigans.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Oceananigans.jl) : non-hydrostatic model
-- [Hector climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Hector.jl) : simple global climate carbon-cycle model 
-- [FaIR	 climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/FaIR.jl) : simple global climate carbon-cycle model
+- [Oceananigans.jl model (3D)](http://www.gaelforget.net/notebooks/Oceananigans.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Oceananigans.jl) : non-hydrostatic model
+- [Hector climate model (global)](http://www.gaelforget.net/notebooks/Hector.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Hector.jl) : simple global climate carbon-cycle model 
+- [FaIR	 climate model (global)](http://www.gaelforget.net/notebooks/FaIR.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/FaIR.jl) : simple global climate carbon-cycle model
 - [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Speedy.jl) : fast, simplified, atmospheric model
 - [MITgcm general circulation model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/MITgcm.jl) : general circulation model
 
