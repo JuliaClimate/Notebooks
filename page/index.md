@@ -27,20 +27,21 @@ Let's start by plotting important aspects of climate change like global warming 
 
 - [climate models](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/CMIP6.jl)) : access climate model output from CMIP6 to compute temperature time series and maps.
 - [climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl)) : reproduce figures from _Climate Change 2021, The Physical Science Basis, Summary for Policymakers_ (IPCC).
-- [sea level](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
+- [mean sea level](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
 
 \lead{Gridded Data}
 
 Gridded data can be read from files and written to files in [various file formats](#files). NetCDF and GeoTIFF are two common examples. Gridded data may include climatologies, reanalyses, or gridded satellite data products. 
 
 - [Earth observation](https://github.com/AIRCentre/JuliaEO/tree/main/notebooks) (multiple notebooks) : popular data sources and use cases covered in JuliaEO23
+- [sea surface temperature](http://www.gaelforget.net/notebooks/sst_anomaly_notebook.html) (_notebook url coming soon_) : visualize global warming at the sea surface
+- [regional sea level](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
 - [Ocean color](https://github.com/JuliaOcean/MarineEcosystemNotebooks/tree/master/OceanColor) (multiple notebooks) : notebooks focused on satellite data that characterize marine ecosystems
 
 \label{ocean-state-estimation}
 
-The [OceanStateEstimation.jl](https://github.com/JuliaOcean/OceanStateEstimation.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages deal with gridded variables. 
+The [OceanStateEstimation.jl](https://github.com/JuliaOcean/OceanStateEstimation.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages can deal with gridded model output. 
 
-- [sea level altimetry](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
 - [physical oceanography](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
 - [marine ecosystems](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
 
