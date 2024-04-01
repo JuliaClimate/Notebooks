@@ -56,7 +56,6 @@ md"""## Download Files"""
 begin
 	DOI="doi:10.7910/DVN/OYBLGK"
 	df=Dataverse.file_list(DOI)
-	lst=Dataverse.url_list(df)
 	"Done with Dataverse"
 end
 
@@ -67,7 +66,7 @@ begin
 	for filename in filenames
 		file0=joinpath(pth0,filename)
 		!ispath(pth0) ? mkdir(pth0) : nothing
-		!isfile(file0) ? Dataverse.file_download(lst,filename,pth0) : nothing
+		!isfile(file0) ? Dataverse.file_download(df,filename,pth0) : nothing
 	end
 	"Done with downloads"
 end

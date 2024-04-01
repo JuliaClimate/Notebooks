@@ -47,7 +47,6 @@ For information on the data see links below.
 begin
 	DOI="doi:10.7910/DVN/OYBLGK"
 	df=Dataverse.file_list(DOI)
-	lst=Dataverse.url_list(df)
 	"Done with accessing Dataverse"
 end
 
@@ -59,7 +58,7 @@ begin
 		file0=joinpath(pth0,filename)
 		!ispath(pth0) ? mkdir(pth0) : nothing
 		println("starting : $filename")
-		!isfile(file0) ? Dataverse.file_download(lst,filename,pth0) : nothing
+		!isfile(file0) ? Dataverse.file_download(df,filename,pth0) : nothing
 	end
 	"Done with downloads"
 end
