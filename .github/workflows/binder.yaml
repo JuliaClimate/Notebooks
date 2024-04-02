@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - webpage_202304
+      - 20230922_mods
   pull_request:
 jobs:
   binder:
