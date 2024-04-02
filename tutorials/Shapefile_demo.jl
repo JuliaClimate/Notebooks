@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.25
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
@@ -77,13 +77,6 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Rasters = "a3a2b9e3-a471-40c9-b274-f788e487c689"
 Shapefile = "8e980c4a-a4fe-5da2-b3a7-4b4b0353a2f4"
-
-[compat]
-Dataverse = "~0.2.0"
-Plots = "~1.38.10"
-PlutoUI = "~0.7.50"
-Rasters = "~0.6.1"
-Shapefile = "~0.9.1"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
