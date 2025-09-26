@@ -31,10 +31,6 @@ RUN cp ${mainpath}/src/runpluto.sh ${mainpath}/runpluto.sh
 RUN cp ${mainpath}/src/environment.yml ${mainpath}/environment.yml
 RUN cp ${mainpath}/src/Project.toml ${mainpath}/Project.toml
 
-ENV USER_HOME_DIR /home/${NB_USER}
-ENV JULIA_PROJECT ${USER_HOME_DIR}
-ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
-
 RUN julia -e "import Pkg; Pkg.Registry.update();"
 RUN julia -e "import Pkg; Pkg.instantiate();"
 
