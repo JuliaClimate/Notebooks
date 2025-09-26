@@ -1,14 +1,26 @@
 FROM jupyter/base-notebook:latest
 
-RUN curl -fsSL https://install.julialang.org | sh -s -- --yes
-
 USER root
 
 ENV mainpath ./
 RUN mkdir -p ${mainpath}
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential && \
+    apt-get install -y --no-install-recommends vim && \
+    apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends git-all && \
+    apt-get install -y --no-install-recommends unzip && \
+    apt-get install -y --no-install-recommends gfortran && \
+    apt-get install -y --no-install-recommends openmpi-bin && \
+    apt-get install -y --no-install-recommends libopenmpi-dev && \
+    apt-get install -y --no-install-recommends libnetcdf-dev && \
+    apt-get install -y --no-install-recommends libnetcdff-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 USER ${NB_USER}
 
+RUN echo 'alias julia="${mainpath}/.juliaup/bin/julia --project=${mainpath}"' >> ~/.bashrc
 RUN curl -fsSL https://install.julialang.org | sh -s -- --yes
 
 COPY --chown=${NB_USER}:users ./src ${mainpath}/src
@@ -25,22 +37,6 @@ ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 
 RUN julia -e "import Pkg; Pkg.Registry.update();"
 RUN julia -e "import Pkg; Pkg.instantiate();"
-
-USER root
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential && \
-    apt-get install -y --no-install-recommends vim && \
-    apt-get install -y --no-install-recommends git-all && \
-    apt-get install -y --no-install-recommends unzip && \
-    apt-get install -y --no-install-recommends gfortran && \
-    apt-get install -y --no-install-recommends openmpi-bin && \
-    apt-get install -y --no-install-recommends libopenmpi-dev && \
-    apt-get install -y --no-install-recommends libnetcdf-dev && \
-    apt-get install -y --no-install-recommends libnetcdff-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER ${NB_USER}
 
 RUN jupyter lab build && \
     jupyter lab clean && \
