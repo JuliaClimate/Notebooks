@@ -49,7 +49,7 @@ jobs:
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.add.(["YAXArrays", "Zarr", "NetCDF", "EarthDataLab"]);
             Pkg.add.(["ArchGDAL","Colors","DiskArrays","Dataverse"]);
-            Pkg.add.(["OceanStateEstimation","IJulia"]);
+            Pkg.add.(["Climatology","IJulia"]);
             include("src/warmup1.jl");
             include("tutorials/run_notebooks.jl");'
     - name: Build and Deploy
