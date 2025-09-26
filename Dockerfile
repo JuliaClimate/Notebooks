@@ -38,8 +38,8 @@ RUN jupyter lab build && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN julia ${mainpath}/src/warmup1.jl
-RUN julia ${mainpath}/src/download_notebooks.jl
+RUN ${mainpath}/.juliaup/bin/julia ${mainpath}/src/warmup1.jl
+RUN ${mainpath}/.juliaup/bin/julia ${mainpath}/src/download_notebooks.jl
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
