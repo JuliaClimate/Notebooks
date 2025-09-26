@@ -31,8 +31,7 @@ RUN cp ${mainpath}/src/runpluto.sh ${mainpath}/runpluto.sh
 RUN cp ${mainpath}/src/environment.yml ${mainpath}/environment.yml
 RUN cp ${mainpath}/src/Project.toml ${mainpath}/Project.toml
 
-RUN julia -e "import Pkg; Pkg.Registry.update();"
-RUN julia -e "import Pkg; Pkg.instantiate();"
+RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath} -e "import Pkg; Pkg.update(); Pkg.instantiate();"
 
 RUN jupyter lab build && \
     jupyter lab clean && \
