@@ -2,9 +2,6 @@ FROM jupyter/base-notebook:latest
 
 USER root
 
-ENV mainpath ./
-RUN mkdir -p ${mainpath}
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential && \
     apt-get install -y --no-install-recommends vim && \
@@ -20,8 +17,15 @@ RUN apt-get update && \
 
 USER ${NB_USER}
 
+ENV mainpath=/home/${NB_USER}
+
 RUN echo 'alias julia="${mainpath}/.juliaup/bin/julia --project=${mainpath}"' >> ~/.bashrc
 RUN curl -fsSL https://install.julialang.org | sh -s -- --yes
+
+USER root
+RUN ln -s ${mainpath}/.juliaup/bin/julia /usr/local/bin/julia
+
+USER ${NB_USER}
 
 COPY --chown=${NB_USER}:users ./src ${mainpath}/src
 COPY --chown=${NB_USER}:users ./src/plutoserver ${mainpath}/plutoserver
@@ -30,8 +34,9 @@ RUN cp ${mainpath}/src/setup.py ${mainpath}/setup.py
 RUN cp ${mainpath}/src/runpluto.sh ${mainpath}/runpluto.sh
 RUN cp ${mainpath}/src/environment.yml ${mainpath}/environment.yml
 RUN cp ${mainpath}/src/Project.toml ${mainpath}/Project.toml
+RUN cp ${mainpath}/src/Manifest.toml ${mainpath}/Manifest.toml
 
-RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath}/src -e "import Pkg; Pkg.update(); Pkg.instantiate();"
+RUN ${mainpath}/.juliaup/bin/julia -e "import Pkg; Pkg.update(); Pkg.instantiate();"
 
 RUN jupyter lab build && \
     jupyter lab clean && \
