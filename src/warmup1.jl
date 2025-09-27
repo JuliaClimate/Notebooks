@@ -1,4 +1,6 @@
 
+if false
+
 using Pkg
 ENV["PYTHON"]=""
 Pkg.build("PyCall")
@@ -6,6 +8,11 @@ Pkg.build("PyCall")
 using Dataverse
 (DataAccessApi,NativeApi)=pyDataverse.APIs()
 
+end
+
+##
+
+import Pkg; Pkg.add("IJulia")
 using IJulia
 
 ##

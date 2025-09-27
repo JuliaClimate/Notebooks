@@ -8,11 +8,11 @@ notebooks.download(path0,nbs)
 
 mv(joinpath(path0,"Notebooks"),joinpath(path0,"FileFormats"))
 
-## Notebooks from IndividualDisplacements.jl
+## Notebooks from Driftersjl
 
 using DataFrames
-url0="https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/worldwide/"
-nbs2=DataFrame( "folder" => ["IndividualDisplacements.jl","IndividualDisplacements.jl"],
+url0="https://raw.githubusercontent.com/JuliaClimate/Driftersjl/master/examples/worldwide/"
+nbs2=DataFrame( "folder" => ["Driftersjl","Driftersjl"],
                 "file" => ["ECCO_FlowFields.jl","OCCA_FlowFields.jl"],
                 "url" => [url0*"ECCO_FlowFields.jl",url0*"OCCA_FlowFields.jl"])
 notebooks.download(path0,nbs2)

@@ -27,7 +27,7 @@ Let's start by plotting important aspects of climate change like global warming 
 
 - [climate models](https://gaelforget.github.io/ClimateModels.jl/dev/examples/CMIP6.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/CMIP6.jl)) : access climate model output from CMIP6 to compute temperature time series and maps.
 - [climate report](https://gaelforget.github.io/ClimateModels.jl/dev/examples/IPCC.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/IPCC.jl)) : reproduce figures from _Climate Change 2021, The Physical Science Basis, Summary for Policymakers_ (IPCC).
-- [mean sea level](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
+- [mean sea level](https://JuliaOcean.github.io/Climatology.jl/dev/examples/NSLCT_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/NSLCT/NSLCT_notebook.jl)) : explore changes in sea level over the Globe using NASA data and estimates.
 
 \lead{Gridded Data}
 
@@ -40,10 +40,10 @@ Gridded data can be read from files and written to files in [various file format
 
 \label{ocean-state-estimation}
 
-The [OceanStateEstimation.jl](https://github.com/JuliaOcean/OceanStateEstimation.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages can deal with gridded model output. 
+The [Climatology.jl](https://github.com/JuliaOcean/Climatology.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages can deal with gridded model output. 
 
-- [physical oceanography](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
-- [marine ecosystems](https://JuliaOcean.github.io/OceanStateEstimation.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanStateEstimation.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
+- [physical oceanography](https://JuliaOcean.github.io/Climatology.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
+- [marine ecosystems](https://JuliaOcean.github.io/Climatology.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
 
 \lead{Sparse Data}
 
@@ -82,31 +82,31 @@ For both land and ocean areas, data collected locally in the field is often spar
 
 \label{individual-displacements}
 
-[IndividualDisplacements.jl](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/) supports the modeling of geophysical fluids at [moving point locations](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). It computes single point displacements within a flow field, and follow individual fluid parcels as they move over time. 	
+[Drifters.jl](https://juliaclimate.github.io/Drifters.jl/dev/) supports the modeling of geophysical fluids at [moving point locations](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). It computes single point displacements within a flow field, and follow individual fluid parcels as they move over time. 	
 
-[IndividualDisplacements.jl](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/) is geared towards the analysis of Climate, Ocean, etc model output over a gridded domain. It can simulate material transports within the Earth System (e.g., for plastics or planktons in the Ocean; dusts or chemicals in the Atmosphere). 
+[Drifters.jl](https://juliaclimate.github.io/Drifters.jl/dev/) is geared towards the analysis of Climate, Ocean, etc model output over a gridded domain. It can simulate material transports within the Earth System (e.g., for plastics or planktons in the Ocean; dusts or chemicals in the Atmosphere). 
 
-- [Simple Two-Dimensional Flow](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/examples/random_flow_field.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/basics/random_flow_field.jl)) : simulate particle trajectories in 2D
-- [Simple Three-Dimensional Flow](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/examples/solid_body_rotation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/basics/solid_body_rotation.jl)) : rotate, converge, and sink in 3D
-- [Global Ocean Circulation (2D)](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/examples/global_ocean_circulation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/worldwide/global_ocean_circulation.jl)) : monthly flow climatology in 2D
-- [Global Ocean Circulation (3D)](https://juliaclimate.github.io/IndividualDisplacements.jl/dev/examples/three_dimensional_ocean.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/IndividualDisplacements.jl/master/examples/worldwide/three_dimensional_ocean.jl)) : mean flow climatology in 3D
+- [Simple Two-Dimensional Flow](https://juliaclimate.github.io/Drifters.jl/dev/examples/random_flow_field.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/basics/random_flow_field.jl)) : simulate particle trajectories in 2D
+- [Simple Three-Dimensional Flow](https://juliaclimate.github.io/Drifters.jl/dev/examples/solid_body_rotation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/basics/solid_body_rotation.jl)) : rotate, converge, and sink in 3D
+- [Global Ocean Circulation (2D)](https://juliaclimate.github.io/Drifters.jl/dev/examples/global_ocean_circulation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/global_ocean_circulation.jl)) : monthly flow climatology in 2D
+- [Global Ocean Circulation (3D)](https://juliaclimate.github.io/Drifters.jl/dev/examples/three_dimensional_ocean.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/three_dimensional_ocean.jl)) : mean flow climatology in 3D
 
 \lead{General Circulation Models}
 
 \label{mitgcm-tools}
 
-[MITgcmTools.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), and analyzing its output. 
+[MITgcm.jl](https://gaelforget.github.io/MITgcm.jl/dev/) is a set of tools for running [MITgcm](https://mitgcm.readthedocs.io/en/latest/?badge=latest), and analyzing its output. 
 
-- [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_configurations.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
-- [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_scan_output.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 
-- [MITgcm_run.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_run.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_run.jl)) : a detailed look into compiling and running the model.
-- [MITgcm_worklow.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/MITgcm_worklow.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/MITgcm_worklow.jl)): build, setup, run, and plot for a chosen standard MITgcm configuration.
+- [MITgcm_configurations.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/MITgcm_configurations.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/MITgcm_configurations.jl)); explore MITgcm configurations and their parameters.
+- [MITgcm\_scan\_output.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/MITgcm_scan_output.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/MITgcm_scan_output.jl)) : scan run directory, standard output, read grid files, and visualize. 
+- [MITgcm_run.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/MITgcm_run.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/MITgcm_run.jl)) : a detailed look into compiling and running the model.
+- [MITgcm_worklow.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/MITgcm_worklow.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/MITgcm_worklow.jl)): build, setup, run, and plot for a chosen standard MITgcm configuration.
 
-The examples run `MITgcm` interactively via `ClimateModels.jl`, use `MeshArrays.jl` for visualizing outputs, and exploit `IndividualDisplacements.jl` to derive material pathways.
+The examples run `MITgcm` interactively via `ClimateModels.jl`, use `MeshArrays.jl` for visualizing outputs, and exploit `Drifters.jl` to derive material pathways.
 
-- [HS94_animation.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_animation.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
-- [HS94_particles.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_particles.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
-- [HS94_Makie.jl](https://gaelforget.github.io/MITgcmTools.jl/dev/examples/HS94_Makie.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcmTools.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
+- [HS94_animation.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_animation.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
+- [HS94_particles.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_particles.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
+- [HS94_Makie.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_Makie.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
 
 \lead{Marine Ecosystem Models}
 
@@ -117,7 +117,7 @@ The [JuliaCon 2021 Workshop on Modeling Marine Ecosystems](https://www.youtube.c
 - [AIBECS](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/AIBECSExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/AIBECSExample.jl)) : global steady-state biogeochemistry and gridded transport models that run fast for long time scales (centuries or even millennia).
 - [PlanktonIndividuals](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/PlanktonIndividualExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/PlanktonIndividualExample.jl))  local to global agent-based model, particularly suited to study microbial communities, plankton physiology, and nutrient cycles.
 - [MITgcm global biogeo](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/MITgcm_tutorial_global_oce_biogeo.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/MITgcm_tutorial_global_oce_biogeo.jl)) : interface to full-featured, Fortran-based, general circulation model and its output (transports, chemistry, ecology, ocean, sea-ice, atmosphere, and more).
-- [IndividualDisplacements](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/IndividualDisplacementsExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/IndividualDisplacementsExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
+- [Drifters](https://juliaocean.github.io/MarineEcosystemsJuliaCon2021.jl/dev/DriftersExample.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/MarineEcosystemsJuliaCon2021.jl/main/src/DriftersExample.jl)) : local to global particle tracking, for simulating dispersion, connectivity, transports in the ocean or atmosphere, etc.
 
 \lead{Model Grids and Geography}
 
@@ -284,21 +284,21 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 The notebooks mostly come from the `examples` section of various Julia packages.
 
 - Data Products / [ClimateModels.jl](#climate-models) examples
-- Data Products / [OceanStateEstimation.jl](#ocean-state-estimation) examples
+- Data Products / [Climatology.jl](#ocean-state-estimation) examples
 - Data Products / [OceanRobots.jl](#ocean-robots) examples
 - Models / [ClimateModels.jl](#climate-models) examples
-- Models / [MITgcmTools.jl](#mitgcm-tools) examples
+- Models / [MITgcm.jl](#mitgcm-tools) examples
 - Arrays / [MeshArrays.jl](#mesh-arrays) examples
-- Points / [IndividualDisplacements.jl](#individual-displacements) examples
+- Points / [Drifters.jl](#individual-displacements) examples
 
-Examples that use gridded data sets include the `OceanStateEstimation.jl` notebooks. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
+Examples that use gridded data sets include the `Climatology.jl` notebooks. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
 
-The `ClimateModels.jl` package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcmTools.jl`.
+The `ClimateModels.jl` package provides an interface to models often used in climate science. The examples either run models and generate new output, or replay model output generated earlier (e.g. from CMIP6 or the 2021 IPCC report). Additional examples for the [MIT general circulation model](https://mitgcm.readthedocs.io/en/latest/) are provided in `MITgcm.jl`.
 
 An important requirement in climate science is to derive transports using native model grid output to e.g. precisely close energy budgets. This is one of the applications of `MeshArrays.jl` -- the analysis of global transports derived from gridded model output. Topics covered via `MeshArrays.jl` also include interpolation and geography.
 
-`IndividualDisplacements.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
-Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `OceanStateEstimation.jl`. 
+`Drifters.jl` extends this approach by providing a [particle tracking](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field) framework that readily operates on climate model `C-grids` using `MeshArrays.jl`. 
+Examples that let you access and explore ocean data products are provided in `OceanRobots.jl` and `Climatology.jl`. 
 
 \lead{Visualization}
 

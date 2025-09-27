@@ -124,7 +124,7 @@ heatmap(A)
 # ╔═╡ a8524123-f78c-4c6d-b455-872c3fcf7f7f
 md"""## Software Links 
 
-The [OceanStateEstimation.jl](https://gaelforget.github.io/OceanStateEstimation.jl/dev/), [OceanRobots.jl](https://gaelforget.github.io/OceanRobots.jl/dev), and [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) package documentations provide complementary examples that cover not only [NetCDF](https://www.unidata.ucar.edu/software/netcdf/) but also formats like `CSV` and `Zarr`. 
+The [Climatology.jl](https://gaelforget.github.io/Climatology.jl/dev/), [OceanRobots.jl](https://gaelforget.github.io/OceanRobots.jl/dev), and [ClimateModels.jl](https://gaelforget.github.io/ClimateModels.jl/dev/) package documentations provide complementary examples that cover not only [NetCDF](https://www.unidata.ucar.edu/software/netcdf/) but also formats like `CSV` and `Zarr`. 
 
 One option to try out these notebooks online is provided in the [JuliaClimate notebooks](https://juliaclimate.github.io/Notebooks/#page-top) page ([here](https://juliaclimate.github.io/Notebooks/#more)).
 

@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - v0p3p17d
+      - update_page_202509
   pull_request:
 jobs:
   build-and-deploy:
@@ -20,9 +20,9 @@ jobs:
     #     python-version: '3.8'
     # - run: pip install matplotlib
     - name: Install Julia
-      uses: julia-actions/setup-julia@v1
+      uses: julia-actions/setup-julia@v2
       with:
-        version: 1.9
+        version: 1
     # NOTE
     # Adjust the `input=""` on the last line to indicate where
     # the source of the package page is (`page/` by default).
@@ -49,7 +49,7 @@ jobs:
             Pkg.add.(["Pluto", "PlutoUI", "PlutoSliderServer"]);
             Pkg.add.(["YAXArrays", "Zarr", "NetCDF", "EarthDataLab"]);
             Pkg.add.(["ArchGDAL","Colors","DiskArrays","Dataverse"]);
-            Pkg.add.(["OceanStateEstimation","IJulia"]);
+            Pkg.add.(["Climatology","IJulia"]);
             include("src/warmup1.jl");
             include("tutorials/run_notebooks.jl");'
     - name: Build and Deploy
