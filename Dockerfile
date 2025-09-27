@@ -31,15 +31,15 @@ RUN cp ${mainpath}/src/runpluto.sh ${mainpath}/runpluto.sh
 RUN cp ${mainpath}/src/environment.yml ${mainpath}/environment.yml
 RUN cp ${mainpath}/src/Project.toml ${mainpath}/Project.toml
 
-RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath} -e "import Pkg; Pkg.update(); Pkg.instantiate();"
+RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath}/src -e "import Pkg; Pkg.update(); Pkg.instantiate();"
 
 RUN jupyter lab build && \
     jupyter lab clean && \
     pip install ${mainpath} --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN ${mainpath}/.juliaup/bin/julia ${mainpath}/src/warmup1.jl
-RUN ${mainpath}/.juliaup/bin/julia ${mainpath}/src/download_notebooks.jl
+RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath}/src ${mainpath}/src/warmup1.jl
+RUN ${mainpath}/.juliaup/bin/julia --project=${mainpath}/src ${mainpath}/src/download_notebooks.jl
 
 RUN mkdir .dev
 RUN mv build plutoserver.egg-info .dev
