@@ -38,12 +38,17 @@ Gridded data can be read from files and written to files in [various file format
 - [regional sea level](https://juliaocean.github.io/OceanRobots.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/SatelliteAltimetry.jl)) : visualize regional sea level anomalies as mapped out by satellites
 - [Ocean color](https://github.com/JuliaOcean/MarineEcosystemNotebooks/tree/master/OceanColor) (multiple notebooks) : notebooks focused on satellite data that characterize marine ecosystems
 
-\label{ocean-state-estimation}
+\label{climatology}
 
-The [Climatology.jl](https://github.com/JuliaOcean/Climatology.jl) and [MeshArrays.jl](https://github.com/JuliaClimate/MeshArrays.jl) packages can deal with gridded model output. 
+The [Climatology.jl](https://github.com/JuliaOcean/Climatology.jl) package deals with gridded data sets and climatologies. 
 
 - [physical oceanography](https://JuliaOcean.github.io/Climatology.jl/dev/examples/ECCO_standard_plots.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/ECCO/ECCO_standard_plots.jl)) : visualize and compare ocean reanalyses from ([ECCO project](https://ecco-group.org))
 - [marine ecosystems](https://JuliaOcean.github.io/Climatology.jl/dev/examples/CBIOMES_climatology_plot.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/CBIOMES/CBIOMES_climatology_plot.jl)) : climatology maps that describe marine ecosystems ([CBIOMES program](https://cbiomes.org))
+- [sea surface temperature](https://JuliaOcean.github.io/Climatology.jl/dev/examples/sst_anomaly_notebook.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/OISST/sst_anomaly_notebook.jl)) : sea surface temperature, anomalies, marine heat waves, etc.
+- [sea level anomaly](https://JuliaOcean.github.io/Climatology.jl/dev/examples/SatelliteAltimetry.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/SSH/SatelliteAltimetry.jl)) : sea level anomaly from satellite altimetry.
+- [Had ocean data base](https://JuliaOcean.github.io/Climatology.jl/dev/examples/HadIOD_viz.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/HadIOD/HadIOD_viz.jl)) : ocean temperature and salinity in situ observations.
+- [Optimal transport method](https://JuliaOcean.github.io/Climatology.jl/dev/examples/HadIOD_viz.html) ([notebook url](https://raw.githubusercontent.com/JuliaOcean/Climatology.jl/master/examples/HadIOD/HadIOD_viz.jl)) : method to compute a distance between mappped data sets, using ooptimal transport.
+
 
 \lead{Sparse Data}
 
@@ -53,11 +58,17 @@ For both land and ocean areas, data collected locally in the field is often spar
 \label{ocean-robots}
 
 - [OceanOPS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/OceanOPS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/OceanOPS.jl)) : explore global ocean observing systems.
+- [Float\_Argo.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Float_Argo.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
+- [ArgoData.jl](https://euroargodev.github.io/ArgoData.jl/dev/examples/) package focused on data from an [Argo](https://argo.ucsd.edu) profiling float data.
 - [Buoy\_NWP\_NOAA.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Buoy_NWP_NOAA.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Buoy_NWP_NOAA.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays [NOAA station](https://www.ndbc.noaa.gov/) data.
+- [Buoy\_NWP\_NOAA\_monthly.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Buoy_NWP_NOAA_monthly.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Buoy_NWP_NOAA_monthly.jl)) : NOAA [station](https://www.ndbc.noaa.gov/) displays monthly [NOAA station](https://www.ndbc.noaa.gov/) data.
 - [Mooring\_WHOTS.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Mooring_WHOTS.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Mooring_WHOTS.jl)) displays [WHOTS mooring](http://www.soest.hawaii.edu/whots/wh_data.html) data.
 - [Drifter\_GDP.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Drifter_GDP.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Drifter_GDP.jl)) displays a [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) time series.
-- [Float\_Argo.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Float_Argo.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Float_Argo.jl)) shows data from an [Argo](https://argo.ucsd.edu) profiling float.
+- [Drifter\_CloudDrift.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Drifter_CloudDrift.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Drifter_CloudDrift.jl)) statistics of [drifter](https://www.aoml.noaa.gov/phod/gdp/hourly_data.php) data sets.
 - [Glider\_Spray.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Glider_Spray.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Glider_Spray.jl)) : underwater [glider](http://spraydata.ucsd.edu/projects/) data.
+- [XBT\_transect.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/XBT_transect.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/XBT_transect.jl)) : expendable bathythermograph data.
+- [ShipCruise\_CCHDO.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/ShipCruise_CCHDO.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/ShipCruise_CCHDO.jl)) : research vessel transect data.
+- [Roce\_interop.jl](https://JuliaOcean.github.io/OceanRobots.jl/dev/examples/Roce_interop.html) (➭ [notebook url](https://raw.githubusercontent.com/JuliaOcean/OceanRobots.jl/master/examples/Roce_interop.jl)) : R language toolbox for ocean data.
 
 
 \end{section}
@@ -73,14 +84,14 @@ For both land and ocean areas, data collected locally in the field is often spar
 - [Random walk model (0D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/RandomWalker.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/RandomWalker.jl) : two-dimensional random walk
 - [ShallowWaters.jl model (2D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/ShallowWaters.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/ShallowWaters.jl) : shallow water equations
 - [Oceananigans.jl model (3D)](http://www.gaelforget.net/notebooks/Oceananigans.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Oceananigans.jl) : non-hydrostatic model
-- [Hector climate model (global)](http://www.gaelforget.net/notebooks/Hector.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Hector.jl) : simple global climate carbon-cycle model 
-- [FaIR	 climate model (global)](http://www.gaelforget.net/notebooks/FaIR.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/FaIR.jl) : simple global climate carbon-cycle model
+- [Hector climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Hector.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Hector.jl) : simple global climate carbon-cycle model 
+- [FaIR	 climate model (global)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/FaIR.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/FaIR.jl) : simple global climate carbon-cycle model
 - [SPEEDY atmosphere model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/Speedy.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/Speedy.jl) : fast, simplified, atmospheric model
 - [MITgcm general circulation model (3D)](https://gaelforget.github.io/ClimateModels.jl/dev/examples/MITgcm.html) ➭ [notebook url](https://raw.githubusercontent.com/gaelforget/ClimateModels.jl/master/examples/MITgcm.jl) : general circulation model
 
 \lead{Particle Tracking Models}
 
-\label{individual-displacements}
+\label{drifters}
 
 [Drifters.jl](https://juliaclimate.github.io/Drifters.jl/dev/) supports the modeling of geophysical fluids at [moving point locations](https://en.wikipedia.org/wiki/Lagrangian_and_Eulerian_specification_of_the_flow_field). It computes single point displacements within a flow field, and follow individual fluid parcels as they move over time. 	
 
@@ -90,6 +101,9 @@ For both land and ocean areas, data collected locally in the field is often spar
 - [Simple Three-Dimensional Flow](https://juliaclimate.github.io/Drifters.jl/dev/examples/solid_body_rotation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/basics/solid_body_rotation.jl)) : rotate, converge, and sink in 3D
 - [Global Ocean Circulation (2D)](https://juliaclimate.github.io/Drifters.jl/dev/examples/global_ocean_circulation.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/global_ocean_circulation.jl)) : monthly flow climatology in 2D
 - [Global Ocean Circulation (3D)](https://juliaclimate.github.io/Drifters.jl/dev/examples/three_dimensional_ocean.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/three_dimensional_ocean.jl)) : mean flow climatology in 3D
+- [Interactive user interface](https://juliaclimate.github.io/Drifters.jl/dev/examples/interactive_UI.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/interactive_UI.jl)) : Interactive user interface
+- [Oscar data driven model](https://juliaclimate.github.io/Drifters.jl/dev/examples/Oscar_model.html) ([notebook url](https://raw.githubusercontent.com/JuliaClimate/Drifters.jl/master/examples/worldwide/Oscar_model.jl)) : Oscar data driven model that assimilates satellite altimetry
+
 
 \lead{General Circulation Models}
 
@@ -107,6 +121,10 @@ The examples run `MITgcm` interactively via `ClimateModels.jl`, use `MeshArrays.
 - [HS94_animation.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_animation.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_animation.jl)) : run simple Atmosphere configuration, read output, interpolate, and plot maps.
 - [HS94_particles.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_particles.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_particles.jl)) : compute particle trajectories from model output generated in `HS94_animation.jl`.
 - [HS94_Makie.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/HS94_Makie.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/HS94_Makie.jl)) : using `Makie.jl` instead of `Plots.jl`
+
+The MITgcm/Darwin3 marine ecosystem model :
+
+- [Darwin3_1D.jl](https://gaelforget.github.io/MITgcm.jl/dev/examples/Darwin3_1D.html) ([notebook url](https://raw.githubusercontent.com/gaelforget/MITgcm.jl/master/examples/Darwin3_1D.jl)) : MITgcm/Darwin3 marine ecosystem model
 
 \lead{Marine Ecosystem Models}
 
@@ -284,12 +302,12 @@ We are very grateful to the [BinderHub Federation](https://mybinder.readthedocs.
 The notebooks mostly come from the `examples` section of various Julia packages.
 
 - Data Products / [ClimateModels.jl](#climate-models) examples
-- Data Products / [Climatology.jl](#ocean-state-estimation) examples
+- Data Products / [Climatology.jl](#climatology) examples
 - Data Products / [OceanRobots.jl](#ocean-robots) examples
 - Models / [ClimateModels.jl](#climate-models) examples
 - Models / [MITgcm.jl](#mitgcm-tools) examples
 - Arrays / [MeshArrays.jl](#mesh-arrays) examples
-- Points / [Drifters.jl](#individual-displacements) examples
+- Points / [Drifters.jl](#drifters) examples
 
 Examples that use gridded data sets include the `Climatology.jl` notebooks. `OceanRobots.jl` in turn deals with sparse data collected in situ by diverse methods. The examples cover common file formats and protocols for accessing data. 
 
