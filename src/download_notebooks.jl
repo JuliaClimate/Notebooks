@@ -38,7 +38,7 @@ run(`$(git()) clone https://github.com/JuliaOcean/MarineEcosystemNotebooks/`)
 mv("MarineEcosystemNotebooks/OceanColor","notebooks/OceanColor")
 rm("MarineEcosystemNotebooks", recursive=true)
 
-Pkg.activate("notebooks/OceanColor"); Pkg.instantiate()
-Pkg.activate()
+#Pkg.activate("notebooks/OceanColor"); Pkg.instantiate()
+#Pkg.activate()
 
 
